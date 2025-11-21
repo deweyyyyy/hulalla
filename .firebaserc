@@ -1,0 +1,8 @@
+{
+  "projects": {
+    "default": "hulalla-party",
+    "RELEASE": "hulalla-party"
+  },
+  "targets": {},
+  "etags": {}
+}
