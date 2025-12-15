@@ -1,0 +1,1319 @@
+        :root {
+            /* Christmas Colors */
+            --christmas-green-dark: #1a472a;
+            --christmas-green: #2d5a3f;
+            --christmas-green-light: #3d7a55;
+            --christmas-red: #c41e3a;
+            --christmas-red-light: #e63946;
+            --christmas-gold: #ffd700;
+            --christmas-gold-light: #ffe55c;
+            --christmas-silver: #c0c0c0;
+            --christmas-white: #fffafa;
+            --christmas-blue: #4169e1;
+            --christmas-purple: #9370db;
+            
+            /* Snow Effects */
+            --snow-white: rgba(255, 255, 255, 0.9);
+            --snow-glow: rgba(255, 255, 255, 0.6);
+            
+            /* Glass Effects */
+            --glass-white: rgba(255, 255, 255, 0.15);
+            --glass-light: rgba(255, 255, 255, 0.25);
+            --glass-medium: rgba(255, 255, 255, 0.4);
+            
+            /* Shadows */
+            --shadow-soft: 0 4px 20px rgba(0, 0, 0, 0.15);
+            --shadow-glow-gold: 0 0 20px rgba(255, 215, 0, 0.5);
+            --shadow-glow-red: 0 0 15px rgba(196, 30, 58, 0.5);
+            
+            /* Spacing */
+            --radius-sm: 12px;
+            --radius-md: 16px;
+            --radius-lg: 24px;
+            --radius-xl: 32px;
+            --radius-full: 9999px;
+            
+            /* Transitions */
+            --transition-fast: 0.15s ease;
+            --transition-normal: 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            --transition-spring: 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
+            
+            /* Safe Areas */
+            --safe-top: env(safe-area-inset-top);
+            --safe-bottom: env(safe-area-inset-bottom);
+        }
+        
+        /* Reset */
+        *, *::before, *::after {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+        
+        /* Back Button */
+        .back-btn {
+            position: fixed;
+            top: calc(15px + var(--safe-top));
+            left: 15px;
+            width: 44px;
+            height: 44px;
+            border-radius: 50%;
+            background: var(--glass-light);
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            text-decoration: none;
+            transition: all 0.3s ease;
+            z-index: 100;
+            font-size: 1rem;
+        }
+        
+        .back-btn:hover {
+            background: var(--glass-medium);
+            transform: scale(1.1);
+        }
+        
+        .back-btn:active {
+            transform: scale(0.95);
+        }
+        
+        html {
+            font-size: 16px;
+            -webkit-font-smoothing: antialiased;
+        }
+        
+        body {
+            font-family: 'Prompt', 'Inter', -apple-system, sans-serif;
+            background: linear-gradient(180deg, #0a1628 0%, #1a2744 50%, #1a472a 100%);
+            color: var(--christmas-white);
+            min-height: 100vh;
+            min-height: 100dvh;
+            overflow-x: hidden;
+            position: relative;
+        }
+        
+        /* Snow Animation Background */
+        .snow-container {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 1;
+            overflow: hidden;
+        }
+        
+        .snowflake {
+            position: absolute;
+            top: -10px;
+            color: var(--snow-white);
+            font-size: 1rem;
+            animation: snowfall linear infinite;
+            opacity: 0.8;
+            text-shadow: 0 0 5px var(--snow-glow);
+        }
+        
+        @keyframes snowfall {
+            0% {
+                transform: translateY(-10px) rotate(0deg);
+                opacity: 1;
+            }
+            100% {
+                transform: translateY(100vh) rotate(360deg);
+                opacity: 0.3;
+            }
+        }
+        
+        /* App Container */
+        .app-container {
+            position: relative;
+            z-index: 10;
+            max-width: 500px;
+            margin: 0 auto;
+            min-height: 100vh;
+            min-height: 100dvh;
+            padding: calc(20px + var(--safe-top)) 16px calc(20px + var(--safe-bottom));
+        }
+        
+        /* Header */
+        .header {
+            text-align: center;
+            margin-bottom: 20px;
+            animation: fadeInDown 0.6s ease;
+        }
+        
+        .header-title {
+            font-family: 'Mountains of Christmas', cursive;
+            font-size: 2.5rem;
+            font-weight: 700;
+            background: linear-gradient(135deg, var(--christmas-gold) 0%, var(--christmas-gold-light) 50%, #fff 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            text-shadow: none;
+            filter: drop-shadow(0 2px 10px rgba(255, 215, 0, 0.3));
+            margin-bottom: 8px;
+        }
+        
+        .header-subtitle {
+            font-size: 0.95rem;
+            color: rgba(255, 255, 255, 0.8);
+            font-weight: 400;
+        }
+        
+        /* Tree Owner Info */
+        .owner-card {
+            background: var(--glass-light);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            border-radius: var(--radius-lg);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            padding: 16px 20px;
+            margin-bottom: 20px;
+            display: flex;
+            align-items: center;
+            gap: 14px;
+            animation: fadeInUp 0.5s ease 0.1s both;
+        }
+        
+        .owner-avatar {
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, var(--christmas-red) 0%, var(--christmas-green) 100%);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.5rem;
+            box-shadow: var(--shadow-soft);
+        }
+        
+        .owner-info h2 {
+            font-size: 1.1rem;
+            font-weight: 600;
+            margin-bottom: 2px;
+        }
+        
+        .owner-info p {
+            font-size: 0.85rem;
+            color: rgba(255, 255, 255, 0.7);
+        }
+        
+        .owner-stats {
+            margin-left: auto;
+            text-align: center;
+        }
+        
+        .stat-number {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: var(--christmas-gold);
+        }
+        
+        .stat-label {
+            font-size: 0.75rem;
+            color: rgba(255, 255, 255, 0.6);
+        }
+        
+        /* Christmas Tree Container */
+        .tree-section {
+            position: relative;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            margin-bottom: 24px;
+            animation: fadeIn 0.8s ease 0.2s both;
+        }
+        
+        /* Tree Star */
+        .tree-star {
+            font-size: 3rem;
+            color: var(--christmas-gold);
+            text-shadow: var(--shadow-glow-gold);
+            animation: twinkle 1.5s ease-in-out infinite, float 3s ease-in-out infinite;
+            margin-bottom: -15px;
+            z-index: 10;
+        }
+        
+        @keyframes twinkle {
+            0%, 100% { opacity: 1; transform: scale(1); }
+            50% { opacity: 0.7; transform: scale(1.1); }
+        }
+        
+        @keyframes float {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-5px); }
+        }
+        
+        /* Tree SVG Container */
+        .tree-container {
+            position: relative;
+            width: 100%;
+            max-width: 350px;
+        }
+        
+        .tree-svg {
+            width: 100%;
+            height: auto;
+            filter: drop-shadow(0 10px 30px rgba(0, 0, 0, 0.3));
+        }
+        
+        /* Ornament Positions on Tree */
+        .ornaments-container {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+        }
+        
+        .ornament {
+            position: absolute;
+            cursor: pointer;
+            pointer-events: auto;
+            transition: var(--transition-spring);
+            animation: ornamentPop 0.4s cubic-bezier(0.34, 1.56, 0.64, 1) both;
+        }
+        
+        .ornament:hover {
+            transform: scale(1.3);
+            z-index: 100;
+        }
+        
+        /* Ornament Tooltip */
+        .ornament-tooltip {
+            position: absolute;
+            bottom: 100%;
+            left: 50%;
+            transform: translateX(-50%);
+            background: rgba(0, 0, 0, 0.9);
+            color: white;
+            padding: 8px 12px;
+            border-radius: 10px;
+            font-size: 0.8rem;
+            white-space: nowrap;
+            max-width: 180px;
+            white-space: normal;
+            text-align: center;
+            opacity: 0;
+            visibility: hidden;
+            transition: all 0.2s ease;
+            pointer-events: none;
+            z-index: 200;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
+        }
+        
+        .ornament-tooltip::after {
+            content: '';
+            position: absolute;
+            top: 100%;
+            left: 50%;
+            transform: translateX(-50%);
+            border: 6px solid transparent;
+            border-top-color: rgba(0, 0, 0, 0.9);
+        }
+        
+        .ornament:hover .ornament-tooltip {
+            opacity: 1;
+            visibility: visible;
+            bottom: calc(100% + 8px);
+        }
+        
+        .tooltip-author {
+            font-weight: 600;
+            color: var(--christmas-gold);
+            margin-bottom: 4px;
+        }
+        
+        .tooltip-message {
+            font-size: 0.75rem;
+            line-height: 1.4;
+            color: rgba(255, 255, 255, 0.9);
+        }
+        
+        /* Music Control Button */
+        .music-control {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, var(--christmas-red) 0%, var(--christmas-red-light) 100%);
+            border: none;
+            color: white;
+            font-size: 1.2rem;
+            cursor: pointer;
+            z-index: 1000;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 4px 20px rgba(196, 30, 58, 0.5);
+            transition: var(--transition-spring);
+        }
+        
+        .music-control:hover {
+            transform: scale(1.1);
+            box-shadow: 0 6px 25px rgba(196, 30, 58, 0.6);
+        }
+        
+        .music-control.playing {
+            animation: musicPulse 1s ease-in-out infinite;
+            background: linear-gradient(135deg, var(--christmas-green) 0%, var(--christmas-green-light) 100%);
+        }
+        
+        @keyframes musicPulse {
+            0%, 100% { box-shadow: 0 4px 20px rgba(3, 147, 89, 0.5); }
+            50% { box-shadow: 0 4px 30px rgba(15, 131, 5, 0.615), 0 0 40px rgba(255, 219, 17, 0.3); }
+        }
+        
+        /* Story Canvas Container for Screenshot */
+        .story-canvas-container {
+            position: fixed;
+            top: 0;
+            left: -9999px;
+            width: 1080px;
+            height: 1920px;
+            background: linear-gradient(180deg, #0a1628 0%, #1a2744 40%, #1a472a 100%);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            padding: 60px;
+            z-index: -1000;
+        }
+        
+        .story-header {
+            text-align: center;
+            margin-bottom: 40px;
+        }
+        
+        .story-title {
+            font-family: 'Mountains of Christmas', cursive;
+            font-size: 72px;
+            color: var(--christmas-gold);
+            text-shadow: 0 4px 20px rgba(255, 215, 0, 0.5);
+            margin-bottom: 20px;
+        }
+        
+        .story-owner {
+            font-size: 48px;
+            color: white;
+            font-weight: 600;
+        }
+        
+        .story-tree-section {
+            position: relative;
+            width: 600px;
+            margin-bottom: 40px;
+        }
+        
+        .story-star {
+            font-size: 80px;
+            text-align: center;
+            margin-bottom: -30px;
+        }
+        
+        .story-footer {
+            text-align: center;
+            color: rgba(255, 255, 255, 0.7);
+            font-size: 32px;
+        }
+        
+        .story-url {
+            margin-top: 20px;
+            padding: 15px 30px;
+            background: rgba(255, 255, 255, 0.15);
+            border-radius: 20px;
+            font-size: 28px;
+            color: var(--christmas-gold);
+        }
+        
+        .story-deco-count {
+            font-size: 36px;
+            color: white;
+            margin-top: 30px;
+        }
+        
+        @keyframes ornamentPop {
+            0% { transform: scale(0); opacity: 0; }
+            100% { transform: scale(1); opacity: 1; }
+        }
+        
+        .ornament-icon {
+            font-size: 1.8rem;
+            filter: drop-shadow(0 2px 8px rgba(0, 0, 0, 0.3));
+        }
+        
+        /* Tree Trunk */
+        .tree-trunk {
+            width: 60px;
+            height: 40px;
+            background: linear-gradient(180deg, #8B4513 0%, #654321 100%);
+            border-radius: 0 0 8px 8px;
+            margin-top: -5px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
+        }
+        
+        /* Presents under tree */
+        .presents-row {
+            display: flex;
+            justify-content: center;
+            gap: 10px;
+            margin-top: 10px;
+            animation: fadeInUp 0.6s ease 0.4s both;
+        }
+        
+        .present {
+            font-size: 2rem;
+            animation: presentBounce 2s ease-in-out infinite;
+        }
+        
+        .present:nth-child(2) { animation-delay: 0.3s; }
+        .present:nth-child(3) { animation-delay: 0.6s; }
+        
+        @keyframes presentBounce {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-5px); }
+        }
+        
+        /* Decoration Counter */
+        .deco-counter {
+            background: var(--glass-light);
+            backdrop-filter: blur(15px);
+            -webkit-backdrop-filter: blur(15px);
+            border-radius: var(--radius-full);
+            padding: 10px 24px;
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            margin-bottom: 20px;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            animation: fadeInUp 0.5s ease 0.3s both;
+        }
+        
+        .deco-counter i {
+            color: var(--christmas-gold);
+        }
+        
+        .deco-counter span {
+            font-weight: 600;
+        }
+        
+        /* Action Buttons */
+        .action-buttons {
+            display: flex;
+            gap: 12px;
+            margin-bottom: 24px;
+            animation: fadeInUp 0.5s ease 0.4s both;
+        }
+        
+        .btn {
+            flex: 1;
+            padding: 14px 20px;
+            border-radius: var(--radius-lg);
+            border: none;
+            font-family: inherit;
+            font-size: 0.95rem;
+            font-weight: 600;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            transition: var(--transition-spring);
+        }
+        
+        .btn-primary {
+            background: linear-gradient(135deg, var(--christmas-red) 0%, var(--christmas-red-light) 100%);
+            color: white;
+            box-shadow: 0 4px 15px rgba(196, 30, 58, 0.4);
+        }
+        
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 25px rgba(196, 30, 58, 0.5);
+        }
+        
+        .btn-primary:active {
+            transform: scale(0.98);
+        }
+        
+        .btn-secondary {
+            background: var(--glass-light);
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+            color: white;
+            border: 1px solid rgba(255, 255, 255, 0.3);
+        }
+        
+        .btn-secondary:hover {
+            background: var(--glass-medium);
+            transform: translateY(-2px);
+        }
+        
+        /* Messages Section */
+        .messages-section {
+            animation: fadeInUp 0.5s ease 0.5s both;
+        }
+        
+        .section-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 16px;
+        }
+        
+        .section-title {
+            font-size: 1.2rem;
+            font-weight: 700;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        
+        .section-title i {
+            color: var(--christmas-gold);
+        }
+        
+        .view-all {
+            color: var(--christmas-gold);
+            font-size: 0.9rem;
+            text-decoration: none;
+            font-weight: 500;
+        }
+        
+        /* Message Cards */
+        .messages-list {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+        }
+        
+        .message-card {
+            background: var(--glass-light);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            border-radius: var(--radius-lg);
+            border: 1px solid rgba(255, 255, 255, 0.15);
+            padding: 16px;
+            transition: var(--transition-normal);
+        }
+        
+        .message-card:hover {
+            background: var(--glass-medium);
+            transform: translateX(5px);
+        }
+        
+        .message-header {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            margin-bottom: 10px;
+        }
+        
+        .message-ornament {
+            font-size: 1.5rem;
+        }
+        
+        .message-author {
+            font-weight: 600;
+            font-size: 0.95rem;
+        }
+        
+        .message-time {
+            font-size: 0.75rem;
+            color: rgba(255, 255, 255, 0.5);
+            margin-left: auto;
+        }
+        
+        .message-content {
+            font-size: 0.9rem;
+            line-height: 1.5;
+            color: rgba(255, 255, 255, 0.9);
+            padding-left: 44px;
+        }
+        
+        /* Empty State */
+        .empty-state {
+            text-align: center;
+            padding: 40px 20px;
+            color: rgba(255, 255, 255, 0.6);
+        }
+        
+        .empty-state i {
+            font-size: 3rem;
+            margin-bottom: 16px;
+            color: var(--christmas-gold);
+            opacity: 0.5;
+        }
+        
+        .empty-state h3 {
+            font-size: 1.1rem;
+            margin-bottom: 8px;
+            color: rgba(255, 255, 255, 0.8);
+        }
+        
+        /* Create Tree Modal Content */
+        .create-tree-form {
+            display: flex;
+            flex-direction: column;
+            gap: 16px;
+        }
+        
+        .form-group {
+            text-align: left;
+        }
+        
+        .form-group label {
+            display: block;
+            font-weight: 600;
+            margin-bottom: 8px;
+            color: var(--christmas-green-dark);
+        }
+        
+        .form-group input {
+            width: 100%;
+            padding: 12px 16px;
+            border-radius: var(--radius-md);
+            border: 2px solid #e0e0e0;
+            font-family: inherit;
+            font-size: 1rem;
+            transition: var(--transition-fast);
+        }
+        
+        .form-group input:focus {
+            outline: none;
+            border-color: var(--christmas-green);
+            box-shadow: 0 0 0 3px rgba(45, 90, 63, 0.2);
+        }
+        
+        /* Ornament Picker */
+        .ornament-picker {
+            display: grid;
+            grid-template-columns: repeat(5, 1fr);
+            gap: 10px;
+            margin-top: 10px;
+        }
+        
+        .ornament-option {
+            width: 50px;
+            height: 50px;
+            border-radius: var(--radius-md);
+            border: 2px solid #e0e0e0;
+            background: #f9f9f9;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.5rem;
+            cursor: pointer;
+            transition: var(--transition-spring);
+        }
+        
+        .ornament-option:hover {
+            transform: scale(1.1);
+            border-color: var(--christmas-green);
+        }
+        
+        .ornament-option.selected {
+            border-color: var(--christmas-red);
+            background: rgba(196, 30, 58, 0.1);
+            transform: scale(1.1);
+        }
+        
+        /* PIN Input Boxes */
+        .pin-container {
+            display: flex;
+            justify-content: center;
+            gap: 12px;
+            margin: 15px 0;
+        }
+        
+        .pin-box {
+            width: 55px;
+            height: 65px;
+            border: 2px solid #e0e0e0;
+            border-radius: 12px;
+            font-size: 1.8rem;
+            font-weight: 700;
+            text-align: center;
+            background: #f9f9f9;
+            transition: all 0.2s ease;
+            color: var(--christmas-green-dark);
+        }
+        
+        .pin-box:focus {
+            outline: none;
+            border-color: var(--christmas-red);
+            background: white;
+            box-shadow: 0 0 0 3px rgba(196, 30, 58, 0.2);
+        }
+        
+        .pin-box::placeholder {
+            color: #ccc;
+        }
+        
+        /* Toggle Switch */
+        .toggle-container {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 12px 16px;
+            background: #f5f5f5;
+            border-radius: 12px;
+            margin-bottom: 15px;
+        }
+        
+        .toggle-label {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            font-weight: 500;
+            color: #333;
+        }
+        
+        .toggle-label i {
+            color: var(--christmas-gold);
+        }
+        
+        .toggle-switch {
+            position: relative;
+            width: 52px;
+            height: 28px;
+        }
+        
+        .toggle-switch input {
+            opacity: 0;
+            width: 0;
+            height: 0;
+        }
+        
+        .toggle-slider {
+            position: absolute;
+            cursor: pointer;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background-color: #ccc;
+            border-radius: 28px;
+            transition: 0.3s;
+        }
+        
+        .toggle-slider:before {
+            position: absolute;
+            content: "";
+            height: 22px;
+            width: 22px;
+            left: 3px;
+            bottom: 3px;
+            background-color: white;
+            border-radius: 50%;
+            transition: 0.3s;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.2);
+        }
+        
+        .toggle-switch input:checked + .toggle-slider {
+            background: linear-gradient(135deg, var(--christmas-red) 0%, var(--christmas-red-light) 100%);
+        }
+        
+        .toggle-switch input:checked + .toggle-slider:before {
+            transform: translateX(24px);
+        }
+        
+        .pin-section {
+            overflow: hidden;
+            max-height: 0;
+            opacity: 0;
+            transition: all 0.3s ease;
+        }
+        
+        .pin-section.active {
+            max-height: 200px;
+            opacity: 1;
+        }
+        
+        /* Loading State */
+        .loading {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            min-height: 60vh;
+            gap: 20px;
+        }
+        
+        .loading-tree {
+            font-size: 4rem;
+            animation: pulse 1.5s ease-in-out infinite;
+        }
+        
+        @keyframes pulse {
+            0%, 100% { transform: scale(1); opacity: 1; }
+            50% { transform: scale(1.05); opacity: 0.8; }
+        }
+        
+        .loading-text {
+            font-size: 1rem;
+            color: rgba(255, 255, 255, 0.7);
+        }
+        
+        /* Landing Page */
+        .landing-container {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            min-height: 80vh;
+            text-align: center;
+            padding: 20px;
+        }
+        
+        .landing-tree {
+            font-size: 8rem;
+            margin-bottom: 20px;
+            animation: float 3s ease-in-out infinite;
+        }
+        
+        .landing-title {
+            font-family: 'Mountains of Christmas', cursive;
+            font-size: 2.4rem;
+            background: linear-gradient(135deg, var(--christmas-gold) 0%, #fff 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            margin-bottom: 12px;
+        }
+
+        .landing-title2 {
+            font-family: 'Mountains of Christmas', cursive;
+            font-size: 1.2rem;
+            background: linear-gradient(135deg, var(--christmas-gold) 0%, #fff 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            margin-bottom: 12px;
+        }
+        
+        .landing-subtitle {
+            font-size: 1rem;
+            color: rgba(255, 255, 255, 0.8);
+            margin-bottom: 20px;
+            max-width: 300px;
+            line-height: 1.6;
+        }
+        
+        /* Tree Stats Box */
+        .tree-stats {
+            margin-bottom: 25px;
+            min-height: 60px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        
+        .stats-box {
+            background: var(--glass-light);
+            backdrop-filter: blur(20px);
+            border-radius: var(--radius-lg);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            padding: 15px 25px;
+            display: flex;
+            align-items: center;
+            gap: 20px;
+            animation: fadeInUp 0.5s ease;
+        }
+        
+        .stat-item {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 2px;
+        }
+        
+        .stat-icon {
+            font-size: 1.2rem;
+        }
+        
+        .stat-value {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: var(--christmas-gold);
+            text-shadow: 0 2px 10px rgba(255, 215, 0, 0.3);
+        }
+        
+        .stat-label {
+            font-size: 0.75rem;
+            color: rgba(255, 255, 255, 0.7);
+        }
+        
+        .stat-divider {
+            width: 1px;
+            height: 40px;
+            background: rgba(255, 255, 255, 0.2);
+        }
+        
+        .stat-loading {
+            color: rgba(255, 255, 255, 0.5);
+            font-size: 1.2rem;
+        }
+        
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(10px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        
+        .landing-buttons {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+            width: 100%;
+            max-width: 300px;
+        }
+        
+        .btn-landing {
+            padding: 16px 24px;
+            border-radius: var(--radius-lg);
+            font-size: 1rem;
+            font-weight: 600;
+            font-family: inherit;
+            cursor: pointer;
+            transition: var(--transition-spring);
+            border: none;
+        }
+        
+        .btn-create {
+            background: linear-gradient(135deg, var(--christmas-red) 0%, var(--christmas-red-light) 100%);
+            color: white;
+            box-shadow: 0 4px 20px rgba(196, 30, 58, 0.4);
+        }
+        
+        .btn-create:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 30px rgba(196, 30, 58, 0.5);
+        }
+        
+        .btn-visit {
+            background: var(--glass-light);
+            backdrop-filter: blur(10px);
+            color: white;
+            border: 1px solid rgba(255, 255, 255, 0.3);
+        }
+        
+        .btn-visit:hover {
+            background: var(--glass-medium);
+            transform: translateY(-2px);
+        }
+        
+        /* Footer */
+        .footer {
+            text-align: center;
+            padding: 20px;
+            color: rgba(255, 255, 255, 0.5);
+            font-size: 0.85rem;
+            margin-top: auto;
+        }
+        
+        .footer a {
+            color: var(--christmas-gold);
+            text-decoration: none;
+        }
+        
+        /* Share Modal */
+        .share-link-container {
+            display: flex;
+            gap: 8px;
+            margin-top: 15px;
+        }
+        
+        .share-link-input {
+            flex: 1;
+            padding: 12px;
+            border-radius: var(--radius-md);
+            border: 2px solid #e0e0e0;
+            font-family: inherit;
+            font-size: 0.9rem;
+        }
+        
+        .share-copy-btn {
+            padding: 12px 16px;
+            background: var(--christmas-green);
+            color: white;
+            border: none;
+            border-radius: var(--radius-md);
+            cursor: pointer;
+            transition: var(--transition-fast);
+        }
+        
+        .share-copy-btn:hover {
+            background: var(--christmas-green-dark);
+        }
+        
+        /* Share Options */
+        .share-options {
+            display: flex;
+            gap: 12px;
+            margin-top: 20px;
+            justify-content: center;
+        }
+        
+        .share-option-btn {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 8px;
+            padding: 15px 20px;
+            border-radius: 16px;
+            border: 2px solid #e0e0e0;
+            background: #f9f9f9;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            min-width: 100px;
+        }
+        
+        .share-option-btn:hover {
+            border-color: var(--christmas-green);
+            background: rgba(45, 90, 63, 0.1);
+            transform: translateY(-2px);
+        }
+        
+        .share-option-btn i {
+            font-size: 1.5rem;
+            color: var(--christmas-green);
+        }
+        
+        .share-option-btn span {
+            font-size: 0.85rem;
+            color: #333;
+            font-weight: 500;
+        }
+        
+        .share-option-btn.story-btn i {
+            color: #E1306C;
+        }
+        
+        /* More Games Link */
+        .more-games-link {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+            background: var(--glass-light);
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.15);
+            border-radius: var(--radius-lg);
+            padding: 7px 14px;
+            margin-top: 20px;
+            color: rgba(255, 255, 255, 0.9);
+            text-decoration: none;
+            font-size: 0.95rem;
+            font-weight: 500;
+            transition: all 0.3s ease;
+        }
+        
+        .more-games-link:hover {
+            background: var(--glass-medium);
+            transform: translateY(-2px);
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.2);
+        }
+        
+        .more-games-link:active {
+            transform: scale(0.98);
+        }
+        
+        .more-games-link i:first-child {
+            font-size: 1.2rem;
+            color: var(--christmas-gold);
+        }
+        
+        .more-games-link i:last-child {
+            font-size: 0.8rem;
+            opacity: 0.6;
+            margin-left: auto;
+        }
+        
+        .more-games-link span {
+            flex: 1;
+        }
+        
+        /* How To Play Section - Collapsible */
+        .how-to-play {
+            background: var(--glass-light);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            border-radius: var(--radius-lg);
+            border: 1px solid rgba(255, 255, 255, 0.15);
+            padding: 16px 20px;
+            margin-top: 30px;
+            animation: fadeInUp 0.6s ease 0.3s both;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+        
+        .how-to-play:hover {
+            background: var(--glass-medium);
+        }
+        
+        .how-to-title {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            font-size: 1rem;
+            font-weight: 600;
+            color: var(--christmas-gold);
+            margin-bottom: 0;
+            padding-bottom: 0;
+            border-bottom: none;
+        }
+        
+        .how-to-title i:first-child {
+            font-size: 1.2rem;
+        }
+        
+        .how-to-title span {
+            flex: 1;
+        }
+        
+        .how-to-arrow {
+            font-size: 0.9rem !important;
+            opacity: 0.7;
+            transition: transform 0.3s ease;
+        }
+        
+        .how-to-play.expanded .how-to-arrow {
+            transform: rotate(180deg);
+        }
+        
+        .how-to-play.expanded .how-to-title {
+            margin-bottom: 16px;
+            padding-bottom: 12px;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+        }
+        
+        .how-to-steps {
+            display: none;
+            flex-direction: column;
+            gap: 16px;
+            overflow: hidden;
+        }
+        
+        .how-to-play.expanded .how-to-steps {
+            display: flex;
+            animation: slideDown 0.3s ease;
+        }
+        
+        @keyframes slideDown {
+            from {
+                opacity: 0;
+                transform: translateY(-10px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        
+        .step-item {
+            display: flex;
+            align-items: flex-start;
+            gap: 14px;
+        }
+        
+        .step-number {
+            width: 32px;
+            height: 32px;
+            min-width: 32px;
+            background: linear-gradient(135deg, var(--christmas-red), var(--christmas-red-light));
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 700;
+            font-size: 0.9rem;
+            color: white;
+            box-shadow: 0 4px 12px rgba(196, 30, 58, 0.3);
+        }
+        
+        .step-content {
+            flex: 1;
+            padding-top: 2px;
+        }
+        
+        .step-title {
+            font-weight: 600;
+            font-size: 0.95rem;
+            margin-bottom: 4px;
+            color: white;
+        }
+        
+        .step-desc {
+            font-size: 0.85rem;
+            color: rgba(255, 255, 255, 0.7);
+            line-height: 1.4;
+        }
+        
+        /* Responsive */
+
+        @media (max-width: 380px) {
+            .header-title {
+                font-size: 2rem;
+            }
+            
+            .owner-card {
+                flex-wrap: wrap;
+            }
+            
+            .owner-stats {
+                margin-left: 0;
+                margin-top: 10px;
+                width: 100%;
+            }
+        }
+        
+        /* Toast Notification */
+        .toast {
+            position: fixed;
+            bottom: 30px;
+            left: 50%;
+            transform: translateX(-50%) translateY(100px);
+            background: rgba(0, 0, 0, 0.9);
+            color: white;
+            padding: 14px 24px;
+            border-radius: var(--radius-full);
+            font-size: 0.9rem;
+            z-index: 1000;
+            opacity: 0;
+            transition: all 0.3s ease;
+        }
+        
+        .toast.show {
+            transform: translateX(-50%) translateY(0);
+            opacity: 1;
+        }
+        
+        /* SweetAlert Custom Styles */
+        .swal2-popup {
+            border-radius: var(--radius-xl) !important;
+            font-family: 'Prompt', 'Inter', sans-serif !important;
+        }
+        
+        .swal2-title {
+            font-family: 'Prompt', 'Inter', sans-serif !important;
+        }
+        
+        .swal2-html-container {
+            font-family: 'Prompt', 'Inter', sans-serif !important;
+        }
