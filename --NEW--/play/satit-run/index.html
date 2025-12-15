@@ -1,0 +1,193 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <meta name="theme-color" content="#4ade80">
+    <title>🏃 Satit Run - Hulalla #3</title>
+    <meta name="description" content="วิ่งหนีครูเวรยามในเกมวิ่งสุดมันส์นี้! เก็บหนังสือและหลบอุปสรรคต่างๆ เพื่อทำคะแนนสูงสุด!">
+    <meta property="og:title" content="Satit Run - Hulalla #3">
+    <meta property="og:description" content="วิ่งหนีครูเวรยามในเกมวิ่งสุดมันส์นี้! เก็บหนังสือและหลบอุปสรรคต่างๆ เพื่อทำคะแนนสูงสุด!">
+    
+    <!-- Favicon & Icons -->
+    <link rel="manifest" href="/manifest.json">
+    <link rel="apple-touch-icon" sizes="180x180" href="/apple-icon-180x180.png">
+    <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+    <link rel="icon" href="/favicon.ico" type="image/x-icon">
+    
+    <!-- Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Prompt:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    
+    <!-- SweetAlert2 -->
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    
+    <!-- html2canvas -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+
+    <!-- Firebase -->
+    <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-database-compat.js"></script>
+    <script src="/keys.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-analytics-compat.js"></script>
+
+    <link rel="apple-touch-icon" sizes="57x57" href="/apple-icon-57x57.png">
+    <link rel="apple-touch-icon" sizes="60x60" href="/apple-icon-60x60.png">
+    <link rel="apple-touch-icon" sizes="72x72" href="/apple-icon-72x72.png">
+    <link rel="apple-touch-icon" sizes="76x76" href="/apple-icon-76x76.png">
+    <link rel="apple-touch-icon" sizes="114x114" href="/apple-icon-114x114.png">
+    <link rel="apple-touch-icon" sizes="120x120" href="/apple-icon-120x120.png">
+    <link rel="apple-touch-icon" sizes="144x144" href="/apple-icon-144x144.png">
+    <link rel="apple-touch-icon" sizes="152x152" href="/apple-icon-152x152.png">
+    <link rel="apple-touch-icon" sizes="180x180" href="/apple-icon-180x180.png">
+    <link rel="icon" type="image/png" sizes="192x192" href="/android-icon-192x192.png">
+    <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="96x96" href="/favicon-96x96.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
+    <meta name="msapplication-TileImage" content="/ms-icon-144x144.png">
+
+    <link rel="stylesheet" href="./style.css">
+</head>
+<body>
+    <!-- Sound Settings Popup -->
+    <div class="sound-settings" id="soundSettings">
+        <div class="settings-card">
+            <div class="settings-icon">🎵</div>
+            <h2>เปิดเสียงเกม?</h2>
+            <p>เพิ่มความสนุกด้วยเพลงและเอฟเฟกต์เสียง!</p>
+            <div class="sound-options">
+                <button class="sound-option-btn sound-on" onclick="startWithSound(true)">
+                    <i class="fas fa-volume-up"></i>
+                    เปิดเสียง
+                </button>
+                <button class="sound-option-btn sound-off" onclick="startWithSound(false)">
+                    <i class="fas fa-volume-mute"></i>
+                    ไม่เปิดเสียง
+                </button>
+            </div>
+        </div>
+    </div>
+    
+    <div class="game-container">
+        <!-- Start Screen -->
+        <div class="start-screen" id="startScreen">
+            <a href="/play/" class="back-btn"><i class="fas fa-arrow-left"></i></a>
+            <div class="character-preview">🏃</div>
+            <h1 class="game-title">Satit Run</h1>
+            <p class="game-subtitle">วิ่งหนีครูเวรยาม!</p>
+            <button class="start-btn" onclick="startGame()">
+                <i class="fas fa-play"></i> เริ่มเกม
+            </button>
+            <div class="instructions">
+                <i class="fas fa-arrow-left"></i> <i class="fas fa-arrow-right"></i> เลี้ยว
+                &nbsp;|&nbsp;
+                <i class="fas fa-arrow-up"></i> / Space กระโดด
+                
+                <div class="how-to-play">
+                    <h4>🎮 วิธีเล่น</h4>
+                    <div class="how-to-play-item collect">
+                        <span class="emoji">📚</span>
+                        <span>เก็บหนังสือให้มากที่สุด!</span>
+                    </div>
+                    <div class="how-to-play-item avoid">
+                        <span class="emoji">🏢</span>
+                        <span>หลบตึกและอาคาร</span>
+                    </div>
+                    <div class="how-to-play-item avoid">
+                        <span class="emoji">🌲</span>
+                        <span>หลบต้นไม้</span>
+                    </div>
+                    <div class="how-to-play-item avoid">
+                        <span class="emoji">⛰️</span>
+                        <span>หลบหน้าผาและหิน</span>
+                    </div>
+                    <div class="how-to-play-item avoid">
+                        <span class="emoji">👨‍🏫</span>
+                        <span>อย่าให้ครูเวรจับได้!</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Game Canvas -->
+        <canvas id="gameCanvas"></canvas>
+        
+        <!-- HUD -->
+        <div class="hud" id="hud" style="display: none;">
+            <div class="score-box">
+                <i class="fas fa-road"></i>
+                <span id="distance">0</span>m
+            </div>
+            <div class="coin-box">
+                📚
+                <span id="coins">0</span>
+            </div>
+        </div>
+        
+        <!-- Sound Toggle -->
+        <button class="sound-toggle" id="soundToggle" style="display: none;" onclick="toggleSound()">
+            <i class="fas fa-volume-up"></i>
+        </button>
+        
+        <!-- Mobile Controls -->
+        <div class="mobile-controls" id="mobileControls" style="display: none;">
+            <button class="control-btn" id="leftBtn">
+                <i class="fas fa-arrow-left"></i>
+            </button>
+            <button class="control-btn jump-btn" id="jumpBtn">
+                <i class="fas fa-arrow-up"></i>
+            </button>
+            <button class="control-btn" id="rightBtn">
+                <i class="fas fa-arrow-right"></i>
+            </button>
+        </div>
+        
+        <!-- Game Over Screen -->
+        <div class="game-over" id="gameOver">
+            <h2>จับได้แล้ว!</h2>
+            <p class="caught-by" id="caughtBy">โดนครูเวรจับ!</p>
+            <div class="final-score" id="finalScore">0</div>
+            <p>เมตร</p>
+            <p class="high-score" id="highScoreText">🏆 สถิติสูงสุด: 0m</p>
+            <div class="game-over-btns">
+                <button class="retry-btn" onclick="restartGame()">
+                    <i class="fas fa-redo"></i> เล่นอีก
+                </button>
+                <button class="share-btn" onclick="shareScore()">
+                    <i class="fas fa-share"></i> แชร์
+                </button>
+                <a href="/play/" class="home-btn">
+                    <i class="fas fa-home"></i> หน้าหลัก
+                </a>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Audio Elements (Optional - ถ้าไม่มีไฟล์ก็เล่นเกมได้ปกติ) -->
+    <audio id="bgMusic" loop preload="none">
+        <source src="sounds/bg-music.mp3" type="audio/mpeg">
+    </audio>
+    
+    <audio id="sfxJump" preload="none">
+        <source src="sounds/jump.mp3" type="audio/mpeg">
+    </audio>
+    
+    <audio id="sfxCollect" preload="none">
+        <source src="sounds/collect.mp3" type="audio/mpeg">
+    </audio>
+    
+    <audio id="sfxCollision" preload="none">
+        <source src="sounds/collision.mp3" type="audio/mpeg">
+    </audio>
+    
+    <audio id="sfxGameOver" preload="none">
+        <source src="sounds/gameover.mp3" type="audio/mpeg">
+    </audio>
+
+    <script src="./script.js"></script>
+</body>
+</html>

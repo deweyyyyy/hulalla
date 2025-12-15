@@ -1,0 +1,190 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <meta name="theme-color" content="#1a1a2e">
+    <title>👻 Satit Horror Story - Hulalla #3</title>
+    <meta name="description" content="เรื่องเล่าสยองขวัญจากโรงเรียน... เลือกทางเดินของคุณ ถ้าคุณกล้าพอ!">
+    <meta property="og:title" content="👻 Satit Horror Story - Hulalla #3">
+    <meta property="og:description" content="เรื่องเล่าสยองขวัญจากโรงเรียน... เลือกทางเดินของคุณ ถ้าคุณกล้า!">
+    
+    <!-- Favicon & Icons -->
+    <link rel="manifest" href="/manifest.json">
+    <link rel="apple-touch-icon" sizes="180x180" href="/apple-icon-180x180.png">
+    <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+    <link rel="icon" href="/favicon.ico" type="image/x-icon">
+    
+    <!-- Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Prompt:wght@300;400;500;600;700;800&family=Creepster&display=swap" rel="stylesheet">
+    
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    
+    <!-- SweetAlert2 -->
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    
+    <!-- html2canvas -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+
+    <!-- Firebase -->
+    <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-analytics-compat.js"></script>
+
+    <link rel="apple-touch-icon" sizes="57x57" href="/apple-icon-57x57.png">
+    <link rel="apple-touch-icon" sizes="60x60" href="/apple-icon-60x60.png">
+    <link rel="apple-touch-icon" sizes="72x72" href="/apple-icon-72x72.png">
+    <link rel="apple-touch-icon" sizes="76x76" href="/apple-icon-76x76.png">
+    <link rel="apple-touch-icon" sizes="114x114" href="/apple-icon-114x114.png">
+    <link rel="apple-touch-icon" sizes="120x120" href="/apple-icon-120x120.png">
+    <link rel="apple-touch-icon" sizes="144x144" href="/apple-icon-144x144.png">
+    <link rel="apple-touch-icon" sizes="152x152" href="/apple-icon-152x152.png">
+    <link rel="apple-touch-icon" sizes="180x180" href="/apple-icon-180x180.png">
+    <link rel="icon" type="image/png" sizes="192x192" href="/android-icon-192x192.png">
+    <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="96x96" href="/favicon-96x96.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
+    <meta name="msapplication-TileImage" content="/ms-icon-144x144.png">
+
+    <link rel="stylesheet" href="./style.css">
+</head>
+<body>
+    <div class="fog"></div>
+    
+    <div class="container" id="mainContainer">
+        <!-- Header -->
+        <div class="header">
+            <a href="/play/" class="back-btn"><i class="fas fa-arrow-left"></i></a>
+            <span class="header-title">Satit Horror Story</span>
+        </div>
+        
+        <!-- Start Screen -->
+        <div class="start-screen" id="startScreen">
+            <div class="ghost-emoji">👻</div>
+            <h1 class="main-title">SATIT HORROR</h1>
+            <p class="subtitle">
+                เรื่องเล่าสยองขวัญจากโรงเรียน<br>
+                เลือกทางเดินของคุณ... ถ้าคุณกล้า
+            </p>
+            <div class="warning-box">
+                <i class="fas fa-exclamation-triangle"></i>
+                คำเตือน: เนื้อหาอาจทำให้ตกใจ<br>
+                ไม่เหมาะสำหรับผู้ที่ตกใจง่าย
+            </div>
+            <button class="start-btn" onclick="showSoundSettings()">
+                <i class="fas fa-ghost"></i> เริ่มเรื่อง
+            </button>
+        </div>
+        
+        <!-- Sound Settings Modal -->
+        <div class="sound-settings" id="soundSettings" style="display: none;">
+            <div class="settings-card">
+                <h2>🔊 ตั้งค่าเสียง</h2>
+                <p style="color: #888; margin-bottom: 20px;">เพื่อประสบการณ์ที่ดีที่สุด แนะนำให้เปิดเสียง</p>
+                
+                <div class="setting-item">
+                    <label>
+                        <input type="checkbox" id="bgMusicToggle" checked>
+                        <span>🎵 เพลงประกอบ (Background Music)</span>
+                    </label>
+                </div>
+                
+                <div class="setting-item">
+                    <label>
+                        <input type="checkbox" id="sfxToggle" checked>
+                        <span>🔔 เสียงเอฟเฟกต์ (Sound Effects)</span>
+                    </label>
+                </div>
+                
+                <div class="settings-btns">
+                    <button class="start-btn" onclick="startStoryWithSettings()">
+                        <i class="fas fa-play"></i> เริ่มเลย!
+                    </button>
+                    <button class="skip-btn" onclick="startStoryWithSettings(true)">
+                        ข้ามไปเลย (ไม่เปิดเสียง)
+                    </button>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Story Section -->
+        <div class="story-section" id="storySection">
+            <div class="story-image" id="storyImage">
+                <span class="scene-emoji" id="sceneEmoji">🏫</span>
+            </div>
+            <span class="chapter-badge" id="chapterBadge">บทที่ 1</span>
+            <p class="story-text" id="storyText"></p>
+            <div class="choices" id="choices"></div>
+        </div>
+        
+        <!-- Ending Screen -->
+        <div class="ending-screen" id="endingScreen">
+            <div class="ending-emoji" id="endingEmoji">💀</div>
+            <h2 class="ending-title" id="endingTitle">THE END</h2>
+            <p class="ending-subtitle" id="endingSubtitle">จบแบบที่ 1/5</p>
+            <p class="ending-text" id="endingText"></p>
+            <div class="ending-stats">
+                <div class="stat-item">
+                    <span class="stat-label">ตอนจบที่ได้</span>
+                    <span class="stat-value" id="endingType">Bad Ending</span>
+                </div>
+                <div class="stat-item">
+                    <span class="stat-label">ความกล้าหาญ</span>
+                    <span class="stat-value" id="braveryScore">50%</span>
+                </div>
+            </div>
+            <div class="ending-btns">
+                <button class="retry-btn" onclick="restartStory()">
+                    <i class="fas fa-redo"></i> เล่นอีกครั้ง
+                </button>
+                <button class="share-btn" onclick="shareEnding()">
+                    <i class="fas fa-share"></i> แชร์ผลลัพธ์
+                </button>
+                <a href="/play/" class="home-btn">
+                    <i class="fas fa-home"></i> กลับหน้าหลัก
+                </a>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Jump Scare Overlay -->
+    <div class="jumpscare" id="jumpscareOverlay">
+        <div class="jumpscare-content" id="jumpscareContent">👹</div>
+    </div>
+    
+    <!-- Sound Control Button -->
+    <button class="sound-control" id="soundControl" onclick="toggleAllSound()" style="display: none;">
+        <i class="fas fa-volume-up" id="soundIcon"></i>
+    </button>
+    
+    <!-- Audio Elements (Optional - ถ้าไม่มีไฟล์ก็เล่นเกมได้ปกติ) -->
+    <audio id="bgMusic" loop preload="none">
+        <source src="sounds/horror-ambient.mp3" type="audio/mpeg">
+    </audio>
+    
+    <audio id="sfxWhisper" preload="none">
+        <source src="sounds/whisper.mp3" type="audio/mpeg">
+    </audio>
+    
+    <audio id="sfxFootsteps" preload="none">
+        <source src="sounds/footsteps.mp3" type="audio/mpeg">
+    </audio>
+    
+    <audio id="sfxScream" preload="none">
+        <source src="sounds/scream.mp3" type="audio/mpeg">
+    </audio>
+    
+    <audio id="sfxDoor" preload="none">
+        <source src="sounds/door.mp3" type="audio/mpeg">
+    </audio>
+    
+    <audio id="sfxHeartbeat" preload="none">
+        <source src="sounds/heartbeat.mp3" type="audio/mpeg">
+    </audio>
+
+
+    <script src="./script33.js"></script>
+</body>
+</html>

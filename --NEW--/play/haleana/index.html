@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <meta name="theme-color" content="#38b6ff">
+    <title>🌺 Who are you in Haleana City? - Hulalla #3</title>
+        <meta name="description" content="ค้นพบตัวตนแบบฮาวายของคุณใน 10 คำถาม!">
+    <meta property="og:title" content="🌺 Who are you in Haleana City? - Hulalla #3">
+    <meta property="og:description" content="ค้นพบตัวตนแบบฮาวายของคุณใน 10 คำถาม!">
+    
+    <!-- Favicon & Icons -->
+    <link rel="manifest" href="/manifest.json">
+    <link rel="apple-touch-icon" sizes="180x180" href="/apple-icon-180x180.png">
+    <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+    <link rel="icon" href="/favicon.ico" type="image/x-icon">
+    
+    <!-- Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Prompt:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    
+    <!-- html2canvas -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+    
+    <!-- Confetti -->
+    <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
+    
+    <!-- SweetAlert2 -->
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    
+    <!-- Firebase -->
+    <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-app-compat.js"></script>
+    <script src="/keys.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-analytics-compat.js"></script>
+
+    <link rel="apple-touch-icon" sizes="57x57" href="/apple-icon-57x57.png">
+    <link rel="apple-touch-icon" sizes="60x60" href="/apple-icon-60x60.png">
+    <link rel="apple-touch-icon" sizes="72x72" href="/apple-icon-72x72.png">
+    <link rel="apple-touch-icon" sizes="76x76" href="/apple-icon-76x76.png">
+    <link rel="apple-touch-icon" sizes="114x114" href="/apple-icon-114x114.png">
+    <link rel="apple-touch-icon" sizes="120x120" href="/apple-icon-120x120.png">
+    <link rel="apple-touch-icon" sizes="144x144" href="/apple-icon-144x144.png">
+    <link rel="apple-touch-icon" sizes="152x152" href="/apple-icon-152x152.png">
+    <link rel="apple-touch-icon" sizes="180x180" href="/apple-icon-180x180.png">
+    <link rel="icon" type="image/png" sizes="192x192" href="/android-icon-192x192.png">
+    <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="96x96" href="/favicon-96x96.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
+    <meta name="msapplication-TileImage" content="/ms-icon-144x144.png">
+
+    <link rel="stylesheet" href="./style.css">
+</head>
+<body>
+    <div class="container">
+        <!-- Header -->
+        <div class="header">
+            <a href="/play/" class="back-btn"><i class="fas fa-arrow-left"></i></a>
+            <span class="header-title">Who are you in Haleana City?</span>
+        </div>
+        
+        <!-- Start Screen -->
+        <div class="start-screen" id="startScreen">
+            <div class="logo-emoji">🌺</div>
+            <h1 class="main-title">Who are you<br>in Haleana City?</h1>
+            <p class="subtitle">ค้นพบตัวตนแบบฮาวายของคุณ<br>ใน 10 คำถาม!</p>
+            <button class="start-btn" onclick="startQuiz()">
+                <i class="fas fa-play"></i> เริ่มเลย!
+            </button>
+        </div>
+        
+        <!-- Quiz Section -->
+        <div class="quiz-section" id="quizSection">
+            <div class="progress-bar">
+                <div class="progress-fill" id="progressFill" style="width: 0%"></div>
+            </div>
+            <p class="question-number" id="questionNumber">คำถามที่ 1/10</p>
+            <div class="question-card">
+                <p class="question-text" id="questionText"></p>
+                <div class="options" id="options"></div>
+            </div>
+        </div>
+        
+        <!-- Result Section -->
+        <div class="result-section" id="resultSection">
+            <div class="result-card" id="resultCard">
+                <div class="result-emoji" id="resultEmoji">🏄</div>
+                <p class="result-type" id="resultType">THE SURFER</p>
+                <p class="result-title" id="resultTitle">นักท่องคลื่นแห่งชีวิต</p>
+                <p class="result-desc" id="resultDesc"></p>
+                <div class="result-traits" id="resultTraits"></div>
+                <div class="result-match">
+                    <p class="match-label">คุณเหมือนกับ</p>
+                    <p class="match-value" id="matchValue">15% ของคนที่เล่น</p>
+                </div>
+            </div>
+            
+            <div class="result-btns">
+                <button class="share-btn" onclick="shareResult()">
+                    <i class="fas fa-share"></i> แชร์ผลลัพธ์
+                </button>
+                <button class="retry-btn" onclick="retryQuiz()">
+                    <i class="fas fa-redo"></i> เล่นอีกครั้ง
+                </button>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Share Card (Hidden, for screenshot) -->
+    <div class="share-card" id="shareCard">
+        <div class="share-card-inner">
+            <div class="result-emoji" id="shareEmoji">🏄</div>
+            <p class="result-type" id="shareType">THE SURFER</p>
+            <p class="result-title" id="shareTitle">นักท่องคลื่นแห่งชีวิต</p>
+            <p class="result-desc" id="shareDesc"></p>
+            <div class="result-traits" id="shareTraits"></div>
+        </div>
+        <div class="share-card-footer">
+            <p class="brand">🌺 Who are you in Haleana City?</p>
+            <p class="url">https://hulalla.party/play/haleana</p>
+        </div>
+    </div>
+    
+    <!-- Loading Overlay -->
+    <div class="loading-overlay" id="loadingOverlay">
+        <div class="loading-spinner">🌺</div>
+        <p>กำลังสร้างรูป...</p>
+    </div>
+
+    <script src="./script.js"></script>
+</body>
+</html>

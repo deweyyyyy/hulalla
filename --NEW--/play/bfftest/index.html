@@ -1,0 +1,170 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>BFF Compatibility Test 👯</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Prompt:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <!-- SweetAlert2 -->
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
+    <script src="https://html2canvas.hertzen.com/dist/html2canvas.min.js"></script>
+    
+    <!-- Firebase -->
+    <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-app-compat.js"></script>
+    <script src="/keys.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-analytics-compat.js"></script>
+</head>
+<body>
+    <div class="background-shapes">
+        <div class="shape shape-1">💕</div>
+        <div class="shape shape-2">✨</div>
+        <div class="shape shape-3">👯</div>
+        <div class="shape shape-4">💫</div>
+        <div class="shape shape-5">🌈</div>
+        <div class="shape shape-6">💖</div>
+    </div>
+
+    <div class="container">
+        <!-- Start Screen -->
+        <div class="screen active" id="startScreen">
+            <div class="start-content">
+                <div class="logo-emoji">👫</div>
+                <h1>BFF Compatibility Test</h1>
+                <p class="subtitle">ทดสอบความเข้ากันได้กับเพื่อนซี้!</p>
+                <p class="description">มาดูกันว่าเธอกับเพื่อนเข้ากันได้แค่ไหน<br>ใครต้องตอบก่อน แล้วส่งให้เพื่อนตอบต่อ!</p>
+                
+                <div class="name-inputs">
+                    <div class="input-group">
+                        <label>ชื่อของคุณ</label>
+                        <input type="text" id="player1Name" placeholder="ใส่ชื่อเล่นของคุณ" maxlength="20">
+                    </div>
+                </div>
+                
+                <button class="btn btn-primary" onclick="startQuiz()">
+                    <span>เริ่มทดสอบ!</span>
+                    <span class="btn-emoji">🚀</span>
+                </button>
+            </div>
+        </div>
+
+        <!-- Question Screen -->
+        <div class="screen" id="questionScreen">
+            <div class="progress-container">
+                <div class="progress-bar">
+                    <div class="progress-fill" id="progressFill"></div>
+                </div>
+                <span class="progress-text" id="progressText">1/10</span>
+            </div>
+            
+            <div class="question-container">
+                <div class="player-indicator" id="playerIndicator">
+                    <span id="currentPlayerName">Player 1</span> กำลังตอบ
+                </div>
+                <h2 class="question-number" id="questionNumber">คำถามที่ 1</h2>
+                <p class="question-text" id="questionText">คำถามจะแสดงที่นี่</p>
+                
+                <div class="options-container" id="optionsContainer">
+                    <!-- Options will be generated here -->
+                </div>
+            </div>
+        </div>
+
+        <!-- Switch Player Screen -->
+        <div class="screen" id="switchScreen">
+            <div class="switch-content">
+                <div class="switch-emoji">🔄</div>
+                <h2>ส่งต่อให้เพื่อน!</h2>
+                <p>เสร็จแล้ว! ตอนนี้ส่งให้เพื่อนตอบบ้าง</p>
+                
+                <div class="input-group">
+                    <label>ชื่อเพื่อนของคุณ</label>
+                    <input type="text" id="player2Name" placeholder="ใส่ชื่อเล่นเพื่อน" maxlength="20">
+                </div>
+                
+                <button class="btn btn-primary" onclick="startPlayer2()">
+                    <span>เพื่อนพร้อมแล้ว!</span>
+                    <span class="btn-emoji">👯</span>
+                </button>
+            </div>
+        </div>
+
+        <!-- Loading Screen -->
+        <div class="screen" id="loadingScreen">
+            <div class="loading-content">
+                <div class="loading-emoji">💕</div>
+                <h2>กำลังคำนวณความเข้ากัน...</h2>
+                <div class="loading-dots">
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                </div>
+            </div>
+        </div>
+
+        <!-- Result Screen -->
+        <div class="screen" id="resultScreen">
+            <div class="result-card" id="resultCard">
+                <div class="result-header">
+                    <div class="bff-names">
+                        <span id="name1Display">Person 1</span>
+                        <span class="heart-icon">💕</span>
+                        <span id="name2Display">Person 2</span>
+                    </div>
+                </div>
+                
+                <div class="compatibility-score">
+                    <div class="score-circle">
+                        <span class="score-number" id="compatibilityScore">85</span>
+                        <span class="score-percent">%</span>
+                    </div>
+                    <p class="score-label">ความเข้ากันได้</p>
+                </div>
+                
+                <div class="result-title-container">
+                    <span class="result-emoji" id="resultEmoji">👯‍♀️</span>
+                    <h2 class="result-title" id="resultTitle">Best Friends Forever!</h2>
+                </div>
+                
+                <p class="result-desc" id="resultDesc">คำอธิบายจะแสดงที่นี่</p>
+                
+                <div class="match-details">
+                    <div class="match-item">
+                        <span class="match-label">คำตอบที่ตรงกัน</span>
+                        <span class="match-value" id="matchCount">8/10</span>
+                    </div>
+                    <div class="match-item">
+                        <span class="match-label">ระดับความสนิท</span>
+                        <span class="match-value" id="friendLevel">เพื่อนซี้ตลอดกาล</span>
+                    </div>
+                </div>
+                
+                <div class="traits-section">
+                    <h3>สิ่งที่คู่นี้มีเหมือนกัน</h3>
+                    <div class="traits-container" id="traitsContainer">
+                        <!-- Traits will be generated here -->
+                    </div>
+                </div>
+                
+                <div class="watermark">BFF Compatibility Test 👯</div>
+            </div>
+            
+            <div class="result-actions">
+                <button class="btn btn-secondary" onclick="openShareModal()">
+                    <span>📤</span> แชร์ผลลัพธ์
+                </button>
+                <button class="btn btn-primary" onclick="restartQuiz()">
+                    <span>🔄</span> เล่นใหม่
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>

@@ -1,0 +1,484 @@
+{
+  "totalScenes": 286,
+  "reachableScenes": 249,
+  "totalEndings": 71,
+  "goodEndings": 32,
+  "badEndings": 24,
+  "neutralEndings": 15,
+  "missingScenes": [],
+  "orphanScenes": [
+    "look_back",
+    "run_stairs",
+    "stand_still",
+    "use_flashlight",
+    "ending"
+  ],
+  "unreachableScenes": [
+    "look_back",
+    "run_stairs",
+    "stand_still",
+    "run_away",
+    "hide_classroom",
+    "shout",
+    "use_flashlight",
+    "take_photo",
+    "enter_bathroom",
+    "ignore_bathroom",
+    "photo_footprints",
+    "go_to_room_404",
+    "run_from_photo",
+    "check_photo_again",
+    "ending",
+    "ask_ghost_child",
+    "talk_to_mirror",
+    "talk_ghost",
+    "brave_speech",
+    "open_door",
+    "face_ghost",
+    "blind_run",
+    "keep_running",
+    "destroy_doll",
+    "escape_window",
+    "close_eyes",
+    "run_through",
+    "run_through_crowd",
+    "ask_help",
+    "escape_bathroom",
+    "run_from_crying",
+    "back_away",
+    "enter_room_404",
+    "close_and_run",
+    "call_student",
+    "scream_out",
+    "stay_still_dark"
+  ],
+  "deadEndScenes": [],
+  "endingsList": [
+    {
+      "sceneId": "check_photo_again",
+      "type": "bad",
+      "title": "BAD ENDING",
+      "bravery": "35%"
+    },
+    {
+      "sceneId": "ending",
+      "type": "bad",
+      "title": "BAD ENDING",
+      "bravery": "35%"
+    },
+    {
+      "sceneId": "ask_ghost_child",
+      "type": "good",
+      "title": "GOOD ENDING",
+      "bravery": "95%"
+    },
+    {
+      "sceneId": "talk_to_mirror",
+      "type": "neutral",
+      "title": "MYSTERIOUS ENDING",
+      "bravery": "75%"
+    },
+    {
+      "sceneId": "talk_ghost",
+      "type": "good",
+      "title": "GOOD ENDING",
+      "bravery": "100%"
+    },
+    {
+      "sceneId": "brave_speech",
+      "type": "good",
+      "title": "GOOD ENDING",
+      "bravery": "100%"
+    },
+    {
+      "sceneId": "open_door",
+      "type": "good",
+      "title": "GOOD ENDING",
+      "bravery": "85%"
+    },
+    {
+      "sceneId": "face_ghost",
+      "type": "bad",
+      "title": "BAD ENDING",
+      "bravery": "70%"
+    },
+    {
+      "sceneId": "blind_run",
+      "type": "bad",
+      "title": "BAD ENDING",
+      "bravery": "30%"
+    },
+    {
+      "sceneId": "keep_running",
+      "type": "neutral",
+      "title": "NEUTRAL ENDING",
+      "bravery": "50%"
+    },
+    {
+      "sceneId": "destroy_doll",
+      "type": "bad",
+      "title": "BAD ENDING",
+      "bravery": "40%"
+    },
+    {
+      "sceneId": "escape_window",
+      "type": "good",
+      "title": "GOOD ENDING",
+      "bravery": "75%"
+    },
+    {
+      "sceneId": "close_eyes",
+      "type": "neutral",
+      "title": "MYSTERIOUS ENDING",
+      "bravery": "60%"
+    },
+    {
+      "sceneId": "run_through",
+      "type": "bad",
+      "title": "BAD ENDING",
+      "bravery": "55%"
+    },
+    {
+      "sceneId": "run_through_crowd",
+      "type": "bad",
+      "title": "BAD ENDING",
+      "bravery": "45%"
+    },
+    {
+      "sceneId": "ask_help",
+      "type": "good",
+      "title": "TRUE ENDING",
+      "bravery": "90%"
+    },
+    {
+      "sceneId": "escape_bathroom",
+      "type": "neutral",
+      "title": "ESCAPE ENDING",
+      "bravery": "50%"
+    },
+    {
+      "sceneId": "run_from_crying",
+      "type": "neutral",
+      "title": "COWARD ENDING",
+      "bravery": "20%"
+    },
+    {
+      "sceneId": "back_away",
+      "type": "bad",
+      "title": "CAUGHT ENDING",
+      "bravery": "30%"
+    },
+    {
+      "sceneId": "enter_room_404",
+      "type": "bad",
+      "title": "TRAPPED ENDING",
+      "bravery": "40%"
+    },
+    {
+      "sceneId": "close_and_run",
+      "type": "neutral",
+      "title": "SAFE ENDING",
+      "bravery": "45%"
+    },
+    {
+      "sceneId": "scream_out",
+      "type": "bad",
+      "title": "SCREAM ENDING",
+      "bravery": "25%"
+    },
+    {
+      "sceneId": "stay_still_dark",
+      "type": "good",
+      "title": "PATIENCE ENDING",
+      "bravery": "70%"
+    },
+    {
+      "sceneId": "throw_phone",
+      "type": "neutral",
+      "title": "DISCONNECT ENDING",
+      "bravery": "55%"
+    },
+    {
+      "sceneId": "reopen_phone",
+      "type": "bad",
+      "title": "CURSED ENDING",
+      "bravery": "35%"
+    },
+    {
+      "sceneId": "walk_endless_hall",
+      "type": "neutral",
+      "title": "ESCAPE ENDING",
+      "bravery": "60%"
+    },
+    {
+      "sceneId": "return_storage",
+      "type": "good",
+      "title": "LIBERATION ENDING",
+      "bravery": "85%"
+    },
+    {
+      "sceneId": "refuse_game",
+      "type": "neutral",
+      "title": "REFUSAL ENDING",
+      "bravery": "70%"
+    },
+    {
+      "sceneId": "draw_doll",
+      "type": "good",
+      "title": "COMPASSION ENDING",
+      "bravery": "90%"
+    },
+    {
+      "sceneId": "climb_window_table",
+      "type": "good",
+      "title": "TEAMWORK ENDING",
+      "bravery": "80%"
+    },
+    {
+      "sceneId": "break_door_again",
+      "type": "neutral",
+      "title": "FORCE ENDING",
+      "bravery": "65%"
+    },
+    {
+      "sceneId": "confront_dolls",
+      "type": "good",
+      "title": "FRIENDSHIP ENDING",
+      "bravery": "95%"
+    },
+    {
+      "sceneId": "non_saves_oh",
+      "type": "good",
+      "title": "TRUE HERO ENDING",
+      "bravery": "100%"
+    },
+    {
+      "sceneId": "leave_oh_behind",
+      "type": "bad",
+      "title": "BETRAYAL ENDING",
+      "bravery": "20%"
+    },
+    {
+      "sceneId": "wont_abandon",
+      "type": "good",
+      "title": "PROMISE ENDING",
+      "bravery": "85%"
+    },
+    {
+      "sceneId": "both_flee_room",
+      "type": "bad",
+      "title": "ABANDONED ENDING",
+      "bravery": "30%"
+    },
+    {
+      "sceneId": "send_police",
+      "type": "good",
+      "title": "JUSTICE ENDING",
+      "bravery": "90%"
+    },
+    {
+      "sceneId": "ignore_close_door",
+      "type": "bad",
+      "title": "TRAPPED ENDING",
+      "bravery": "15%"
+    },
+    {
+      "sceneId": "dance_back",
+      "type": "good",
+      "title": "DANCE ENDING",
+      "bravery": "95%"
+    },
+    {
+      "sceneId": "choose_truth_key",
+      "type": "good",
+      "title": "TRUTH ENDING",
+      "bravery": "88%"
+    },
+    {
+      "sceneId": "choose_courage_key",
+      "type": "good",
+      "title": "COURAGE ENDING",
+      "bravery": "100%"
+    },
+    {
+      "sceneId": "choose_friendship_key",
+      "type": "good",
+      "title": "BEST FRIENDS ENDING",
+      "bravery": "100%"
+    },
+    {
+      "sceneId": "reject_all_keys",
+      "type": "neutral",
+      "title": "STUBBORN ENDING",
+      "bravery": "70%"
+    },
+    {
+      "sceneId": "flee_downstairs",
+      "type": "neutral",
+      "title": "ESCAPE ENDING",
+      "bravery": "55%"
+    },
+    {
+      "sceneId": "check_safety",
+      "type": "good",
+      "title": "CARING ENDING",
+      "bravery": "85%"
+    },
+    {
+      "sceneId": "bring_items_music",
+      "type": "good",
+      "title": "COMPLETE ENDING",
+      "bravery": "100%"
+    },
+    {
+      "sceneId": "collect_amnuay_evidence",
+      "type": "good",
+      "title": "JUSTICE ENDING",
+      "bravery": "92%"
+    },
+    {
+      "sceneId": "descend_secret_stairs",
+      "type": "good",
+      "title": "SECRET ENDING",
+      "bravery": "75%"
+    },
+    {
+      "sceneId": "non_asks_oh_what",
+      "type": "bad",
+      "title": "TOO LATE ENDING",
+      "bravery": "40%"
+    },
+    {
+      "sceneId": "hug_oh_behind",
+      "type": "good",
+      "title": "COMFORT ENDING",
+      "bravery": "90%"
+    },
+    {
+      "sceneId": "stop_oh_playing",
+      "type": "good",
+      "title": "INTERVENTION ENDING",
+      "bravery": "85%"
+    },
+    {
+      "sceneId": "follow_voice_floor4",
+      "type": "good",
+      "title": "FOUND ENDING",
+      "bravery": "80%"
+    },
+    {
+      "sceneId": "follow_voice_floor2",
+      "type": "bad",
+      "title": "DECEIVED ENDING",
+      "bravery": "35%"
+    },
+    {
+      "sceneId": "follow_voice_bathroom",
+      "type": "bad",
+      "title": "TRAPPED ENDING",
+      "bravery": "25%"
+    },
+    {
+      "sceneId": "ignore_all_voices",
+      "type": "good",
+      "title": "INTUITION ENDING",
+      "bravery": "88%"
+    },
+    {
+      "sceneId": "call_back_number",
+      "type": "bad",
+      "title": "DISCONNECTED ENDING",
+      "bravery": "30%"
+    },
+    {
+      "sceneId": "delete_ignore",
+      "type": "neutral",
+      "title": "SOLO ENDING",
+      "bravery": "65%"
+    },
+    {
+      "sceneId": "follow_back_sign",
+      "type": "neutral",
+      "title": "GIVE UP ENDING",
+      "bravery": "20%"
+    },
+    {
+      "sceneId": "escape_alone",
+      "type": "bad",
+      "title": "ทิ้งเพื่อนไว้",
+      "bravery": "10%"
+    },
+    {
+      "sceneId": "destroy_all_dolls",
+      "type": "neutral",
+      "title": "ทำลายทุกอย่าง",
+      "bravery": "40%"
+    },
+    {
+      "sceneId": "non_flees_immediately",
+      "type": "bad",
+      "title": "หนีทันที",
+      "bravery": "5%"
+    },
+    {
+      "sceneId": "drop_run",
+      "type": "bad",
+      "title": "ทิ้งของวิ่งหนี",
+      "bravery": "15%"
+    },
+    {
+      "sceneId": "send_photo_police",
+      "type": "good",
+      "title": "ส่งหลักฐาน",
+      "bravery": "85%"
+    },
+    {
+      "sceneId": "refuse_collect",
+      "type": "bad",
+      "title": "ปฏิเสธ",
+      "bravery": "10%"
+    },
+    {
+      "sceneId": "call_police_investigate",
+      "type": "good",
+      "title": "แจ้งตำรวจ",
+      "bravery": "90%"
+    },
+    {
+      "sceneId": "oh_says_peace",
+      "type": "good",
+      "title": "ส่งต่อ",
+      "bravery": "80%"
+    },
+    {
+      "sceneId": "return_necklace",
+      "type": "good",
+      "title": "คืนของ",
+      "bravery": "70%"
+    },
+    {
+      "sceneId": "throw_necklace_window",
+      "type": "bad",
+      "title": "โยนทิ้ง",
+      "bravery": "0%"
+    },
+    {
+      "sceneId": "destroy_necklace",
+      "type": "bad",
+      "title": "ทำลาย",
+      "bravery": "0%"
+    },
+    {
+      "sceneId": "oh_says_rest",
+      "type": "good",
+      "title": "สงบ",
+      "bravery": "85%"
+    },
+    {
+      "sceneId": "play_more_piano",
+      "type": "good",
+      "title": "เพลงแห่งสันติ",
+      "bravery": "95%"
+    }
+  ]
+}

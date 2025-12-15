@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <meta name="theme-color" content="#6C5CE7">
+    <title>🧠 MBTI by HULALLA - ค้นหาบุคลิกภาพของคุณ</title>
+    
+    <!-- Meta Tags -->
+    <meta name="description" content="ค้นหาบุคลิกภาพ MBTI ของคุณในแบบไทยๆ - 16 บุคลิกภาพที่จะบอกว่าคุณเป็นคนแบบไหน">
+    <meta property="og:title" content="🧠 MBTI by HULALLA - ค้นหาบุคลิกภาพของคุณ">
+    <meta property="og:description" content="ทดสอบบุคลิกภาพ MBTI แบบไทยๆ หาว่าคุณเป็นคนแบบไหน!">
+    
+    <!-- Favicon & Icons -->
+    <link rel="manifest" href="/manifest.json">
+    <link rel="apple-touch-icon" sizes="180x180" href="/apple-icon-180x180.png">
+    <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+    <link rel="icon" href="/favicon.ico" type="image/x-icon">
+    
+    <!-- Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Prompt:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    
+    <!-- html2canvas -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+    
+    <!-- Confetti -->
+    <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
+    
+    <!-- SweetAlert2 -->
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    
+    <!-- Firebase -->
+    <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-app-compat.js"></script>
+    <script src="/keys.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-analytics-compat.js"></script>
+    
+    <link rel="stylesheet" href="./style.css">
+</head>
+<body>
+    <!-- Floating Background Elements -->
+    <div class="floating-bg">
+        <div class="float-item">🧠</div>
+        <div class="float-item">✨</div>
+        <div class="float-item">💭</div>
+        <div class="float-item">🌟</div>
+        <div class="float-item">💡</div>
+        <div class="float-item">🎯</div>
+    </div>
+
+    <div class="container">
+        <!-- Start Screen -->
+        <div id="startScreen" class="screen active">
+            <div class="logo-container">
+                <div class="logo-emoji">🧠</div>
+                <h1 class="title">MBTI by HULALLA #3</h1>
+                <p class="subtitle">ค้นหาบุคลิกภาพของคุณ</p>
+            </div>
+            
+            <div class="info-box">
+                <p>🔮 ตอบคำถาม 12 ข้อ</p>
+                <p>⏱️ ใช้เวลาประมาณ 3 นาที</p>
+                <p>✨ ค้นพบตัวตนที่แท้จริงของคุณ</p>
+            </div>
+            
+            <button class="btn-start" onclick="startQuiz()">
+                <span>เริ่มทดสอบเลย!</span>
+                <i class="fas fa-arrow-right"></i>
+            </button>
+            
+            <p class="footer-text">Hulalla #3</p>
+        </div>
+
+        <!-- Question Screen -->
+        <div id="questionScreen" class="screen">
+            <div class="progress-container">
+                <div class="progress-bar">
+                    <div class="progress-fill" id="progressFill"></div>
+                </div>
+                <span class="progress-text" id="progressText">1/12</span>
+            </div>
+            
+            <div class="question-container">
+                <div class="question-number" id="questionNumber">คำถามที่ 1</div>
+                <h2 class="question-text" id="questionText"></h2>
+                
+                <div class="options-container" id="optionsContainer">
+                    <!-- Options will be inserted here -->
+                </div>
+            </div>
+        </div>
+
+        <!-- Loading Screen -->
+        <div id="loadingScreen" class="screen">
+            <div class="loading-content">
+                <div class="loading-emoji">🔮</div>
+                <h2>กำลังวิเคราะห์บุคลิกภาพ...</h2>
+                <div class="loading-bar">
+                    <div class="loading-fill"></div>
+                </div>
+                <p class="loading-text">กรุณารอสักครู่</p>
+            </div>
+        </div>
+
+        <!-- Result Screen -->
+        <div id="resultScreen" class="screen">
+            <div class="result-card" id="resultCard">
+                <div class="result-badge">🧠 MBTI by HULALLA #3</div>
+                
+                <div class="result-emoji" id="resultEmoji">🦁</div>
+                <div class="result-type" id="resultType">ENTJ</div>
+                <h2 class="result-title" id="resultTitle">ผู้นำแห่งความมุ่งมั่น</h2>
+                
+                <p class="result-desc" id="resultDesc"></p>
+                
+                <div class="traits-container" id="traitsContainer">
+                    <!-- Traits will be inserted here -->
+                </div>
+                
+                <div class="match-info">
+                    <span>คนที่เป็นแบบคุณมี</span>
+                    <span class="match-percent" id="matchPercent">8%</span>
+                </div>
+                
+                <div class="compatible-box">
+                    <p class="compatible-title">เข้ากันได้ดีกับ</p>
+                    <p class="compatible-types" id="compatibleTypes">INFP, INTP</p>
+                </div>
+                
+                <div class="watermark">https://hulalla.party/play/mbti</div>
+            </div>
+            
+            <div class="action-buttons">
+                <button class="btn-action btn-share" onclick="openShareModal()">
+                    <i class="fas fa-share-nodes"></i>
+                    <span>แชร์ผลลัพธ์</span>
+                </button>
+                <button class="btn-action btn-retry" onclick="restartQuiz()">
+                    <i class="fas fa-redo"></i>
+                    <span>ทำใหม่</span>
+                </button>
+            </div>
+            
+            <a href="/play" class="back-link">
+                <i class="fas fa-gamepad"></i>
+                เล่นเกมอื่น
+            </a>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
