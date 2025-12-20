@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <meta name="theme-color" content="#1a472a">
+    <title>🎄 Deco a Christmas Tree - Hulalla #3</title>
+    <meta name="description" content="มาสร้างหรือตกแต่งต้นคริสต์มาสกานนน!!! #3">
+    <meta property="og:title" content="🎄 Deco a Christmas Tree - Hulalla #3">
+    <meta property="og:description" content="มาสร้างหรือตกแต่งต้นคริสต์มาสกานนน!!! #3">
+    
+    <!-- Favicon & Icons -->
+    <link rel="manifest" href="/manifest.json">
+    <link rel="apple-touch-icon" sizes="57x57" href="/apple-icon-57x57.png">
+    <link rel="apple-touch-icon" sizes="60x60" href="/apple-icon-60x60.png">
+    <link rel="apple-touch-icon" sizes="72x72" href="/apple-icon-72x72.png">
+    <link rel="apple-touch-icon" sizes="76x76" href="/apple-icon-76x76.png">
+    <link rel="apple-touch-icon" sizes="114x114" href="/apple-icon-114x114.png">
+    <link rel="apple-touch-icon" sizes="120x120" href="/apple-icon-120x120.png">
+    <link rel="apple-touch-icon" sizes="144x144" href="/apple-icon-144x144.png">
+    <link rel="apple-touch-icon" sizes="152x152" href="/apple-icon-152x152.png">
+    <link rel="apple-touch-icon" sizes="180x180" href="/apple-icon-180x180.png">
+    <link rel="icon" type="image/png" sizes="192x192" href="/android-icon-192x192.png">
+    <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="96x96" href="/favicon-96x96.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
+    <meta name="msapplication-TileImage" content="/ms-icon-144x144.png">
+    <link rel="icon" href="/favicon.ico" type="image/x-icon">
+    
+    <!-- Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Prompt:wght@300;400;500;600;700&family=Mountains+of+Christmas:wght@400;700&display=swap" rel="stylesheet">
+    
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    
+    <!-- Animate.css -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css">
+    
+    <!-- SweetAlert2 -->
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    
+    <!-- Confetti -->
+    <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
+    
+    <!-- Firebase -->
+    <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-database-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-analytics-compat.js"></script>
+    
+    <!-- HTML2Canvas for screenshot -->
+    <script src="/keys.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/html2canvas@1.4.1/dist/html2canvas.min.js"></script>
+
+    <link rel="stylesheet" href="./style.css">
+</head>
+<body>
+    <!-- Snow Effect Container -->
+    <div class="snow-container" id="snowContainer"></div>
+    
+    <!-- App Container -->
+    <div class="app-container" id="appContainer">
+        <!-- Content will be loaded dynamically -->
+        <div class="loading" id="loadingState">
+            <div class="loading-tree">🎄</div>
+            <div class="loading-text">กำลังโหลด...</div>
+        </div>
+    </div>
+    
+    <!-- Toast Notification -->
+    <div class="toast" id="toast"></div>
+    
+    <!-- Background Music -->
+    <audio id="bgMusic" loop>
+        <source src="https://firebasestorage.googleapis.com/v0/b/i-dewey-world.appspot.com/o/TbwP4wPNumUuN8yMrAcVAHZAaus2%2F52KQSMC9W%2Fchristmas-holiday-festive-cheer-snow-427231.mp3?alt=media" type="audio/mpeg">
+    </audio>
+    
+    <!-- Music Control Button -->
+    <button class="music-control" id="musicControl" onclick="toggleMusic()" title="เปิด/ปิดเพลง">
+        <i class="fa-solid fa-volume-xmark" id="musicIcon"></i>
+    </button>
+    
+    <script src="./script.js"></script>
+    
+</body>
+</html>
