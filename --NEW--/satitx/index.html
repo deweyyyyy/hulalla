@@ -1,0 +1,577 @@
+<!doctype html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8" />
+	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no, viewport-fit=cover" />
+	<meta name="apple-mobile-web-app-capable" content="yes" />
+	<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+	<meta name="theme-color" content="#667eea" />
+	<title>Satit X - Hulalla #3</title>
+	
+	<!-- Favicon & Icons -->
+	<link rel="manifest" href="/manifest.json">
+	<link rel="apple-touch-icon" sizes="57x57" href="/apple-icon-57x57.png">
+	<link rel="apple-touch-icon" sizes="60x60" href="/apple-icon-60x60.png">
+	<link rel="apple-touch-icon" sizes="72x72" href="/apple-icon-72x72.png">
+	<link rel="apple-touch-icon" sizes="76x76" href="/apple-icon-76x76.png">
+	<link rel="apple-touch-icon" sizes="114x114" href="/apple-icon-114x114.png">
+	<link rel="apple-touch-icon" sizes="120x120" href="/apple-icon-120x120.png">
+	<link rel="apple-touch-icon" sizes="144x144" href="/apple-icon-144x144.png">
+	<link rel="apple-touch-icon" sizes="152x152" href="/apple-icon-152x152.png">
+	<link rel="apple-touch-icon" sizes="180x180" href="/apple-icon-180x180.png">
+	<link rel="icon" type="image/png" sizes="192x192" href="/android-icon-192x192.png">
+	<link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+	<link rel="icon" type="image/png" sizes="96x96" href="/favicon-96x96.png">
+	<link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
+	<meta name="msapplication-TileImage" content="/ms-icon-144x144.png">
+	<link rel="icon" href="/favicon.ico" type="image/x-icon">
+	
+	<link rel="preconnect" href="https://fonts.googleapis.com" />
+	<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+	<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Prompt:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" />
+	<script src="/keys.js"></script>
+	<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+	<link rel="stylesheet" href="./satitx.css" />
+
+</head>
+<body>
+	<div class="app-container" style="margin-bottom: 0px;">
+		<!-- Header -->
+		<header class="app-header" style="margin-bottom: 0px;">
+			<div class="header-top">
+				<h1 class="greeting">
+					Hi, <span class="greeting-name" id="userName">There</span>!
+				</h1>
+				<div class="header-actions">
+					<div class="theme-toggle-wrapper">
+						<button class="theme-toggle" id="btnTheme" aria-label="Toggle Theme">
+							<i class="fa-solid fa-circle-half-stroke" id="themeIcon"></i>
+						</button>
+						<div class="theme-menu">
+							<button class="theme-menu-item" data-theme="light">
+								<i class="fa-solid fa-sun"></i>
+								<span data-i18n="theme_light">Light</span>
+							</button>
+							<button class="theme-menu-item" data-theme="dark">
+								<i class="fa-solid fa-moon"></i>
+								<span data-i18n="theme_dark">Dark</span>
+							</button>
+							<button class="theme-menu-item" data-theme="system">
+								<i class="fa-solid fa-laptop"></i>
+								<span data-i18n="theme_system">System</span>
+							</button>
+						</div>
+					</div>
+					<button class="lang-toggle" id="btnLanguage" aria-label="Toggle Language">
+						<span class="lang-flag" id="langFlag">🇹🇭</span>
+						<span class="lang-code" id="langCode">ไทย</span>
+					</button>
+					<button class="icon-button" id="btnNotifications" aria-label="Notifications">
+						<i class="fa-regular fa-bell"></i>
+						<span class="notification-badge" id="notifBadge"></span>
+					</button>
+					<button class="icon-button" id="btnProfile" aria-label="Profile">
+						<i class="fa-regular fa-user"></i>
+					</button>
+				</div>
+			</div>
+
+			<!-- Global Search -->
+			<div class="search-container" style="margin-bottom: 0px;padding-bottom: 15px;">
+				<div class="search-bar" style="margin-bottom: 0px;">
+					<i class="fa-solid fa-magnifying-glass"></i>
+					<input type="search" id="globalSearch" data-i18n-placeholder="search_placeholder" placeholder="Search food, uniforms, anything..." autocomplete="off">
+				</div>
+			</div>
+		</header>
+
+		<!-- Main Content -->
+		<main class="main-content" style="margin-top: 0px;padding-top:15px;">
+			<!-- HOME VIEW -->
+			<div id="viewHome" class="view-container active">
+				<!-- Hero Action Buttons -->
+				<div class="hero-grid">
+					<div class="hero-card food" data-navigate="food">
+						<div>
+							<div class="hero-icon">🍔</div>
+							<h2 class="hero-title">Satit<br><span data-i18n="grab_go">Grab & Go</span></h2>
+							<p class="hero-subtitle" data-i18n="grab_go_desc">Get your trendy eat-easy food and skip the line</p>
+						</div>
+						<div class="hero-badge">
+							<span class="status-dot"></span>
+							<span data-i18n="open_now">Open now</span>
+						</div>
+					</div>
+
+					<div class="hero-card market" data-navigate="market">
+						<div>
+							<div class="hero-icon">🛍️</div>
+							<h2 class="hero-title">Satit<br><span data-i18n="marketplace">Marketplace</span></h2>
+							<p class="hero-subtitle" data-i18n="marketplace_desc">Buy & sell with trusted students</p>
+						</div>
+						<div class="hero-badge">
+							<i class="fa-solid fa-shield-halved"></i>
+							<span data-i18n="trusted">Trusted</span>
+						</div>
+					</div>
+				</div>
+					<!-- Trending Items Widget -->
+					<div class="widget">
+						<div class="widget-header">
+							<h3 class="widget-title" data-i18n="trending_today">Trending Today</h3>
+						</div>
+						<div class="trending-grid">
+							<div class="trending-item">
+								<div class="trending-item-icon">🍜</div>
+								<div class="trending-item-name" data-i18n="noodles">Noodles</div>
+							</div>
+							<div class="trending-item">
+								<div class="trending-item-icon">🥤</div>
+								<div class="trending-item-name" data-i18n="drinks">Drinks</div>
+							</div>
+							<div class="trending-item">
+								<div class="trending-item-icon">👕</div>
+								<div class="trending-item-name" data-i18n="uniform">Uniform</div>
+							</div>
+						</div>
+					</div>
+				<!-- Dynamic Widgets -->
+				<div class="widget-container">
+					<!-- Current Order Widget -->
+					<div class="widget" id="currentOrderWidget" style="display: none;">
+						<div class="widget-header">
+							<h3 class="widget-title">Active Order</h3>
+							<span class="widget-badge">Preparing</span>
+						</div>
+						<div class="order-item">
+							<div class="order-icon">🍗</div>
+							<div class="order-details">
+								<div class="order-name">Chicken Rice (Prep)</div>
+								<div class="order-status">Ready for pickup in 10 mins</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+
+			<!-- SEARCH RESULTS VIEW -->
+			<div id="viewSearch" class="view-container hidden">
+				<div class="section">
+					<div class="section-header">
+						<h2 class="section-title">ผลการค้นหา</h2>
+						<button class="section-link" id="clearSearch">ล้างการค้นหา</button>
+					</div>
+					<p id="searchQuery" style="color: var(--text-muted); margin-bottom: 16px; font-size: 14px;"></p>
+					
+					<!-- Food Results -->
+					<div id="searchFoodSection" style="margin-bottom: 24px;">
+						<h3 style="font-size: 16px; font-weight: 700; margin-bottom: 12px; display: flex; align-items: center; gap: 8px;">
+							<i class="fa-solid fa-utensils" style="color: var(--sun-golden);"></i> อาหาร
+							<span id="searchFoodCount" class="widget-badge">0</span>
+						</h3>
+						<div class="food-grid" id="searchFoodGrid"></div>
+					</div>
+					
+					<!-- Market Results -->
+					<div id="searchMarketSection">
+						<h3 style="font-size: 16px; font-weight: 700; margin-bottom: 12px; display: flex; align-items: center; gap: 8px;">
+							<i class="fa-solid fa-bag-shopping" style="color: var(--ocean-blue);"></i> ตลาดนัด
+							<span id="searchMarketCount" class="widget-badge">0</span>
+						</h3>
+						<div class="market-grid" id="searchMarketGrid"></div>
+					</div>
+				</div>
+			</div>
+
+			<!-- FOOD VIEW -->
+			<div id="viewFood" class="view-container hidden">
+				<div class="section">
+					<div class="section-header">
+						<h2 class="section-title" data-i18n="grab_go">Grab & Go</h2>
+					</div>
+
+					<!-- Filter Chips -->
+					<div class="filter-chips" id="foodFilters">
+						<button class="chip active" data-filter="all" data-i18n="filter_all">All</button>
+						<button class="chip" data-filter="noodles" data-i18n="noodles">Noodles</button>
+						<button class="chip" data-filter="rice" data-i18n="rice">Rice</button>
+						<button class="chip" data-filter="drinks" data-i18n="drinks">Drinks</button>
+						<button class="chip" data-filter="snacks" data-i18n="snacks">Snacks</button>
+					</div>
+
+					<!-- Food Items -->
+					<div class="food-grid" id="foodGrid">
+						<!-- Dynamic content -->
+					</div>
+				</div>
+			</div>
+
+			<!-- MARKET VIEW -->
+			<div id="viewMarket" class="view-container hidden">
+				<div class="section">
+					<div class="section-header">
+						<h2 class="section-title" data-i18n="marketplace">Marketplace</h2>
+						<button class="btn-primary" id="btnSellItem" style="padding: 10px 20px; border-radius: 12px; border: none; font-size: 14px; font-weight: 600; cursor: pointer;">
+							<i class="fa-solid fa-plus"></i> <span data-i18n="sell">Sell</span>
+						</button>
+					</div>
+
+					<!-- Filter Chips -->
+					<div class="filter-chips" id="marketFilters">
+						<button class="chip active" data-filter="all" data-i18n="filter_all">All</button>
+						<button class="chip" data-filter="category" data-i18n="category">Category</button>
+						<button class="chip" data-filter="marketplace" data-i18n="marketplace">Marketplace</button>
+						<button class="chip" data-filter="student" data-i18n="student">Student</button>
+					</div>
+
+					<!-- Market Items -->
+					<div class="market-grid" id="marketGrid">
+						<!-- Dynamic content -->
+					</div>
+				</div>
+			</div>
+
+			<!-- NOTIFICATIONS VIEW -->
+			<div id="viewNotifications" class="view-container hidden">
+				<div class="section">
+					<div class="section-header">
+						<h2 class="section-title" data-i18n="notifications">Notifications</h2>
+					</div>
+					<div class="empty-state">
+						<i class="fa-regular fa-bell"></i>
+						<p data-i18n="no_notifications">You're all caught up!<br>No new notifications.</p>
+					</div>
+				</div>
+			</div>
+
+		<!-- PROFILE VIEW -->
+		<div id="viewProfile" class="view-container hidden">
+			<div class="section">
+				<div class="section-header">
+					<h2 class="section-title" data-i18n="profile">Profile</h2>
+				</div>
+				<div class="widget">
+					<div id="profileContent" style="text-align: center; padding: 20px;">
+						<!-- Dynamic content loaded by JavaScript -->
+					</div>
+				</div>
+			</div>
+		</div>
+
+		<!-- CART VIEW -->
+		<div id="viewCart" class="view-container hidden">
+			<div class="section">
+				<div class="section-header">
+					<h2 class="section-title" data-i18n="my_cart">My Cart</h2>
+					<button class="section-link" id="clearCart" style="color: #ef4444;" data-i18n="clear_all">Clear All</button>
+				</div>
+				<div id="cartContent">
+					<!-- Dynamic cart items -->
+				</div>
+				<div id="cartSummary" style="position: sticky; bottom: 0; background: var(--bg-glass); backdrop-filter: blur(20px); padding: 16px; border-radius: 16px; margin-top: 16px; display: none;">
+					<div style="display: flex; justify-content: space-between; margin-bottom: 12px;">
+						<span style="font-weight: 600;" data-i18n="subtotal">Subtotal:</span>
+						<span id="cartSubtotal" style="font-weight: 700;">฿0</span>
+					</div>
+					<button class="btn btn-primary" id="checkoutBtn" style="width: 100%;">
+						<i class="fa-solid fa-check"></i> <span data-i18n="checkout">Checkout</span>
+					</button>
+				</div>
+			</div>
+		</div>
+	</main>
+
+		<!-- Live Activity Bar -->
+		<div class="live-activity-bar" id="liveActivityBar">
+			<div class="live-activity-content">
+				<div class="live-activity-icon pulse">
+					<i class="fa-solid fa-fire-burner"></i>
+				</div>
+				<div class="live-activity-info">
+					<div class="live-activity-title" id="liveActivityTitle" data-i18n="preparing_order">Preparing your order</div>
+					<div class="live-activity-subtitle" id="liveActivitySubtitle">Order from Store Name</div>
+				</div>
+				<i class="fa-solid fa-chevron-right live-activity-chevron"></i>
+			</div>
+			<div class="live-activity-progress">
+				<div class="live-activity-progress-bar" id="liveActivityProgressBar" style="width: 33%;"></div>
+			</div>
+			<div class="live-activity-steps">
+				<span class="live-activity-step active" data-i18n="status_pending">Pending</span>
+				<span class="live-activity-step" id="stepPreparing" data-i18n="status_preparing">Preparing</span>
+				<span class="live-activity-step" id="stepReady" data-i18n="status_ready">Ready</span>
+				<span class="live-activity-step" id="stepComplete" data-i18n="status_complete">Complete</span>
+			</div>
+		</div>
+
+		<!-- Bottom Navigation -->
+		<nav class="bottom-nav">
+			<button class="nav-item active" data-view="home">
+				<i class="fa-solid fa-house"></i>
+				<span data-i18n="nav_home">Home</span>
+			</button>
+			<button class="nav-item" data-view="food">
+				<i class="fa-solid fa-utensils"></i>
+				<span data-i18n="nav_food">Food</span>
+			</button>
+			<button class="nav-item" data-view="market">
+				<i class="fa-solid fa-bag-shopping"></i>
+				<span data-i18n="nav_market">Market</span>
+			</button>
+			<button class="nav-item" data-view="cart" id="cartNavBtn" style="position: relative;">
+				<i class="fa-solid fa-cart-shopping"></i>
+				<span data-i18n="nav_cart">Cart</span>
+			</button>
+			<button class="nav-item" data-view="profile">
+				<i class="fa-solid fa-user"></i>
+				<span data-i18n="nav_profile">Profile</span>
+			</button>
+		</nav>
+	</div>
+
+	<!-- Pickup Time Modal -->
+	<div class="modal-overlay" id="pickupModal">
+		<div class="modal">
+			<div class="modal-header">
+				<h3 class="modal-title">Order Details</h3>
+				<button class="btn-close" id="closePickupModal">
+					<i class="fa-solid fa-xmark"></i>
+				</button>
+			</div>
+			
+			<div class="form-group">
+				<label class="form-label">Food Item</label>
+				<input type="text" class="form-input" id="pickupItemName" readonly>
+			</div>
+
+			<div class="form-group">
+				<label class="form-label">Store</label>
+				<input type="text" class="form-input" id="pickupStoreName" readonly>
+			</div>
+
+			<div class="form-group">
+				<label class="form-label">Quantity</label>
+				<input type="number" class="form-input" id="pickupQuantity" min="1" value="1">
+			</div>
+
+			<div class="form-group">
+				<label class="form-label">Pickup Time Slot</label>
+				<select class="form-select" id="pickupTimeSlot">
+					<option value="">Choose your time</option>
+					<option value="10:30-11:00">10:30 - 11:00 AM</option>
+					<option value="11:00-11:30">11:00 - 11:30 AM</option>
+					<option value="11:30-12:00">11:30 - 12:00 PM</option>
+					<option value="12:00-12:30">12:00 - 12:30 PM</option>
+					<option value="12:30-13:00">12:30 - 1:00 PM</option>
+					<option value="13:00-13:30">1:00 - 1:30 PM</option>
+				</select>
+			</div>
+
+			<div class="form-group">
+				<label class="form-label">Special Instructions (Optional)</label>
+				<textarea class="form-textarea" id="pickupNotes" placeholder="e.g., No spicy, extra sauce..." style="min-height: 80px;"></textarea>
+			</div>
+
+			<div class="form-group">
+				<label class="form-label">Total Price</label>
+				<div style="font-size: 24px; font-weight: 800; background: var(--food-gradient); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;" id="pickupTotalPrice">฿0.00</div>
+			</div>
+
+			<div class="modal-actions">
+				<button class="btn btn-secondary" id="cancelPickup">Cancel</button>
+				<button class="btn btn-primary" id="confirmPickup">
+					<i class="fa-solid fa-check"></i> Confirm Order
+				</button>
+			</div>
+		</div>
+	</div>
+
+	<!-- Order Detail Modal -->
+	<div class="modal-overlay" id="orderDetailModal">
+		<div class="modal">
+			<div class="modal-header">
+				<h3 class="modal-title">Order Details</h3>
+				<button class="btn-close" onclick="document.getElementById('orderDetailModal').classList.remove('active')">
+					<i class="fa-solid fa-xmark"></i>
+				</button>
+			</div>
+			
+			<div id="orderDetailContent" style="max-height: 60vh; overflow-y: auto;">
+				<!-- Order details will be populated here -->
+			</div>
+		</div>
+	</div>
+
+	<!-- Contact Seller Modal -->
+	<div class="modal-overlay" id="contactModal">
+		<div class="modal">
+			<div class="modal-header">
+				<h3 class="modal-title">Contact Seller</h3>
+				<button class="btn-close" onclick="document.getElementById('contactModal').classList.remove('active')">
+					<i class="fa-solid fa-xmark"></i>
+				</button>
+			</div>
+			
+			<div class="contact-info">
+				<div style="text-align: center; margin-bottom: 20px;">
+					<img id="contactItemImage" src="" alt="Item" style="width: 100px; height: 100px; border-radius: 12px; object-fit: cover; margin-bottom: 12px;">
+					<h3 id="contactItemName" style="margin: 0 0 4px;"></h3>
+					<p id="contactItemPrice" style="color: var(--primary); font-size: 20px; font-weight: 700; margin: 0;"></p>
+				</div>
+				<div style="background: rgba(255,255,255,0.5); border-radius: 12px; padding: 16px;">
+					<p style="font-weight: 600; margin-bottom: 12px;"><i class="fa-solid fa-user"></i> Seller: <span id="contactSellerName"></span></p>
+					<div id="contactMethods"></div>
+				</div>
+			</div>
+		</div>
+	</div>
+
+	<!-- Sell Item Modal -->
+	<div class="modal-overlay" id="sellModal">
+		<div class="modal">
+			<div class="modal-header">
+				<h3 class="modal-title">List an Item</h3>
+				<button class="btn-close" id="closeSellModal">
+					<i class="fa-solid fa-xmark"></i>
+				</button>
+			</div>
+
+			<div class="form-group">
+				<label class="form-label">Item Name *</label>
+				<input type="text" class="form-input" id="sellItemName" placeholder="e.g., School Uniform" required>
+			</div>
+
+			<div class="form-group">
+				<label class="form-label">Description</label>
+				<textarea class="form-textarea" id="sellItemDesc" placeholder="Condition, size, etc." rows="3"></textarea>
+			</div>
+
+			<div class="form-group">
+				<label class="form-label">Price (฿) *</label>
+				<input type="number" class="form-input" id="sellItemPrice" placeholder="0" min="0" required>
+			</div>
+
+			<div class="form-group">
+				<label class="form-label">Category *</label>
+				<select class="form-select" id="sellItemCategory">
+					<option value="uniform">Uniform</option>
+					<option value="books">Books</option>
+					<option value="electronics">Electronics</option>
+					<option value="other">Other</option>
+				</select>
+			</div>
+
+			<div class="form-group">
+				<label class="form-label">Image URL *</label>
+				<input type="url" class="form-input" id="sellItemImage" placeholder="https://..." required>
+			</div>
+			
+			<div style="background: rgba(102,126,234,0.1); border-radius: 12px; padding: 12px; margin: 16px 0;">
+				<p style="font-weight: 600; margin-bottom: 8px;"><i class="fa-solid fa-address-book"></i> Contact Information</p>
+				<p style="font-size: 12px; color: var(--text-secondary); margin-bottom: 12px;">Choose at least one way for buyers to contact you</p>
+				
+				<div class="form-group">
+					<label class="form-label">Line ID</label>
+					<input type="text" class="form-input" id="sellLineID" placeholder="@yourlineid">
+				</div>
+				<div class="form-group">
+					<label class="form-label">Instagram</label>
+					<input type="text" class="form-input" id="sellInstagram" placeholder="@yourusername">
+				</div>
+				<div class="form-group">
+					<label class="form-label">Facebook</label>
+					<input type="text" class="form-input" id="sellFacebook" placeholder="facebook.com/yourprofile">
+				</div>
+				<div class="form-group">
+					<label class="form-label">Phone Number</label>
+					<input type="tel" class="form-input" id="sellPhone" placeholder="0812345678">
+				</div>
+			</div>
+
+			<div class="form-group" style="margin-top: 16px;">
+				<label style="display: flex; align-items: start; gap: 8px; cursor: pointer;">
+					<input type="checkbox" id="sellPrivacyConsent" required style="margin-top: 4px;">
+					<span style="font-size: 12px; color: var(--text-secondary);">
+						I agree to share my contact information and accept the 
+						<a href="https://hulalla.party/privacy" target="_blank" style="color: var(--primary);">Terms of Service</a> and 
+						<a href="https://hulalla.party/terms" target="_blank" style="color: var(--primary);">Privacy Policy</a>
+					</span>
+				</label>
+			</div>
+
+			<div class="modal-actions">
+				<button class="btn btn-secondary" id="cancelSell">Cancel</button>
+				<button class="btn btn-primary" id="confirmSell"><i class="fa-solid fa-check"></i> List Item</button>
+			</div>
+		</div>
+	</div>
+
+	<!-- Login/Auth Modal -->
+	<div class="modal-overlay" id="authModal">
+		<div class="modal">
+			<div class="modal-header">
+				<h3 class="modal-title" id="authModalTitle">Sign In</h3>
+				<button class="btn-close" id="closeAuthModal">
+					<i class="fa-solid fa-xmark"></i>
+				</button>
+			</div>
+			
+			<div class="form-group">
+				<label class="form-label">Email</label>
+				<input type="email" class="form-input" id="authEmail" placeholder="you@student.edu">
+			</div>
+
+			<div class="form-group">
+				<label class="form-label">Password</label>
+				<input type="password" class="form-input" id="authPassword" placeholder="••••••••">
+			</div>
+
+			<div class="form-group" id="authNameGroup" style="display: none;">
+				<label class="form-label">Display Name</label>
+				<input type="text" class="form-input" id="authName" placeholder="Your name">
+			</div>
+
+			<div class="form-group" id="authConsentGroup" style="display: none;">
+				<label style="display: flex; align-items: start; gap: 8px; cursor: pointer;">
+					<input type="checkbox" id="authPrivacyConsent" required style="margin-top: 4px;">
+					<span style="font-size: 12px; color: var(--text-secondary);">
+						I agree to the 
+						<a href="https://hulalla.party/privacy" target="_blank" style="color: var(--primary);">Terms of Service</a> and 
+						<a href="https://hulalla.party/terms" target="_blank" style="color: var(--primary);">Privacy Policy</a>
+					</span>
+				</label>
+			</div>
+
+			<div class="modal-actions">
+				<button class="btn btn-secondary" id="cancelAuth">Cancel</button>
+				<button class="btn btn-primary" id="confirmAuth">Continue</button>
+			</div>
+
+			<div style="position: relative; text-align: center; margin: 20px 0;">
+				<div style="position: absolute; top: 50%; left: 0; right: 0; height: 1px; background: var(--border-glass);"></div>
+				<span style="position: relative; background: white; padding: 0 12px; color: var(--text-muted); font-size: 13px;">OR</span>
+			</div>
+
+			<button class="btn" id="googleSignInBtn" style="width: 100%; background: white; color: var(--text-primary); border: 2px solid #e5e7eb; justify-content: center; margin-bottom: 16px;">
+				<svg width="18" height="18" viewBox="0 0 18 18" style="margin-right: 8px;">
+					<path fill="#4285F4" d="M17.64 9.2c0-.637-.057-1.251-.164-1.84H9v3.481h4.844c-.209 1.125-.843 2.078-1.796 2.717v2.258h2.908c1.702-1.567 2.684-3.874 2.684-6.615z"/>
+					<path fill="#34A853" d="M9 18c2.43 0 4.467-.806 5.956-2.184l-2.908-2.258c-.806.54-1.837.86-3.048.86-2.344 0-4.328-1.584-5.036-3.711H.957v2.332C2.438 15.983 5.482 18 9 18z"/>
+					<path fill="#FBBC05" d="M3.964 10.707c-.18-.54-.282-1.117-.282-1.707 0-.593.102-1.17.282-1.709V4.958H.957C.347 6.173 0 7.548 0 9c0 1.452.348 2.827.957 4.042l3.007-2.335z"/>
+					<path fill="#EA4335" d="M9 3.58c1.321 0 2.508.454 3.44 1.345l2.582-2.58C13.463.891 11.426 0 9 0 5.482 0 2.438 2.017.957 4.958L3.964 7.29C4.672 5.163 6.656 3.58 9 3.58z"/>
+				</svg>
+				Continue with Google
+			</button>
+
+			<div style="margin-bottom: 0;">
+				<label style="display: flex; align-items: center; gap: 8px; font-size: 14px; color: var(--text-secondary); cursor: pointer;">
+					<input type="checkbox" id="authToggleMode" style="cursor: pointer;">
+					New here? Create an account
+				</label>
+			</div>
+		</div>
+	</div>
+
+<script src="./satitx.js" type="module"></script>
+</body>
+</html>
