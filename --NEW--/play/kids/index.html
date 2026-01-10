@@ -1,0 +1,698 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>เด็กคนนั้นโตมากลายเป็นเธอ | The Child You Became</title>
+    
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    
+    <!-- Google Fonts - Mali (Handwritten Thai) -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Mali:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    
+    <!-- Firebase SDK v9 -->
+    <script src="/keys.js"></script>
+    <script type="module">
+        import { initializeApp } from 'https://www.gstatic.com/firebasejs/9.22.0/firebase-app.js';
+        import { getDatabase, ref, set, push, get } from 'https://www.gstatic.com/firebasejs/9.22.0/firebase-database.js';
+        
+        // Firebase Configuration
+        const firebaseConfig = window.HLL_KEYS.firebase;
+        
+        // Initialize Firebase
+        const app = initializeApp(firebaseConfig);
+        const database = getDatabase(app);
+        
+        // Make Firebase functions available globally
+        window.firebaseDB = database;
+        window.firebaseRef = ref;
+        window.firebaseSet = set;
+        window.firebasePush = push;
+        window.firebaseGet = get;
+    </script>
+    
+    <style>
+        * {
+            font-family: 'Mali', cursive;
+        }
+        
+        body {
+            background-color: #FAFAFA;
+            color: #4A4A4A;
+        }
+        
+        /* Custom Scrollbar */
+        ::-webkit-scrollbar {
+            width: 8px;
+        }
+        
+        ::-webkit-scrollbar-track {
+            background: #f1f1f1;
+        }
+        
+        ::-webkit-scrollbar-thumb {
+            background: #F4D03F;
+            border-radius: 4px;
+        }
+        
+        /* Scene Transitions */
+        .scene {
+            opacity: 0;
+            transform: translateY(20px);
+            transition: opacity 0.6s ease, transform 0.6s ease;
+            display: none;
+        }
+        
+        .scene.active {
+            opacity: 1;
+            transform: translateY(0);
+            display: flex;
+        }
+        
+        /* Typewriter Effect */
+        .typewriter-text {
+            overflow: hidden;
+            border-right: 3px solid #F4D03F;
+            white-space: pre-wrap;
+            animation: blink-caret 0.75s step-end infinite;
+        }
+        
+        .typewriter-text.complete {
+            border-right: none;
+            animation: none;
+        }
+        
+        @keyframes blink-caret {
+            from, to { border-color: transparent; }
+            50% { border-color: #F4D03F; }
+        }
+        
+        /* Button Styles */
+        .btn-primary {
+            background-color: #F4D03F;
+            color: #4A4A4A;
+            font-weight: 600;
+            padding: 12px 32px;
+            border-radius: 50px;
+            border: none;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 15px rgba(244, 208, 63, 0.3);
+        }
+        
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(244, 208, 63, 0.4);
+        }
+        
+        .btn-primary:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+            transform: none;
+        }
+        
+        /* Input Styles */
+        .input-underline {
+            border: none;
+            border-bottom: 2px solid #F4D03F;
+            background: transparent;
+            outline: none;
+            padding: 8px 4px;
+            font-size: 1.5rem;
+            text-align: center;
+            transition: border-color 0.3s ease;
+        }
+        
+        .input-underline:focus {
+            border-bottom-color: #E8C13A;
+        }
+        
+        /* Card Styles */
+        .memory-card {
+            background: white;
+            border-radius: 16px;
+            padding: 32px;
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.1);
+            max-width: 600px;
+            width: 100%;
+        }
+        
+        /* Modal Styles */
+        .modal-overlay {
+            background-color: rgba(0, 0, 0, 0.5);
+            backdrop-filter: blur(5px);
+        }
+        
+        .modal-content {
+            background: white;
+            border-radius: 20px;
+            max-width: 500px;
+            width: 90%;
+            animation: slideUp 0.3s ease;
+        }
+        
+        @keyframes slideUp {
+            from {
+                transform: translateY(50px);
+                opacity: 0;
+            }
+            to {
+                transform: translateY(0);
+                opacity: 1;
+            }
+        }
+        
+        /* Floating Animation */
+        @keyframes float {
+            0%, 100% { transform: translateY(0px); }
+            50% { transform: translateY(-10px); }
+        }
+        
+        .float-animation {
+            animation: float 3s ease-in-out infinite;
+        }
+        
+        /* Fade In Animation */
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+        
+        .fade-in {
+            animation: fadeIn 1s ease;
+        }
+        
+        /* Textarea Custom */
+        textarea {
+            resize: none;
+        }
+        
+        /* Loading Spinner */
+        .spinner {
+            border: 3px solid #f3f3f3;
+            border-top: 3px solid #F4D03F;
+            border-radius: 50%;
+            width: 40px;
+            height: 40px;
+            animation: spin 1s linear infinite;
+        }
+        
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+    </style>
+</head>
+<body class="min-h-screen flex items-center justify-center p-4">
+
+    <!-- Scene 1: Intro -->
+    <div id="scene1" class="scene active flex-col items-center justify-center text-center w-full max-w-2xl mx-auto">
+        <div class="mb-8 float-animation">
+            <svg class="w-24 h-24 mx-auto text-yellow-400" fill="currentColor" viewBox="0 0 20 20">
+                <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/>
+            </svg>
+        </div>
+        
+        <h1 class="text-3xl md:text-4xl font-bold mb-6" style="color: #F4D03F;">เด็กคนนั้นโตมากลายเป็น... เธอ</h1>
+        
+        <div id="intro-text" class="text-lg md:text-xl mb-8 leading-relaxed typewriter-text"></div>
+        
+        <div id="name-input-container" class="hidden fade-in">
+            <input 
+                type="text" 
+                id="userName" 
+                class="input-underline mb-8 w-64" 
+                placeholder="ใส่ชื่อของคุณ..."
+                maxlength="30"
+            />
+            <br>
+            <button onclick="startJourney()" class="btn-primary">เริ่มออกเดินทาง ✨</button>
+        </div>
+    </div>
+
+    <!-- Scene 2: Greeting & Childhood Memory -->
+    <div id="scene2" class="scene flex-col items-center justify-center text-center w-full max-w-3xl mx-auto px-4">
+        <div class="mb-8">
+            <div class="text-6xl mb-4">🌟</div>
+        </div>
+        <div id="scene2-text" class="text-xl md:text-2xl leading-relaxed space-y-6"></div>
+        <button onclick="nextScene(3)" class="btn-primary mt-8 hidden" id="scene2-btn">ถัดไป →</button>
+    </div>
+
+    <!-- Scene 3: The Reality Check -->
+    <div id="scene3" class="scene flex-col items-center justify-center text-center w-full max-w-3xl mx-auto px-4">
+        <div class="mb-8">
+            <div class="text-6xl mb-4">🌙</div>
+        </div>
+        <div id="scene3-text" class="text-xl md:text-2xl leading-relaxed space-y-6"></div>
+        <button onclick="nextScene(4)" class="btn-primary mt-8 hidden" id="scene3-btn">ฉันพร้อมแล้ว →</button>
+    </div>
+
+    <!-- Scene 4: Time Travel Preparation -->
+    <div id="scene4" class="scene flex-col items-center justify-center text-center w-full max-w-3xl mx-auto px-4">
+        <div class="mb-8">
+            <div class="text-6xl mb-4">⏰</div>
+        </div>
+        <div id="scene4-text" class="text-xl md:text-2xl leading-relaxed space-y-6 mb-8"></div>
+        <button onclick="nextScene(5)" class="btn-primary hidden" id="scene4-btn">ย้อนเวลากลับไป 🕰️</button>
+    </div>
+
+    <!-- Scene 5: The Encounter (Message Input) -->
+    <div id="scene5" class="scene flex-col items-center justify-center text-center w-full max-w-3xl mx-auto px-4">
+        <div class="mb-6">
+            <div class="text-6xl mb-4">💌</div>
+        </div>
+        <h2 class="text-2xl md:text-3xl font-semibold mb-4" style="color: #F4D03F;">ถึง... ตัวฉันในวันวาน</h2>
+        <p class="text-lg md:text-xl mb-8 leading-relaxed" id="scene5-intro"></p>
+        
+        <textarea 
+            id="userMessage" 
+            rows="8" 
+            class="w-full max-w-xl p-4 border-2 border-yellow-300 rounded-lg focus:outline-none focus:border-yellow-400 text-lg mb-6"
+            placeholder="เขียนข้อความถึงตัวเองในวัย 7 ขวบ...&#10;&#10;บอกเขาว่าทุกอย่างจะดีขึ้น... หรืออะไรก็ได้ที่อยากให้เขารู้"
+        ></textarea>
+        
+        <button onclick="sendToThePast()" class="btn-primary">ส่งข้อความย้อนไปถึงอดีต 💫</button>
+    </div>
+
+    <!-- Scene 6: The Reflection -->
+    <div id="scene6" class="scene flex-col items-center justify-center text-center w-full max-w-3xl mx-auto px-4">
+        <div class="mb-8">
+            <div class="text-6xl mb-4">✨</div>
+        </div>
+        <div id="scene6-text" class="text-xl md:text-2xl leading-relaxed space-y-6"></div>
+        <button onclick="nextScene(7)" class="btn-primary mt-8 hidden" id="scene6-btn">ถัดไป →</button>
+    </div>
+
+    <!-- Scene 7: Result & Share -->
+    <div id="scene7" class="scene flex-col items-center justify-center w-full max-w-4xl mx-auto px-4">
+        <div class="memory-card text-center fade-in">
+            <div class="mb-6">
+                <div class="text-5xl mb-4">💝</div>
+            </div>
+            
+            <h3 class="text-2xl md:text-3xl font-semibold mb-4" style="color: #F4D03F;">ถึง... ตัวฉันในวันวาน</h3>
+            
+            <div class="border-t-2 border-b-2 border-yellow-200 py-6 my-6">
+                <p id="displayMessage" class="text-lg md:text-xl leading-relaxed whitespace-pre-wrap"></p>
+            </div>
+            
+            <p class="text-lg md:text-xl font-semibold mb-2">จาก <span id="displayName" style="color: #F4D03F;"></span></p>
+            <p class="text-sm md:text-base text-gray-500 mb-6">(ในตอนนี้ที่โตมาอย่างดี)</p>
+            
+            <div class="mb-6">
+                <span class="text-lg" style="color: #F4D03F;">#เด็กคนนั้นโตมากลายเป็นเธอ - HULALLA #3</span>
+            </div>
+            
+            <div class="flex flex-col sm:flex-row gap-4 justify-center">
+                <button onclick="openShareModal()" class="btn-primary">แชร์ความรู้สึกนี้ 🌟</button>
+                <button onclick="restartJourney()" class="btn-primary" style="background: white; border: 2px solid #F4D03F;">เริ่มใหม่อีกครั้ง</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Privacy Consent Modal -->
+    <div id="privacyModal" class="fixed inset-0 modal-overlay hidden items-center justify-center z-50" style="display: none;">
+        <div class="modal-content p-8">
+            <div class="text-center mb-6">
+                <div class="text-5xl mb-4">🔒</div>
+                <h3 class="text-2xl font-semibold mb-4" style="color: #F4D03F;">ขอเก็บความประทับใจนี้ไว้ได้ไหม?</h3>
+            </div>
+            
+            <p class="text-base md:text-lg mb-6 leading-relaxed">
+                เราต้องการเก็บบันทึกความรู้สึกนี้ไว้ เพื่อสร้างลิงก์สำหรับแชร์ของคุณ
+                <br><br>
+                ข้อมูลจะถูกเก็บอย่างปลอดภัย และคุณสามารถอ่าน Privacy Policy ของเราได้ตลอดเวลา
+            </p>
+            
+            <div class="flex items-start mb-6 text-left">
+                <input 
+                    type="checkbox" 
+                    id="consentCheckbox" 
+                    class="mt-1 mr-3 w-5 h-5 cursor-pointer"
+                    onchange="toggleShareButton()"
+                />
+                <label for="consentCheckbox" class="cursor-pointer text-sm md:text-base">
+                    ฉันยอมรับ <a href="/terms" class="underline" style="color: #F4D03F;">Terms of Service</a> และ 
+                    <a href="/privacy" class="underline" style="color: #F4D03F;">Privacy Policy</a>
+                </label>
+            </div>
+            
+            <div class="flex flex-col sm:flex-row gap-3 justify-center">
+                <button onclick="createShareLink()" id="createLinkBtn" class="btn-primary" disabled>
+                    สร้างลิงก์ 🔗
+                </button>
+                <button onclick="closeShareModal()" class="btn-primary" style="background: white; border: 2px solid #F4D03F;">
+                    ยกเลิก
+                </button>
+            </div>
+            
+            <div id="linkCreated" class="hidden mt-6 p-4 bg-green-50 rounded-lg border-2 border-green-300">
+                <p class="text-green-800 font-semibold mb-2">✅ สร้างลิงก์สำเร็จ!</p>
+                <div class="flex gap-2">
+                    <input 
+                        type="text" 
+                        id="shareLink" 
+                        readonly 
+                        class="flex-1 p-2 bg-white border border-gray-300 rounded text-sm"
+                    />
+                    <button onclick="copyLink()" class="btn-primary text-sm px-4">คัดลอก</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Loading Overlay -->
+    <div id="loadingOverlay" class="fixed inset-0 bg-black bg-opacity-50 hidden items-center justify-center z-50" style="display: none;">
+        <div class="spinner"></div>
+    </div>
+
+    <script>
+        // Global State
+        let currentScene = 1;
+        let userName = '';
+        let userMessage = '';
+        let shareId = '';
+        
+        // Typewriter Effect Function
+        function typeWriter(elementId, text, speed = 50, callback = null) {
+            const element = document.getElementById(elementId);
+            element.classList.add('typewriter-text');
+            let i = 0;
+            
+            function type() {
+                if (i < text.length) {
+                    element.innerHTML += text.charAt(i);
+                    i++;
+                    setTimeout(type, speed);
+                } else {
+                    element.classList.add('complete');
+                    if (callback) callback();
+                }
+            }
+            
+            type();
+        }
+        
+        // Scene Management
+        function showScene(sceneNumber) {
+            // Hide all scenes
+            document.querySelectorAll('.scene').forEach(scene => {
+                scene.classList.remove('active');
+            });
+            
+            // Show target scene
+            const targetScene = document.getElementById(`scene${sceneNumber}`);
+            if (targetScene) {
+                setTimeout(() => {
+                    targetScene.classList.add('active');
+                }, 100);
+            }
+            
+            currentScene = sceneNumber;
+        }
+        
+        function nextScene(sceneNumber) {
+            showScene(sceneNumber);
+            
+            // Load content for the next scene
+            switch(sceneNumber) {
+                case 3:
+                    loadScene3();
+                    break;
+                case 4:
+                    loadScene4();
+                    break;
+                case 6:
+                    loadScene6();
+                    break;
+                case 7:
+                    loadScene7();
+                    break;
+            }
+        }
+        
+        // Scene 1: Intro (moved to DOMContentLoaded below to handle shared links)
+        
+        function startJourney() {
+            const nameInput = document.getElementById('userName');
+            userName = nameInput.value.trim();
+            
+            if (!userName) {
+                alert('กรุณาใส่ชื่อของคุณ 😊');
+                return;
+            }
+            
+            showScene(2);
+            loadScene2();
+        }
+        
+        // Scene 2: Childhood Greeting
+        function loadScene2() {
+            const text = `สวัสดี ${userName}...\n\nนานแค่ไหนแล้วนะ\nที่ไม่ได้ยินเสียงหัวเราะของตัวเองแบบตอนเด็ก\n\nนานแค่ไหนแล้ว\nที่ไม่ได้วิ่งเล่นจนเหนื่อย จนล้ม\nตอนที่มองท้องฟ้าแล้วคิดว่า...\n"เมฆก้อนนั้นสวยจัง"\n\nตอนนั้น... ทุกอย่างมันแฮปปี้ง่ายกว่านี้\nใช่ไหม?`;
+            
+            document.getElementById('scene2-text').innerHTML = '';
+            typeWriter('scene2-text', text, 40, () => {
+                document.getElementById('scene2-btn').classList.remove('hidden');
+            });
+        }
+        
+        // Scene 3: Reality Check
+        function loadScene3() {
+            const text = `แต่ตอนนี้... ชีวิตมันไม่ได้ง่ายขนาดนั้น\n\nคุณต้องตื่นเช้า ไปเรียนที่โรงเรียน\nต้องรับมือกับความคาดหวัง\nต้องแก้ปัญหาที่ไม่มีใครสอน\n\nบางทีก็เหนื่อย\nบางทีก็อยากร้องไห้\nบางทีก็รู้สึกว่า... เราไม่เก่งพอ\n\nแต่รู้ไหม ${userName}?\n\nแค่ที่คุณยังอยู่ตรงนี้ได้...\nคุณเก่งมาก ๆ แล้วเว่ย`;
+            
+            document.getElementById('scene3-text').innerHTML = '';
+            typeWriter('scene3-text', text, 40, () => {
+                document.getElementById('scene3-btn').classList.remove('hidden');
+            });
+        }
+        
+        // Scene 4: Time Travel Preparation
+        function loadScene4() {
+            const text = `วันนี้... ถ้าคุณสามารถบอกกับตัวเองในอดีตได้\n\nถ้าคุณได้พบกับตัวเอง... ในวัย 6-7 ขวบ\n\nเด็กตัวเล็กๆ คนนั้น\nที่ยังไม่รู้ว่าชีวิตจะต้องผ่านอะไรมาบ้าง\nยังมีดวงตาที่สดใส... และรอยยิ้มที่ไร้เดียงสา\n\nคุณอยากบอกอะไรกับเขาบ้าง?`;
+            
+            document.getElementById('scene4-text').innerHTML = '';
+            typeWriter('scene4-text', text, 40, () => {
+                document.getElementById('scene4-btn').classList.remove('hidden');
+            });
+        }
+        
+        // Scene 5: Message Input
+        function sendToThePast() {
+            const messageInput = document.getElementById('userMessage');
+            userMessage = messageInput.value.trim();
+            
+            if (!userMessage) {
+                alert('ส่งข้อความหาเด็กคนนั้น 💌');
+                return;
+            }
+            
+            if (userMessage.length < 10) {
+                alert('ลองเขียนอีกสักหน่อยนะ... เพื่อตัวเองในวันวาน 🥺');
+                return;
+            }
+            
+            showScene(6);
+            loadScene6();
+        }
+        
+        // Scene 6: The Reflection
+        function loadScene6() {
+            const text = `ส่งแล้ว...\n\nข้อความของคุณได้เดินทางข้ามกาลเวลาไปแล้ว\n\nและรู้ไหม?\n\nเด็กคนนั้นที่ได้ยิน ได้รับรู้...\nเขาได้ยิ้มให้กับคุณ\n\nและเขาบอกว่า "ขอบคุณนะ พี่คนนี้เก่งจัง"\n\nแล้วเขาก็วิ่งไปเล่นต่อ\nไม่กลัวอะไร\n\nเพราะเขารู้แล้วว่า...\nไม่ว่าจะเจออะไร\nเขาก็จะโตมาเป็นคนที่เติบโตมาอย่างดี\n\nเหมือนกับคุณในตอนนี้`;
+            
+            document.getElementById('scene6-text').innerHTML = '';
+            typeWriter('scene6-text', text, 40, () => {
+                document.getElementById('scene6-btn').classList.remove('hidden');
+            });
+        }
+        
+        // Scene 7: Display Result
+        function loadScene7() {
+            document.getElementById('displayName').textContent = userName;
+            document.getElementById('displayMessage').textContent = userMessage;
+        }
+        
+        // Modal Functions
+        function openShareModal() {
+            document.getElementById('privacyModal').style.display = 'flex';
+        }
+        
+        function closeShareModal() {
+            document.getElementById('privacyModal').style.display = 'none';
+            document.getElementById('consentCheckbox').checked = false;
+            document.getElementById('linkCreated').classList.add('hidden');
+            toggleShareButton();
+        }
+        
+        function toggleShareButton() {
+            const checkbox = document.getElementById('consentCheckbox');
+            const button = document.getElementById('createLinkBtn');
+            button.disabled = !checkbox.checked;
+        }
+        
+        // Firebase: Create Share Link
+        async function createShareLink() {
+            const loadingOverlay = document.getElementById('loadingOverlay');
+            loadingOverlay.style.display = 'flex';
+            
+            try {
+                // Check if Firebase is initialized
+                if (!window.firebaseDB) {
+                    throw new Error('Firebase is not initialized. Please configure Firebase.');
+                }
+                
+                // Create a new reference with auto-generated ID
+                const messagesRef = window.firebaseRef(window.firebaseDB, 'messages');
+                const newMessageRef = window.firebasePush(messagesRef);
+                
+                // Prepare data
+                const messageData = {
+                    name: userName,
+                    message: userMessage,
+                    timestamp: Date.now(),
+                    consent: true,
+                    createdAt: new Date().toISOString()
+                };
+                
+                // Save to Firebase
+                await window.firebaseSet(newMessageRef, messageData);
+                
+                // Get the generated ID
+                shareId = newMessageRef.key;
+                
+                // Create shareable link
+                const shareUrl = `${window.location.origin}${window.location.pathname}?id=${shareId}`;
+                
+                // Display the link
+                document.getElementById('shareLink').value = shareUrl;
+                document.getElementById('linkCreated').classList.remove('hidden');
+                
+                loadingOverlay.style.display = 'none';
+                
+                // Show success message
+                alert('สร้างลิงก์สำเร็จ! คุณสามารถคัดลอกและแชร์ได้เลย 🎉');
+                
+            } catch (error) {
+                console.error('Error creating share link:', error);
+                loadingOverlay.style.display = 'none';
+                
+                // Fallback: Create mock link if Firebase is not configured
+                shareId = 'DEMO_' + Date.now();
+                const mockUrl = `${window.location.origin}${window.location.pathname}?id=${shareId}`;
+                document.getElementById('shareLink').value = mockUrl;
+                document.getElementById('linkCreated').classList.remove('hidden');
+                
+                alert('⚠️ Firebase ยังไม่ได้ตั้งค่า\nนี่คือลิงก์ทดสอบ (Mock Link)\nสามารถนำไปใช้ต่อได้');
+            }
+        }
+        
+        // Copy Link to Clipboard
+        function copyLink() {
+            const linkInput = document.getElementById('shareLink');
+            linkInput.select();
+            linkInput.setSelectionRange(0, 99999); // For mobile devices
+            
+            try {
+                document.execCommand('copy');
+                alert('คัดลอกลิงก์แล้ว! 📋');
+            } catch (err) {
+                // Fallback for modern browsers
+                navigator.clipboard.writeText(linkInput.value).then(() => {
+                    alert('คัดลอกลิงก์แล้ว! 📋');
+                }).catch(() => {
+                    alert('ไม่สามารถคัดลอกได้ กรุณาคัดลอกด้วยตัวเอง');
+                });
+            }
+        }
+        
+        // Restart Journey
+        function restartJourney() {
+            if (confirm('คุณต้องการเริ่มต้นใหม่ใช่ไหม?')) {
+                location.reload();
+            }
+        }
+        
+        // Load Shared Message from Firebase
+        async function loadSharedMessage(messageId) {
+            const loadingOverlay = document.getElementById('loadingOverlay');
+            loadingOverlay.style.display = 'flex';
+            
+            try {
+                if (!window.firebaseDB || !window.firebaseGet) {
+                    throw new Error('Firebase is not initialized');
+                }
+                
+                // Get message from Firebase
+                const messageRef = window.firebaseRef(window.firebaseDB, `messages/${messageId}`);
+                const snapshot = await window.firebaseGet(messageRef);
+                
+                if (snapshot.exists()) {
+                    const data = snapshot.val();
+                    
+                    // Set global variables
+                    userName = data.name || 'ผู้ใช้';
+                    userMessage = data.message || '';
+                    
+                    // Hide intro scene and show result directly
+                    document.getElementById('scene1').classList.remove('active');
+                    
+                    // Load and show Scene 7
+                    loadScene7();
+                    showScene(7);
+                    
+                    loadingOverlay.style.display = 'none';
+                } else {
+                    throw new Error('Message not found');
+                }
+            } catch (error) {
+                console.error('Error loading shared message:', error);
+                loadingOverlay.style.display = 'none';
+                alert('❌ ไม่พบข้อความนี้\nลิงก์อาจหมดอายุหรือไม่ถูกต้อง');
+                
+                // Show intro scene
+                const introText = `ยินดีต้อนรับสู่กล่องความทรงจำ...\n\nก่อนที่เราจะเริ่มเดินทาง...\n\nช่วยบอกหน่อยได้ไหม\n\nว่าคุณชื่ออะไร?`;
+                typeWriter('intro-text', introText, 50, () => {
+                    document.getElementById('name-input-container').classList.remove('hidden');
+                });
+            }
+        }
+        
+        // Check for shared message ID in URL
+        window.addEventListener('DOMContentLoaded', () => {
+            const urlParams = new URLSearchParams(window.location.search);
+            const messageId = urlParams.get('id');
+            
+            if (messageId) {
+                // Load shared message from Firebase
+                loadSharedMessage(messageId);
+            } else {
+                // Normal intro flow
+                const introText = `ยินดีต้อนรับสู่กล่องความทรงจำ...\n\nก่อนที่เราจะเริ่มเดินทาง...\n\nช่วยบอกหน่อยได้ไหม\n\nว่าคุณชื่ออะไร?`;
+                typeWriter('intro-text', introText, 50, () => {
+                    document.getElementById('name-input-container').classList.remove('hidden');
+                });
+            }
+        });
+        
+        // Update Scene 5 intro text when userName changes
+        function updateScene5Intro() {
+            const scene5Intro = document.getElementById('scene5-intro');
+            if (scene5Intro) {
+                scene5Intro.textContent = `สมมติว่า... ตรงหน้าคุณตอนนี้\nคือ ${userName || 'ตัวคุณ'} ในวัย 7 ขวบ...\n\nคุณอยากบอกอะไรกับเขา?`;
+            }
+        }
+        
+        // Call this when entering scene 5
+        const originalShowScene = showScene;
+        showScene = function(sceneNumber) {
+            originalShowScene(sceneNumber);
+            if (sceneNumber === 5) {
+                updateScene5Intro();
+            }
+        };
+    </script>
+</body>
+</html>
