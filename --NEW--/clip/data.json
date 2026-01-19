@@ -1,0 +1,42 @@
+[
+  {
+    "id": "games1",
+    "title": "Hulalla Games EP.1 - เมื่อเมนเทอร์ชายแท้ 2 คนมาเจอกัน ทีมไหนกันแน่ที่จะเป็นฝ่ายชนะ",
+    "description": "เมื่อเมนเทอร์ชายแท้ 2 คนมาเจอกัน ทีมไหนกันแน่ที่จะเป็นฝ่ายชนะ🤫🐒🌴🏐??.. และในตอนนี้การแข่งขันได้เริ่มต้นขึ้นแล้ว... จะมีสุดยอดชายแท้เพียง 1 เดียวเท่านั้น ที่จะคว้าชัยชนะในการชิงบอลฮูลัลลาในครั้งนี้🏆 มาลุ้นกันว่า ใครกันแน่🤫 ที่จะได้ครอบครองตำแหน่งสุดยอดชายแท้แห่งฮาวาย🤴🏻🌺",
+    "type": "video",
+    "link": {
+        "YouTube" : "https://youtu.be/ueH9JeEVz6I",
+        "Instagram" : "https://www.instagram.com/reel/DS4wytek3-O/",
+        "TikTok" : "https://www.tiktok.com/@hulalla.hawaii/video/7589667035945192711"
+    },
+    "thumbnail": "https://firebasestorage.googleapis.com/v0/b/i-dewey-world.appspot.com/o/TbwP4wPNumUuN8yMrAcVAHZAaus2%2F391HXM0K4%2FHulallauuu.jpg?alt=media",
+    "teaser": true,
+    "teaser_url": "https://youtu.be/by-nfgYC0LI"
+  },
+  {
+    "id": "inv1",
+    "title": "เมื่อ 𝑯𝑼𝑳𝑨𝑳𝑳𝑨 บุกสัมภาษณ์พี่น้องชาวสาธิตตตต❗️ จะฮาแค่ไหนไปดูกันเล้ยย 🫵🏻🌺🌊 ",
+    "description": "เมื่อ 𝑯𝑼𝑳𝑨𝑳𝑳𝑨 บุกสัมภาษณ์พี่น้องชาวสาธิตตตต❗️ จะฮาแค่ไหน ต้องดูให้จบ🌺",
+    "type": "video",
+    "link": {
+        "YouTube" : "https://youtu.be/G-tOWp8bT5s",
+        "Instagram" : "https://www.instagram.com/reel/DTXM7M5E3Gs/",
+        "TikTok" : "https://www.tiktok.com/@hulalla.hawaii/video/7594045429357055250"
+    },
+    "thumbnail": "https://firebasestorage.googleapis.com/v0/b/i-dewey-world.appspot.com/o/TbwP4wPNumUuN8yMrAcVAHZAaus2%2F6A91U811W%2FHulallatninter.jpg?alt=media",
+    "teaser": true,
+    "teaser_url": "https://youtu.be/OmdoP-iPT68"
+  },
+  {
+    "id": "show",
+    "title": "การแสดงเปิดตัวพรรค Hulalla เนื่องในวันปีใหม่ 🌊",
+    "description": "พรรคเบอร์ 3 HULALLA - การแสดงเปิดตัวพรรคผู้สมัครสภานักเรียน ประจำปีการศึกษา 2569",
+    "type": "video",
+    "link": {
+        "YouTube" : "https://youtu.be/9Ldl1gfjchc"
+    },
+    "thumbnail": "https://firebasestorage.googleapis.com/v0/b/i-dewey-world.appspot.com/o/TbwP4wPNumUuN8yMrAcVAHZAaus2%2F6A91U811W%2FHulallatninter.jpg?alt=media",
+    "teaser": true,
+    "teaser_url": "https://youtu.be/97SzP0nANCo"
+  }
+]
