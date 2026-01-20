@@ -1,0 +1,709 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Chat Messages Dashboard - Hulalla</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+
+        .header {
+            background: white;
+            border-radius: 15px;
+            padding: 25px;
+            margin-bottom: 20px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+        }
+
+        h1 {
+            color: #667eea;
+            font-size: 2em;
+            margin-bottom: 15px;
+        }
+
+        .stats {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 15px;
+            margin-top: 20px;
+        }
+
+        .stat-card {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 20px;
+            border-radius: 10px;
+            text-align: center;
+        }
+
+        .stat-card h3 {
+            font-size: 2em;
+            margin-bottom: 5px;
+        }
+
+        .stat-card p {
+            opacity: 0.9;
+            font-size: 0.9em;
+        }
+
+        .controls {
+            background: white;
+            border-radius: 15px;
+            padding: 20px;
+            margin-bottom: 20px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+        }
+
+        .search-box {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 15px;
+            flex-wrap: wrap;
+        }
+
+        .search-box input {
+            flex: 1;
+            min-width: 250px;
+            padding: 12px 20px;
+            border: 2px solid #e0e0e0;
+            border-radius: 25px;
+            font-size: 16px;
+            transition: all 0.3s;
+        }
+
+        .search-box input:focus {
+            outline: none;
+            border-color: #667eea;
+            box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
+        }
+
+        .filter-buttons {
+            display: flex;
+            gap: 10px;
+            flex-wrap: wrap;
+        }
+
+        .btn {
+            padding: 10px 20px;
+            border: none;
+            border-radius: 20px;
+            cursor: pointer;
+            font-size: 14px;
+            font-weight: 600;
+            transition: all 0.3s;
+        }
+
+        .btn-primary {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(102, 126, 234, 0.4);
+        }
+
+        .btn-secondary {
+            background: #f0f0f0;
+            color: #333;
+        }
+
+        .btn-secondary:hover {
+            background: #e0e0e0;
+        }
+
+        .btn-secondary.active {
+            background: #667eea;
+            color: white;
+        }
+
+        .loading {
+            text-align: center;
+            padding: 40px;
+            background: white;
+            border-radius: 15px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+        }
+
+        .loading-spinner {
+            border: 4px solid #f3f3f3;
+            border-top: 4px solid #667eea;
+            border-radius: 50%;
+            width: 50px;
+            height: 50px;
+            animation: spin 1s linear infinite;
+            margin: 0 auto 20px;
+        }
+
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        .sessions-container {
+            display: grid;
+            gap: 20px;
+        }
+
+        .session-card {
+            background: white;
+            border-radius: 15px;
+            padding: 25px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+            transition: all 0.3s;
+        }
+
+        .session-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 15px 40px rgba(0, 0, 0, 0.3);
+        }
+
+        .session-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 15px;
+            padding-bottom: 15px;
+            border-bottom: 2px solid #f0f0f0;
+        }
+
+        .session-id {
+            font-weight: 600;
+            color: #667eea;
+            font-size: 1.1em;
+        }
+
+        .session-time {
+            color: #666;
+            font-size: 0.9em;
+        }
+
+        .session-meta {
+            display: flex;
+            gap: 15px;
+            margin-bottom: 15px;
+            flex-wrap: wrap;
+        }
+
+        .meta-tag {
+            background: #f0f0f0;
+            padding: 5px 15px;
+            border-radius: 15px;
+            font-size: 0.85em;
+            color: #666;
+        }
+
+        .messages-list {
+            margin-top: 15px;
+        }
+
+        .message {
+            margin-bottom: 15px;
+            padding: 15px;
+            border-radius: 10px;
+            position: relative;
+        }
+
+        .message.user {
+            background: linear-gradient(135deg, #667eea15 0%, #764ba215 100%);
+            border-left: 4px solid #667eea;
+        }
+
+        .message.assistant {
+            background: #f8f9fa;
+            border-left: 4px solid #28a745;
+        }
+
+        .message-role {
+            font-weight: 600;
+            margin-bottom: 8px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .message-role .icon {
+            width: 24px;
+            height: 24px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 14px;
+        }
+
+        .message.user .icon {
+            background: #667eea;
+            color: white;
+        }
+
+        .message.assistant .icon {
+            background: #28a745;
+            color: white;
+        }
+
+        .message-content {
+            color: #333;
+            line-height: 1.6;
+            word-wrap: break-word;
+        }
+
+        .message-timestamp {
+            font-size: 0.8em;
+            color: #999;
+            margin-top: 8px;
+        }
+
+        .no-results {
+            text-align: center;
+            padding: 60px 20px;
+            background: white;
+            border-radius: 15px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+        }
+
+        .no-results h2 {
+            color: #667eea;
+            margin-bottom: 10px;
+        }
+
+        .highlight {
+            background-color: yellow;
+            font-weight: 600;
+            padding: 2px 4px;
+            border-radius: 3px;
+        }
+
+        .export-buttons {
+            display: flex;
+            gap: 10px;
+        }
+
+        @media (max-width: 768px) {
+            h1 {
+                font-size: 1.5em;
+            }
+
+            .session-header {
+                flex-direction: column;
+                align-items: flex-start;
+                gap: 10px;
+            }
+
+            .search-box {
+                flex-direction: column;
+            }
+
+            .search-box input {
+                min-width: 100%;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>📊 Chat Messages Dashboard</h1>
+            <p style="color: #666; margin-bottom: 20px;">แสดงและค้นหาข้อความทั้งหมดจากระบบแชท Hulalla</p>
+            
+            <div class="stats">
+                <div class="stat-card">
+                    <h3 id="totalSessions">0</h3>
+                    <p>Total Sessions</p>
+                </div>
+                <div class="stat-card">
+                    <h3 id="totalMessages">0</h3>
+                    <p>Total Messages</p>
+                </div>
+                <div class="stat-card">
+                    <h3 id="userMessages">0</h3>
+                    <p>User Messages</p>
+                </div>
+                <div class="stat-card">
+                    <h3 id="assistantMessages">0</h3>
+                    <p>Assistant Messages</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="controls">
+            <div class="search-box">
+                <input type="text" id="searchInput" placeholder="🔍 ค้นหาข้อความ..." />
+                <button class="btn btn-primary" onclick="searchMessages()">ค้นหา</button>
+                <button class="btn btn-secondary" onclick="clearSearch()">ล้างการค้นหา</button>
+            </div>
+
+            <div style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 10px;">
+                <div class="filter-buttons">
+                    <button class="btn btn-secondary active" data-filter="all" onclick="filterByRole('all')">ทั้งหมด</button>
+                    <button class="btn btn-secondary" data-filter="user" onclick="filterByRole('user')">User</button>
+                    <button class="btn btn-secondary" data-filter="assistant" onclick="filterByRole('assistant')">Assistant</button>
+                </div>
+
+                <div class="export-buttons">
+                    <button class="btn btn-primary" onclick="exportToJSON()">📥 Export JSON</button>
+                    <button class="btn btn-primary" onclick="exportToCSV()">📄 Export CSV</button>
+                </div>
+            </div>
+        </div>
+
+        <div id="loadingContainer" class="loading">
+            <div class="loading-spinner"></div>
+            <p>กำลังโหลดข้อมูล...</p>
+        </div>
+
+        <div id="sessionsContainer" class="sessions-container" style="display: none;"></div>
+
+        <div id="noResults" class="no-results" style="display: none;">
+            <h2>ไม่พบข้อมูล</h2>
+            <p>ไม่พบข้อความที่ตรงกับคำค้นหา</p>
+        </div>
+    </div>
+
+    <!-- Firebase SDK -->
+    <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-database-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-analytics-compat.js"></script>
+
+    <script src="/keys.js"></script>
+    <script>
+        // Firebase Configuration
+        const firebaseConfig = window.HLL_KEYS.firebase;
+
+        // Initialize Firebase
+        let app, database, analytics;
+        try {
+            app = firebase.initializeApp(firebaseConfig);
+            database = firebase.database();
+            analytics = firebase.analytics();
+            console.log('✅ Firebase initialized successfully');
+        } catch (error) {
+            console.error('❌ Firebase initialization error:', error);
+        }
+
+        // Global variables
+        let allSessions = [];
+        let filteredSessions = [];
+        let currentFilter = 'all';
+        let searchTerm = '';
+
+        // Load all chat sessions
+        async function loadAllSessions() {
+            try {
+                const sessionsRef = database.ref('chat_sessions');
+                const snapshot = await sessionsRef.once('value');
+                const data = snapshot.val();
+
+                if (!data) {
+                    showNoResults();
+                    hideLoading();
+                    return;
+                }
+
+                allSessions = [];
+                let totalMessages = 0;
+                let userMessagesCount = 0;
+                let assistantMessagesCount = 0;
+
+                Object.keys(data).forEach(sessionId => {
+                    const session = data[sessionId];
+                    const messages = session.messages ? Object.values(session.messages) : [];
+                    
+                    messages.forEach(msg => {
+                        totalMessages++;
+                        if (msg.role === 'user') userMessagesCount++;
+                        if (msg.role === 'assistant') assistantMessagesCount++;
+                    });
+
+                    allSessions.push({
+                        id: sessionId,
+                        started_at: session.started_at,
+                        last_activity: session.last_activity,
+                        user_agent: session.user_agent,
+                        platform: session.platform,
+                        messages: messages.sort((a, b) => new Date(a.timestamp) - new Date(b.timestamp))
+                    });
+                });
+
+                // Sort sessions by last activity (newest first)
+                allSessions.sort((a, b) => new Date(b.last_activity || b.started_at) - new Date(a.last_activity || a.started_at));
+
+                // Update stats
+                document.getElementById('totalSessions').textContent = allSessions.length;
+                document.getElementById('totalMessages').textContent = totalMessages;
+                document.getElementById('userMessages').textContent = userMessagesCount;
+                document.getElementById('assistantMessages').textContent = assistantMessagesCount;
+
+                filteredSessions = [...allSessions];
+                renderSessions();
+                hideLoading();
+
+                console.log('✅ Loaded', allSessions.length, 'sessions');
+            } catch (error) {
+                console.error('❌ Error loading sessions:', error);
+                hideLoading();
+                showNoResults();
+            }
+        }
+
+        // Render sessions
+        function renderSessions() {
+            const container = document.getElementById('sessionsContainer');
+            container.innerHTML = '';
+
+            if (filteredSessions.length === 0) {
+                showNoResults();
+                return;
+            }
+
+            container.style.display = 'grid';
+            document.getElementById('noResults').style.display = 'none';
+
+            filteredSessions.forEach(session => {
+                const card = createSessionCard(session);
+                container.appendChild(card);
+            });
+        }
+
+        // Create session card
+        function createSessionCard(session) {
+            const card = document.createElement('div');
+            card.className = 'session-card';
+
+            const startDate = new Date(session.started_at);
+            const lastActivity = session.last_activity ? new Date(session.last_activity) : startDate;
+
+            card.innerHTML = `
+                <div class="session-header">
+                    <div>
+                        <div class="session-id">🗨️ ${session.id}</div>
+                        <div class="session-time">เริ่มเมื่อ: ${formatDate(startDate)}</div>
+                        ${session.last_activity ? `<div class="session-time">กิจกรรมล่าสุด: ${formatDate(lastActivity)}</div>` : ''}
+                    </div>
+                </div>
+                
+                <div class="session-meta">
+                    <div class="meta-tag">💬 ${session.messages.length} messages</div>
+                    ${session.platform ? `<div class="meta-tag">💻 ${session.platform}</div>` : ''}
+                    ${session.user_agent ? `<div class="meta-tag" title="${session.user_agent}">🌐 ${getBrowserInfo(session.user_agent)}</div>` : ''}
+                </div>
+
+                <div class="messages-list">
+                    ${session.messages.map(msg => createMessageHTML(msg)).join('')}
+                </div>
+            `;
+
+            return card;
+        }
+
+        // Create message HTML
+        function createMessageHTML(message) {
+            const timestamp = new Date(message.timestamp);
+            const icon = message.role === 'user' ? '👤' : '🤖';
+            const roleName = message.role === 'user' ? 'User' : 'Assistant';
+            
+            let content = escapeHtml(message.content);
+            
+            // Highlight search term
+            if (searchTerm) {
+                const regex = new RegExp(`(${escapeRegex(searchTerm)})`, 'gi');
+                content = content.replace(regex, '<span class="highlight">$1</span>');
+            }
+
+            return `
+                <div class="message ${message.role}">
+                    <div class="message-role">
+                        <div class="icon">${icon}</div>
+                        <span>${roleName}</span>
+                    </div>
+                    <div class="message-content">${content}</div>
+                    <div class="message-timestamp">${formatDate(timestamp)}</div>
+                </div>
+            `;
+        }
+
+        // Search messages
+        function searchMessages() {
+            searchTerm = document.getElementById('searchInput').value.trim();
+            
+            if (!searchTerm) {
+                filteredSessions = [...allSessions];
+                applyRoleFilter();
+                return;
+            }
+
+            const searchLower = searchTerm.toLowerCase();
+            filteredSessions = allSessions.filter(session => {
+                // Check if any message in the session contains the search term
+                const hasMatch = session.messages.some(msg => 
+                    msg.content.toLowerCase().includes(searchLower)
+                );
+                
+                // If found, return the entire session with all messages
+                return hasMatch;
+            });
+
+            applyRoleFilter();
+        }
+
+        // Clear search
+        function clearSearch() {
+            document.getElementById('searchInput').value = '';
+            searchTerm = '';
+            filteredSessions = [...allSessions];
+            applyRoleFilter();
+        }
+
+        // Filter by role
+        function filterByRole(role) {
+            currentFilter = role;
+            
+            // Update button states
+            document.querySelectorAll('.filter-buttons .btn').forEach(btn => {
+                btn.classList.remove('active');
+                if (btn.dataset.filter === role) {
+                    btn.classList.add('active');
+                }
+            });
+
+            applyRoleFilter();
+        }
+
+        // Apply role filter
+        function applyRoleFilter() {
+            if (currentFilter === 'all') {
+                renderSessions();
+                return;
+            }
+
+            filteredSessions = filteredSessions.map(session => {
+                const matchingMessages = session.messages.filter(msg => 
+                    msg.role === currentFilter
+                );
+
+                if (matchingMessages.length > 0) {
+                    return {
+                        ...session,
+                        messages: matchingMessages
+                    };
+                }
+                return null;
+            }).filter(session => session !== null);
+
+            renderSessions();
+        }
+
+        // Export to JSON
+        function exportToJSON() {
+            const dataStr = JSON.stringify(filteredSessions, null, 2);
+            const dataBlob = new Blob([dataStr], { type: 'application/json' });
+            const url = URL.createObjectURL(dataBlob);
+            const link = document.createElement('a');
+            link.href = url;
+            link.download = `chat-sessions-${Date.now()}.json`;
+            link.click();
+            URL.revokeObjectURL(url);
+        }
+
+        // Export to CSV
+        function exportToCSV() {
+            let csv = 'Session ID,Timestamp,Role,Content,Started At,Last Activity\n';
+            
+            filteredSessions.forEach(session => {
+                session.messages.forEach(msg => {
+                    const row = [
+                        session.id,
+                        msg.timestamp,
+                        msg.role,
+                        `"${msg.content.replace(/"/g, '""')}"`,
+                        session.started_at,
+                        session.last_activity || ''
+                    ];
+                    csv += row.join(',') + '\n';
+                });
+            });
+
+            const blob = new Blob([csv], { type: 'text/csv;charset=utf-8;' });
+            const url = URL.createObjectURL(blob);
+            const link = document.createElement('a');
+            link.href = url;
+            link.download = `chat-messages-${Date.now()}.csv`;
+            link.click();
+            URL.revokeObjectURL(url);
+        }
+
+        // Helper functions
+        function formatDate(date) {
+            const options = {
+                year: 'numeric',
+                month: 'short',
+                day: 'numeric',
+                hour: '2-digit',
+                minute: '2-digit',
+                second: '2-digit'
+            };
+            return date.toLocaleDateString('th-TH', options);
+        }
+
+        function getBrowserInfo(userAgent) {
+            if (userAgent.includes('Chrome')) return 'Chrome';
+            if (userAgent.includes('Safari')) return 'Safari';
+            if (userAgent.includes('Firefox')) return 'Firefox';
+            if (userAgent.includes('Edge')) return 'Edge';
+            return 'Unknown';
+        }
+
+        function escapeHtml(text) {
+            const div = document.createElement('div');
+            div.textContent = text;
+            return div.innerHTML;
+        }
+
+        function escapeRegex(string) {
+            return string.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+        }
+
+        function hideLoading() {
+            document.getElementById('loadingContainer').style.display = 'none';
+        }
+
+        function showNoResults() {
+            document.getElementById('noResults').style.display = 'block';
+            document.getElementById('sessionsContainer').style.display = 'none';
+        }
+
+        // Initialize on page load
+        window.addEventListener('DOMContentLoaded', () => {
+            loadAllSessions();
+            
+            // Allow search on Enter key
+            document.getElementById('searchInput').addEventListener('keypress', (e) => {
+                if (e.key === 'Enter') {
+                    searchMessages();
+                }
+            });
+
+            // Track page view
+            if (analytics) {
+                analytics.logEvent('dashboard_page_view');
+            }
+        });
+    </script>
+</body>
+</html>
