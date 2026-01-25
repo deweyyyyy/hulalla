@@ -1,0 +1,390 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>สมาชิก - พรรคฮูลัลลา | Hulalla Party Members</title>
+    <meta name="description" content="สมาชิกพรรคฮูลัลลาเบอร์ 3 - Hulalla Party Members">
+    
+    <!-- Google Fonts - Prompt -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Prompt:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
+    
+    <!-- Favicon & Icons -->
+    <link rel="manifest" href="/manifest.json">
+    <link rel="apple-touch-icon" sizes="57x57" href="/apple-icon-57x57.png">
+    <link rel="apple-touch-icon" sizes="60x60" href="/apple-icon-60x60.png">
+    <link rel="apple-touch-icon" sizes="72x72" href="/apple-icon-72x72.png">
+    <link rel="apple-touch-icon" sizes="76x76" href="/apple-icon-76x76.png">
+    <link rel="apple-touch-icon" sizes="114x114" href="/apple-icon-114x114.png">
+    <link rel="apple-touch-icon" sizes="120x120" href="/apple-icon-120x120.png">
+    <link rel="apple-touch-icon" sizes="144x144" href="/apple-icon-144x144.png">
+    <link rel="apple-touch-icon" sizes="152x152" href="/apple-icon-152x152.png">
+    <link rel="apple-touch-icon" sizes="180x180" href="/apple-icon-180x180.png">
+    <link rel="icon" type="image/png" sizes="192x192" href="/android-icon-192x192.png">
+    <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="96x96" href="/favicon-96x96.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
+    <meta name="msapplication-TileImage" content="/ms-icon-144x144.png">
+    <link rel="icon" href="/favicon.ico" type="image/x-icon">
+    <meta name="theme-color" content="#38b6ff">
+    <meta name="msapplication-TileColor" content="#38b6ff">
+    
+    <!-- SweetAlert2 -->
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <link rel="stylesheet" href="./styles.css">
+</head>
+<body>
+    <!-- Navigation Bar -->
+    <nav>
+        <div class="nav-container">
+            <a href="/" class="nav-logo">
+                <img src="../apple-icon.png" alt="Hulalla Logo" class="nav-logo-emoji">
+                <span>Hulalla</span>
+            </a>
+            <button class="nav-toggle" aria-label="Toggle navigation">
+                <i class="fas fa-bars"></i>
+            </button>
+            <ul class="nav-menu">
+                <li><a href="/" class="nav-link">หน้าหลัก</a></li>
+                <li><a href="/members" class="nav-link active">สมาชิก</a></li>
+                <li><a href="/play" class="nav-link">กิจกรรม</a></li>
+                <li><a href="/report" class="nav-link">รายงานปัญหา</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <!-- Background Particles -->
+    <div class="bg-particles" id="particles"></div>
+
+    <!-- Header -->
+    <div class="header">
+        <div class="party-logo">🌊</div>
+        <h1 class="party-name">HULALLA</h1>
+        <p class="party-tagline" style="margin: 0px;">พรรคฮูลัลลา</p>
+        <div class="member-count" style="display: none;">สมาชิกทั้งหมด <strong>49</strong> คน</div>
+    </div>
+
+    <!-- Main Container -->
+    <div class="container">
+        <!-- Leadership Section -->
+        <div class="leadership-section">
+            <!-- Advisors -->
+            <h2 class="leadership-title">👨‍🏫 อาจารย์ที่ปรึกษา</h2>
+            <div class="advisors-grid">
+                <div class="advisor-card">
+                    <div class="advisor-avatar">
+                        <img src="images/aj1.png" alt="อ.พงศธร" onerror="this.parentElement.innerHTML='👨‍🏫'">
+                    </div>
+                    <div class="advisor-name">อ.พงศธร เหล็กคง</div>
+                    <div class="advisor-nickname">(อ.เจ๋ง)</div>
+                </div>
+                <div class="advisor-card">
+                    <div class="advisor-avatar">
+                        <img src="images/aj2.png" alt="อ.นิตยา" onerror="this.parentElement.innerHTML='👩‍🏫'">
+                    </div>
+                    <div class="advisor-name">อ.นิตยา โชติการณ์</div>
+                    <div class="advisor-nickname">(อ.นิตย์)</div>
+                </div>
+                <div class="advisor-card">
+                    <div class="advisor-avatar">
+                        <img src="images/aj3.png" alt="อ.ทักษิณ" onerror="this.parentElement.innerHTML='👨‍🏫'">
+                    </div>
+                    <div class="advisor-name">อ.ทักษิณ ใหมหรือ</div>
+                    <div class="advisor-nickname">(อ.มาร์ก)</div>
+                </div>
+            </div>
+
+            <!-- Executive Board -->
+            <h2 class="leadership-title">⭐ คณะกรรมการบริหาร</h2>
+            <div class="executives-grid" id="executivesGrid"></div>
+
+            <!-- Department Heads - ซ่อนส่วนนี้ออก -->
+            <div class="department-heads" style="display: none;">
+                <h2 class="leadership-title">🎯 หัวหน้าฝ่าย</h2>
+                <div class="dept-grid">
+                    <div class="dept-card">
+                        <div class="dept-emoji">❤️</div>
+                        <div class="dept-name">ประชาสัมพันธ์</div>
+                        <div class="dept-head">ออม</div>
+                    </div>
+                    <div class="dept-card">
+                        <div class="dept-emoji">🧡</div>
+                        <div class="dept-name">ปฏิคม</div>
+                        <div class="dept-head">แก้มใส</div>
+                    </div>
+                    <div class="dept-card">
+                        <div class="dept-emoji">💛</div>
+                        <div class="dept-name">เหรัญญิก</div>
+                        <div class="dept-head">เลโอ</div>
+                    </div>
+                    <div class="dept-card">
+                        <div class="dept-emoji">💚</div>
+                        <div class="dept-name">กิจกรรม</div>
+                        <div class="dept-head">แคนน่อน</div>
+                    </div>
+                    <div class="dept-card">
+                        <div class="dept-emoji">🩵</div>
+                        <div class="dept-name">ศิลป์</div>
+                        <div class="dept-head">หยก</div>
+                    </div>
+                    <div class="dept-card">
+                        <div class="dept-emoji">💙</div>
+                        <div class="dept-name">วิชาการ</div>
+                        <div class="dept-head">เคอิจิ</div>
+                    </div>
+                    <div class="dept-card">
+                        <div class="dept-emoji">💜</div>
+                        <div class="dept-name">กีฬา</div>
+                        <div class="dept-head">บูม</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+                        <!-- Navigation Tabs -->
+        <div class="nav-tabs">
+            <div class="nav-container">
+                <div class="nav-tabs-left">
+                    <div class="nav-tab active" onclick="showSection('all')">
+                        <i class="fas fa-users"></i> ทั้งหมด
+                    </div>
+                    <div class="nav-tab" onclick="showSection('executive')" style="--dept-color: rgba(251, 191, 36, 0.3);">
+                        <i class="fas fa-crown"></i> บริหาร
+                    </div>
+                    <div class="nav-tab" onclick="showSection('academic')" style="--dept-color: rgba(59, 130, 246, 0.3);">
+                        <i class="fas fa-book"></i> วิชาการ
+                    </div>
+                    <div class="nav-tab" onclick="showSection('arts')" style="--dept-color: rgba(14, 165, 233, 0.3);">
+                        <i class="fas fa-palette"></i> ศิลป์
+                    </div>
+                    <div class="nav-tab" onclick="showSection('activity')" style="--dept-color: rgba(34, 197, 94, 0.3);">
+                        <i class="fas fa-star"></i> กิจกรรม
+                    </div>
+                    <div class="nav-tab" onclick="showSection('sports')" style="--dept-color: rgba(168, 85, 247, 0.3);">
+                        <i class="fas fa-futbol"></i> กีฬา
+                    </div>
+                    <div class="nav-tab" onclick="showSection('pr')" style="--dept-color: rgba(239, 68, 68, 0.3);">
+                        <i class="fas fa-bullhorn"></i> PR
+                    </div>
+                    <div class="nav-tab" onclick="showSection('welfare')" style="--dept-color: rgba(249, 115, 22, 0.3);">
+                        <i class="fas fa-hands-helping"></i> ปฏฺิคม
+                    </div>
+                    <div class="nav-tab" onclick="showSection('finance')" style="--dept-color: rgba(234, 179, 8, 0.3);">
+                        <i class="fas fa-coins"></i> เหรัญญิก
+                    </div>
+                </div>
+                
+                <!-- Search in Navbar -->
+                <div class="search-nav-container">
+                    <div class="search-input-wrapper" id="searchWrapper">
+                        <input type="text" class="search-input-nav" id="searchInputNav" placeholder="ค้นหาสมาชิก...">
+                        <button class="search-close" onclick="toggleSearch()">
+                            <i class="fas fa-times"></i>
+                        </button>
+                    </div>
+                    <div class="search-toggle" onclick="toggleSearch()">
+                        <i class="fas fa-search"></i>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Search -->
+        <div class="search-container">
+            <input type="text" class="search-input" id="searchInput" placeholder="ค้นหาสมาชิก...">
+        </div>
+
+        <!-- All Members Section -->
+        <div id="all" class="section active">
+            <h2 class="section-title">สมาชิกทั้งหมด</h2>
+            <div class="members-grid" id="allMembers"></div>
+        </div>
+
+
+        <!-- Other Sections -->
+        <div id="executive" class="section">
+            <h2 class="section-title"><i class="fas fa-crown"></i> ฝ่ายบริหาร</h2>
+            <div class="members-grid" id="executiveMembers"></div>
+        </div>
+
+        <div id="academic" class="section">
+            <h2 class="section-title"><i class="fas fa-book"></i> ฝ่ายวิชาการ</h2>
+            
+            <!-- Department Head Showcase -->
+            <div class="dept-head-showcase" data-dept="academic"></div>
+            
+            <div class="members-grid" id="academicMembers"></div>
+        </div>
+
+        <div id="arts" class="section">
+            <h2 class="section-title"><i class="fas fa-palette"></i> ฝ่ายศิลป์</h2>
+            
+            <!-- Department Head Showcase -->
+            <div class="dept-head-showcase" data-dept="arts"></div>
+            
+            <div class="members-grid" id="artsMembers"></div>
+        </div>
+
+        <div id="activity" class="section">
+            <h2 class="section-title"><i class="fas fa-star"></i> ฝ่ายกิจกรรม</h2>
+            
+            <!-- Department Head Showcase -->
+            <div class="dept-head-showcase" data-dept="activity"></div>
+            
+            <div class="members-grid" id="activityMembers"></div>
+        </div>
+
+        <div id="sports" class="section">
+            <h2 class="section-title"><i class="fas fa-futbol"></i> ฝ่ายกีฬา</h2>
+            
+            <!-- Department Head Showcase -->
+            <div class="dept-head-showcase" data-dept="sports"></div>
+            
+            <div class="members-grid" id="sportsMembers"></div>
+        </div>
+
+        <div id="pr" class="section">
+            <h2 class="section-title"><i class="fas fa-bullhorn"></i> ฝ่ายประชาสัมพันธ์</h2>
+            
+            <!-- Department Head Showcase -->
+            <div class="dept-head-showcase" data-dept="pr"></div>
+            
+            <div class="members-grid" id="prMembers"></div>
+        </div>
+
+        <div id="welfare" class="section">
+            <h2 class="section-title"><i class="fas fa-hands-helping"></i> ฝ่ายปฏฺิคม</h2>
+            
+            <!-- Department Head Showcase -->
+            <div class="dept-head-showcase" data-dept="welfare"></div>
+            
+            <div class="members-grid" id="welfareMembers"></div>
+        </div>
+
+        <div id="finance" class="section">
+            <h2 class="section-title"><i class="fas fa-coins"></i> ฝ่ายเหรัญญิก</h2>
+            
+            <!-- Department Head Showcase -->
+            <div class="dept-head-showcase" data-dept="finance"></div>
+            
+            <div class="members-grid" id="financeMembers"></div>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer>
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-section">
+                    <div class="footer-logo">
+                        <img src="../nav_white.png" alt="Hulalla Logo" class="footer-logo-emoji">
+                        <span class="footer-logo-text">พรรคฮูลัลลา Hulalla</span>
+                    </div>
+                    <p>พรรคฮูลัลลาเบอร์ 3 - โรงเรียนสาธิตมหาวิทยาลัยขอนแก่น ฝ่ายมัธยมศึกษา (ศึกษาศาสตร์)</p>
+                </div>
+                
+                <div class="footer-section">
+                    <h4>หน้าอื่น ๆ</h4>
+                    <a href="/">หน้าหลัก</a>
+                    <a href="/play">เกม & กิจกรรม</a>
+                    <a href="/report">รายงานปัญหา</a>
+                </div>
+                
+                <div class="footer-section">
+                    <h4>เกี่ยวกับ</h4>
+                    <a href="/privacy">ความเป็นส่วนตัว</a>
+                    <a href="/terms">เงื่อนไขการใช้งาน</a>
+                </div>
+            </div>
+
+            <div class="social-bar">
+                <a href="https://www.instagram.com/hulalla.hawaii/" class="social-link ig" target="_blank" rel="noopener" aria-label="Instagram">
+                    <i class="fab fa-instagram"></i>
+                </a>
+                <a href="https://www.youtube.com/@hulalla.hawaii" class="social-link yt" target="_blank" rel="noopener" aria-label="YouTube">
+                    <i class="fab fa-youtube"></i>
+                </a>
+                <a href="https://www.tiktok.com/@hulalla.hawaii" class="social-link tiktok" target="_blank" rel="noopener" aria-label="TikTok">
+                    <i class="fab fa-tiktok"></i>
+                </a>
+            </div>
+
+            <div class="footer-bottom">
+                <p>© 2026 Hulalla Party. All rights reserved.</p>
+                <div class="footer-links">
+                    <a href="/privacy">Privacy</a>
+                    <a href="/terms">Terms</a>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Ocean Waves -->
+    <div class="ocean">
+        <div class="wave"></div>
+        <div class="wave"></div>
+        <div class="wave"></div>
+    </div>
+
+    <!-- Scroll to Top Button -->
+    <button class="scroll-top" aria-label="Scroll to top">
+        <i class="fas fa-arrow-up"></i>
+    </button>
+
+<script src="./roster.js"></script>
+<script src="./script.js"></script>
+<script>
+    // Mobile Navigation Toggle
+    const navToggle = document.querySelector('.nav-toggle');
+    const navMenu = document.querySelector('.nav-menu');
+    
+    if (navToggle && navMenu) {
+        navToggle.addEventListener('click', () => {
+            navMenu.classList.toggle('active');
+            const icon = navToggle.querySelector('i');
+            if (icon) {
+                icon.classList.toggle('fa-bars');
+                icon.classList.toggle('fa-times');
+            }
+        });
+
+        // Close mobile menu when clicking on a link
+        document.querySelectorAll('.nav-link').forEach(link => {
+            link.addEventListener('click', () => {
+                navMenu.classList.remove('active');
+                const icon = navToggle.querySelector('i');
+                if (icon) {
+                    icon.classList.remove('fa-times');
+                    icon.classList.add('fa-bars');
+                }
+            });
+        });
+    }
+
+    // Scroll to Top Button
+    const scrollTopBtn = document.querySelector('.scroll-top');
+
+    if (scrollTopBtn) {
+        window.addEventListener('scroll', () => {
+            if (window.pageYOffset > 300) {
+                scrollTopBtn.classList.add('show');
+            } else {
+                scrollTopBtn.classList.remove('show');
+            }
+        });
+
+        scrollTopBtn.addEventListener('click', () => {
+            window.scrollTo({
+                top: 0,
+                behavior: 'smooth'
+            });
+        });
+    }
+</script>
+</body>
+</html>

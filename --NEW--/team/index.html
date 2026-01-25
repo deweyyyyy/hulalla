@@ -1,0 +1,239 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>สมาชิกฮูลัลลา - Hulalla Team</title>
+    <meta name="description" content="ทีมงานและฝ่ายต่างๆ ของพรรคฮูลัลลาเบอร์ 3 - Hulalla Party Team">
+    
+    <!-- Google Fonts - Prompt -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Prompt:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
+    
+    <!-- Favicon & Icons -->
+    <link rel="manifest" href="/manifest.json">
+    <link rel="apple-touch-icon" sizes="57x57" href="/apple-icon-57x57.png">
+    <link rel="apple-touch-icon" sizes="60x60" href="/apple-icon-60x60.png">
+    <link rel="apple-touch-icon" sizes="72x72" href="/apple-icon-72x72.png">
+    <link rel="apple-touch-icon" sizes="76x76" href="/apple-icon-76x76.png">
+    <link rel="apple-touch-icon" sizes="114x114" href="/apple-icon-114x114.png">
+    <link rel="apple-touch-icon" sizes="120x120" href="/apple-icon-120x120.png">
+    <link rel="apple-touch-icon" sizes="144x144" href="/apple-icon-144x144.png">
+    <link rel="apple-touch-icon" sizes="152x152" href="/apple-icon-152x152.png">
+    <link rel="apple-touch-icon" sizes="180x180" href="/apple-icon-180x180.png">
+    <link rel="icon" type="image/png" sizes="192x192" href="/android-icon-192x192.png">
+    <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="96x96" href="/favicon-96x96.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
+    <meta name="msapplication-TileImage" content="/ms-icon-144x144.png">
+    <link rel="icon" href="/favicon.ico" type="image/x-icon">
+    <meta name="theme-color" content="#38b6ff">
+    <meta name="msapplication-TileColor" content="#38b6ff">
+    
+    <!-- SweetAlert2 -->
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <link rel="stylesheet" href="./styles.css">
+</head>
+<body class="fullscreen-active">
+    <!-- Navigation Bar -->
+    <nav>
+        <div class="nav-container">
+            <a href="/" class="nav-logo">
+                <img src="../nav_black.png" alt="Hulalla Logo" class="nav-logo-emoji">
+                <span>Hulalla #3</span>
+            </a>
+            <button class="nav-toggle" aria-label="Toggle navigation">
+                <i class="fas fa-bars"></i>
+            </button>
+            <ul class="nav-menu">
+                <li><a href="/" class="nav-link">หน้าหลัก</a></li>
+                <li><a href="/team" class="nav-link active">สมาชิก</a></li>
+                <li><a href="/policies" class="nav-link">นโยบาย</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <!-- Background Particles -->
+    <div class="bg-particles" id="particles"></div>
+
+    <!-- Header -->
+    <header class="team-header">
+        <div class="header-content">
+            <div class="party-logo"><img src="../nav_white.png" alt="Hulalla Logo" style="width: 133px;"></div>
+            <h1 class="party-name">สมาชิกพรรค</h1>
+            <p class="party-tagline">สมาชิกพรรคฮูลัลลา เบอร์ 3</p>
+            <p class="party-subtitle">Hulalla * Haleana</p>
+        </div>
+    </header>
+
+    <!-- View Toggle -->
+    <div class="view-toggle-container">
+        <div class="view-toggle">
+            <button class="toggle-btn active" data-view="main" aria-label="หน้าหลัก">
+                <i class="fas fa-layer-group"></i>
+                <span>HLL #3</span>
+            </button>
+            <button class="toggle-btn" data-view="departments" aria-label="แสดงแบบฝ่าย">
+                <i class="fas fa-users-cog"></i>
+                <span>ฝ่ายต่างๆ</span>
+            </button>
+            <button class="toggle-btn" data-view="individuals" aria-label="แสดงแบบรายบุคคล">
+                <i class="fas fa-user-friends"></i>
+                <span>สมาชิก</span>
+            </button>
+        </div>
+    </div>
+
+    <!-- Main View - Full Screen Sections -->
+    <div id="mainView" class="view-section active fullscreen-view">
+        <div class="fullscreen-sections" id="fullscreenSections">
+            <!-- จะถูกสร้างด้วย JavaScript -->
+        </div>
+        
+        <!-- Navigation Dots -->
+        <div class="section-nav-dots" id="sectionNavDots">
+            <!-- จะถูกสร้างด้วย JavaScript -->
+        </div>
+        
+        <!-- Scroll Indicator -->
+        <div class="scroll-indicator">
+            <i class="fas fa-chevron-down"></i>
+            <span>เลื่อนเพื่อดูฝ่ายอื่นๆ</span>
+        </div>
+    </div>
+
+    <!-- Main Container -->
+    <div class="container">
+        <!-- Departments View -->
+        <div id="departmentsView" class="view-section">
+            <div class="departments-intro">
+                <h2 class="section-title">
+                    <i class="fas fa-users-cog"></i>
+                    ฝ่ายต่าง ๆ ของพรรค
+                </h2>
+            </div>
+
+            <!-- Departments Grid -->
+            <div class="departments-grid" id="departmentsGrid">
+            </div>
+        </div>
+
+        <!-- Individuals View -->
+        <div id="individualsView" class="view-section">
+            <div class="individuals-intro">
+                <h2 class="section-title">
+                    <i class="fas fa-user-friends"></i>
+                    สมาชิกพรรคทั้งหมด
+                </h2>
+            </div>
+
+            <!-- Search Bar -->
+            <div class="search-bar">
+                <i class="fas fa-search"></i>
+                <input type="text" id="memberSearch" placeholder="ค้นหาสมาชิก...">
+                <button class="search-clear" id="searchClear" aria-label="ล้างการค้นหา">
+                    <i class="fas fa-times"></i>
+                </button>
+            </div>
+
+            <!-- Filter Buttons -->
+            <div class="filter-buttons">
+                <button class="filter-btn active" data-dept="all">
+                    <i class="fas fa-users"></i> ทั้งหมด
+                </button>
+                <button class="filter-btn" data-dept="บริหาร" data-color="#ff69b4">
+                    <i class="fas fa-crown"></i> บริหาร
+                </button>
+                <button class="filter-btn" data-dept="ปฏิคม" data-color="#ff4444">
+                    <i class="fas fa-hands-helping"></i> ปฏิคม
+                </button>
+                <button class="filter-btn" data-dept="เหรัญญิก" data-color="#ff9500">
+                    <i class="fas fa-coins"></i> เหรัญญิก
+                </button>
+                <button class="filter-btn" data-dept="กีฬา" data-color="#ffeb3b">
+                    <i class="fas fa-futbol"></i> กีฬา
+                </button>
+                <button class="filter-btn" data-dept="กิจกรรม" data-color="#4caf50">
+                    <i class="fas fa-star"></i> กิจกรรม
+                </button>
+                <button class="filter-btn" data-dept="วิชาการ" data-color="#03a9f4">
+                    <i class="fas fa-book"></i> วิชาการ
+                </button>
+                <button class="filter-btn" data-dept="ศิลป์" data-color="#2196f3">
+                    <i class="fas fa-palette"></i> ศิลป์
+                </button>
+                <button class="filter-btn" data-dept="ประชาสัมพันธ์" data-color="#9c27b0">
+                    <i class="fas fa-bullhorn"></i> PR
+                </button>
+            </div>
+
+            <!-- Members Grid -->
+            <div class="members-grid" id="membersGrid">
+                <!-- จะถูกสร้างด้วย JavaScript -->
+            </div>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer>
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-section">
+                    <div class="footer-logo">
+                        <img src="../nav_white.png" alt="Hulalla Logo" class="footer-logo-emoji">
+                        <span class="footer-logo-text">พรรคฮูลัลลา Hulalla</span>
+                    </div>
+                    <p>พรรคฮูลัลลาเบอร์ 3 - โรงเรียนสาธิตมหาวิทยาลัยขอนแก่น ฝ่ายมัธยมศึกษา (ศึกษาศาสตร์)</p>
+                </div>
+                
+                <div class="footer-section">
+                    <h4>หน้าอื่น ๆ</h4>
+                    <a href="/">หน้าหลัก</a>
+                    <a href="/play">เกม & กิจกรรม</a>
+                    <a href="/policies">นโยบาย</a>
+                    <a href="/team">สมาชิก</a>
+                    <a href="/report">รายงานปัญหา</a>
+                </div>
+                
+                <div class="footer-section">
+                    <h4>เกี่ยวกับ</h4>
+                    <a href="/privacy">ความเป็นส่วนตัว</a>
+                    <a href="/terms">เงื่อนไขการใช้งาน</a>
+                </div>
+            </div>
+
+            <div class="social-bar">
+                <a href="https://www.instagram.com/hulalla.hawaii/" class="social-link ig" target="_blank" rel="noopener" aria-label="Instagram">
+                    <i class="fab fa-instagram"></i>
+                </a>
+                <a href="https://www.youtube.com/@hulalla.hawaii" class="social-link yt" target="_blank" rel="noopener" aria-label="YouTube">
+                    <i class="fab fa-youtube"></i>
+                </a>
+                <a href="https://www.tiktok.com/@hulalla.hawaii" class="social-link tiktok" target="_blank" rel="noopener" aria-label="TikTok">
+                    <i class="fab fa-tiktok"></i>
+                </a>
+            </div>
+
+            <div class="footer-bottom">
+                <p>© 2026 Hulalla Party. All rights reserved.</p>
+                <div class="footer-links">
+                    <a href="/privacy">Privacy</a>
+                    <a href="/terms">Terms</a>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Scroll to Top Button -->
+    <button class="scroll-top" aria-label="Scroll to top">
+        <i class="fas fa-arrow-up"></i>
+    </button>
+
+    <script src="./roster.js"></script>
+    <script src="./script.js"></script>
+</body>
+</html>
