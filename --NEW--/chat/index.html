@@ -1,0 +1,529 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Hulalla AI - พรรคฮูลัลลา เบอร์ 3</title>
+    <meta name="description" content="AI Agent ประจำพรรคฮูลัลลา เบอร์ 3 โรงเรียนสาธิตมหาวิทยาลัยขอนแก่น - ตอบทุกคำถามเกี่ยวกับนโยบายและกิจกรรมของพรรค">
+    
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Prompt:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
+    
+    <!-- SweetAlert2 -->
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    
+    <link rel="stylesheet" href="./styles2.css">
+    <style>
+/* ========== VOTE POPUP (FEBRUARY 10) ========== */
+.vote-popup {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 100000;
+    display: none;
+    justify-content: center;
+    align-items: center;
+    padding: 20px;
+}
+
+.vote-popup.show {
+    display: flex;
+    animation: fadeIn 0.3s ease-out;
+}
+
+.vote-popup-overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.75);
+    backdrop-filter: blur(8px);
+    animation: fadeIn 0.3s ease-out;
+}
+
+.vote-popup-content {
+    position: relative;
+    background: linear-gradient(135deg, #ffffff 0%, #f8f9fa 100%);
+    border-radius: 30px;
+    max-width: 800px;
+    width: 100%;
+    max-height: 90vh;
+    overflow-y: auto;
+    box-shadow: 0 25px 80px rgba(0, 0, 0, 0.3);
+    animation: slideUp 0.4s ease-out;
+    border: 3px solid rgba(56, 182, 255, 0.3);
+}
+
+.vote-popup-close {
+    position: absolute;
+    top: 20px;
+    right: 20px;
+    background: rgba(255, 255, 255, 0.95);
+    border: none;
+    border-radius: 50%;
+    width: 40px;
+    height: 40px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    color: #666;
+    font-size: 20px;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+    z-index: 10;
+}
+
+.vote-popup-close:hover {
+    background: #38b6ff;
+    color: white;
+    transform: rotate(90deg) scale(1.1);
+}
+
+.vote-popup-header {
+    background: linear-gradient(135deg, #38b6ff 0%, #5cc3ff 100%);
+    padding: 40px 30px 30px;
+    text-align: center;
+    border-radius: 27px 27px 0 0;
+    position: relative;
+    overflow: hidden;
+}
+
+.vote-popup-header::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 120"><path d="M0,50 Q300,100 600,50 T1200,50 L1200,120 L0,120 Z" fill="white" opacity="0.1"/></svg>');
+    background-size: cover;
+    background-position: bottom;
+    pointer-events: none;
+}
+
+.vote-popup-header h2 {
+    color: white;
+    font-size: clamp(1.5rem, 4vw, 2.2rem);
+    font-weight: 800;
+    margin: 0 0 10px 0;
+    text-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+    position: relative;
+    z-index: 1;
+}
+
+.vote-date {
+    color: rgba(255, 255, 255, 0.95);
+    font-size: 1.1rem;
+    font-weight: 600;
+    margin: 0;
+    text-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
+    position: relative;
+    z-index: 1;
+}
+
+.vote-popup-body {
+    padding: 30px;
+}
+
+.vote-poster {
+    margin-bottom: 30px;
+    border-radius: 20px;
+    overflow: hidden;
+    box-shadow: 0 10px 40px rgba(56, 182, 255, 0.2);
+    border: 3px solid rgba(56, 182, 255, 0.2);
+}
+
+.poster-image {
+    width: 100%;
+    height: auto;
+    display: block;
+    transition: transform 0.3s ease;
+}
+
+.vote-poster:hover .poster-image {
+    transform: scale(1.02);
+}
+
+.vote-instructions h3 {
+    color: #38b6ff;
+    font-size: 1.5rem;
+    font-weight: 700;
+    margin: 0 0 20px 0;
+    text-align: center;
+}
+
+.instructions-images {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 20px;
+    margin-bottom: 25px;
+}
+
+.instruction-image {
+    width: 100%;
+    height: auto;
+    border-radius: 15px;
+    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.1);
+    border: 2px solid rgba(56, 182, 255, 0.2);
+    transition: all 0.3s ease;
+}
+
+.instruction-image:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 12px 35px rgba(56, 182, 255, 0.3);
+}
+
+.vote-cta {
+    background: linear-gradient(135deg, #38b6ff 0%, #e3b93d 100%);
+    padding: 25px;
+    border-radius: 20px;
+    text-align: center;
+    margin-top: 25px;
+    box-shadow: 0 8px 30px rgba(56, 182, 255, 0.3);
+}
+
+.vote-message {
+    color: white;
+    font-size: 1.1rem;
+    font-weight: 600;
+    margin: 0 0 20px 0;
+    line-height: 1.6;
+    text-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
+}
+
+.btn-vote {
+    background: white;
+    color: #38b6ff;
+    border: none;
+    padding: 15px 40px;
+    font-size: 1.1rem;
+    font-weight: 700;
+    border-radius: 50px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.15);
+    font-family: 'Prompt', sans-serif;
+}
+
+.btn-vote:hover {
+    background: #e3b93d;
+    color: white;
+    transform: translateY(-3px);
+    box-shadow: 0 8px 30px rgba(227, 185, 61, 0.4);
+}
+
+.btn-vote i {
+    margin-right: 8px;
+}
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+    }
+    to {
+        opacity: 1;
+    }
+}
+
+@keyframes slideUp {
+    from {
+        opacity: 0;
+        transform: translateY(50px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+@media (max-width: 768px) {
+    .vote-popup-content {
+        border-radius: 20px;
+        max-height: 95vh;
+    }
+
+    .vote-popup-header {
+        padding: 30px 20px 25px;
+        border-radius: 17px 17px 0 0;
+    }
+
+    .vote-popup-header h2 {
+        font-size: 1.5rem;
+    }
+
+    .vote-date {
+        font-size: 1rem;
+    }
+
+    .vote-popup-body {
+        padding: 20px;
+    }
+
+    .instructions-images {
+        grid-template-columns: 1fr;
+        gap: 15px;
+    }
+
+    .vote-cta {
+        padding: 20px;
+    }
+
+    .vote-message {
+        font-size: 1rem;
+    }
+
+    .btn-vote {
+        padding: 12px 30px;
+        font-size: 1rem;
+    }
+}
+    </style>
+</head>
+<body>
+
+    <!-- Header -->
+    <div class="header">
+        <div class="header-left">
+            <!--hh
+            <a href="/" class="back-btn" title="กลับหน้าหลัก">
+                <i class="fas fa-home"></i>
+            </a>
+            -->
+            <a href="/" class="back-btn" title="กลับหน้าหลัก">
+                <img id="nav-logo" src="../nav_black.png" alt="Hulalla Logo" style="height: 40px;">
+            </a>
+            <div class="logo-section">
+                <div class="logo-text">
+                    <h1>Hulalla #3</h1>
+                    <span><i class="fas fa-circle"></i> Online</span>
+                </div>
+            </div>
+        </div>
+        <div class="header-right">
+            <button class="theme-toggle" id="theme-toggle" title="เปลี่ยนธีม" onclick="toggleTheme()">
+                <i class="fas fa-moon" id="theme-icon"></i>
+            </button>
+            <div class="social-menu">
+                <button class="social-toggle" title="Social Media">
+                    <i class="fas fa-link"></i>
+                </button>
+                <div class="social-dropdown">
+                    <a href="https://www.instagram.com/hulalla.hawaii/" target="_blank" class="social-btn ig" title="Instagram">
+                        <i class="fab fa-instagram"></i>
+                    </a>
+                    <a href="https://www.tiktok.com/@hulalla.hawaii" target="_blank" class="social-btn tt" title="TikTok">
+                        <i class="fab fa-tiktok"></i>
+                    </a>
+                    <a href="https://www.youtube.com/@hulalla.hawaii" target="_blank" class="social-btn yt" title="YouTube">
+                        <i class="fab fa-youtube"></i>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Loading Bar -->
+    <div id="loading-bar" class="loading-bar hidden"></div>
+
+    <!-- Error Toast -->
+    <div id="error-toast" class="error-toast">
+        <i class="fas fa-exclamation-circle"></i>
+        <span id="error-message">เกิดข้อผิดพลาด</span>
+    </div>
+
+    <!-- Chat Container -->
+    <div class="chat-container">
+        <div id="chat-box">
+            <!-- Welcome Message -->
+            <div class="welcome-card" id="welcome-message">
+                <div class="welcome-icon"><img src="./ai_logo.png" style="width: 100%;border-radius: 12px;"></div>
+                <h1>LuLu Robot</h1>
+                <h2>🍍 สวัสดีครับ! ผมลูลู่เอง</h2>
+                <div class="welcome-badge" id="model-badge">
+                    <i class="fas fa-bolt"></i>
+                    <span id="model-name">กำลังโหลด...</span>
+                </div>
+                <p>
+                    ลิงสับปะรดตัวแทนพรรคฮูลัลลา #3 🐒✨<br>
+                    ขี้เล่นนิดนึง แต่พร้อมช่วยตอบคำถามจริงจังแน่นอนครับ!
+                </p>
+                <div class="suggestions" id="initial-suggestions">
+                    <!-- Random suggestions will be generated by inline script below -->
+                </div>
+                <script>
+                    // Generate random suggestions immediately on page load
+                    (function() {
+                        const suggestionPool = [
+                            'พรรคมีนโยบายอะไรบ้าง?',
+                            'วันเลือกตั้งเมื่อไหร่?',
+                            'ติดตามพรรคได้ที่ไหน?',
+                            'พรรคฮูลัลลาคืออะไร?',
+                            'ประธานพรรคคือใคร?',
+                            'อาจารย์ที่ปรึกษามีใครบ้าง?',
+                            'นโยบายด้านการเรียนมีอะไร?',
+                            'นโยบายด้านกีฬามีอะไรบ้าง?',
+                            'มีนโยบายด้านสิ่งแวดล้อมไหม?',
+                            'สมาชิกพรรคมีกี่คน?',
+                            'หัวหน้าฝ่ายต่างๆ คือใคร?',
+                            'มีนโยบายด้านนวัตกรรมอะไรบ้าง?',
+                            'วิสัยทัศน์ของพรรคคืออะไร?',
+                            'ติดต่อพรรคผ่าน IG ได้ไหม?',
+                            'มีนโยบายด้านสวัสดิการไหม?',
+                            'พรรคมีกิจกรรมอะไรบ้าง?',
+                            'มีนโยบายด้านศิลปะไหม?',
+                            'โรงอาหารมีนโยบายอะไร?',
+                            'มีชุมนุมอะไรบ้าง?',
+                            'พรรคช่วยเรื่องการเรียนยังไง?'
+                        ];
+                        
+                        // Shuffle and pick 4 unique suggestions
+                        const shuffled = suggestionPool.sort(() => Math.random() - 0.5);
+                        const randomSuggestions = shuffled.slice(0, 4);
+                        
+                        // Generate HTML
+                        const container = document.getElementById('initial-suggestions');
+                        if (container) {
+                            container.innerHTML = randomSuggestions.map(q => {
+                                const escaped = q.replace(/'/g, "\\'");
+                                return `<div class="suggestion-chip" onclick="askQuestion('${escaped}')">
+                                    <i class="fas fa-comment"></i> ${q}
+                                </div>`;
+                            }).join('');
+                        }
+                    })();
+                </script>
+            </div>
+        </div>
+
+        <!-- Input Area -->
+        <div class="input-container">
+            <div class="input-wrapper">
+                <input type="text" id="userInput" placeholder="พิมพ์คำถามของคุณ..." autocomplete="off">
+                <div class="question-counter" id="question-counter">
+                    <span id="question-count">0</span>/<span id="question-limit">33</span>
+                </div>
+                <button id="send-btn" onclick="sendMessage()">
+                    <i class="fas fa-paper-plane"></i>
+                </button>
+            </div>
+        </div>
+
+        <div class="footer-info">
+            การใช้งาน AI ถือว่าท่านได้อ่านและยอมรับ <a href="/privacy">Privacy Policy</a><br>AI อาจให้ข้อมูลที่ไม่ถูกต้อง กรุณาตรวจสอบข้อมูลก่อนใช้งาน<br><p style="font-size: xx-small;" id="buildver"></p>
+        </div>
+    </div>
+
+    <!-- Disclaimer Modal -->
+    <div id="disclaimer-modal" class="disclaimer-modal">
+        <div class="disclaimer-content">
+            <div class="disclaimer-icon">⚖️</div>
+            <h2>ข้อจำกัดความรับผิดและข้อตกลงการใช้งาน</h2>
+            <p class="disclaimer-intro">กรุณาอ่านและทำความเข้าใจข้อกำหนดต่อไปนี้ก่อนใช้งาน AI Chatbot</p>
+            
+            <div class="disclaimer-terms">
+                <div class="term-item">
+                    <span class="term-number">1</span>
+                    <div class="term-text">
+                        <strong>การแจ้งเตือนเกี่ยวกับระบบ AI:</strong> ท่านกำลังสนทนากับระบบปัญญาประดิษฐ์ (AI) ซึ่งไม่ใช่บุคคลหรือตัวแทนอย่างเป็นทางการของพรรคฮูลัลลา
+                    </div>
+                </div>
+                <div class="term-item">
+                    <span class="term-number">2</span>
+                    <div class="term-text">
+                        <strong>ข้อจำกัดความรับผิด:</strong> พรรคฮูลัลลาไม่รับผิดชอบต่อความเสียหาย สูญเสีย หรือผลกระทบใดๆ ที่อาจเกิดขึ้นจากการใช้ข้อมูลที่ได้รับจากระบบนี้ ข้อมูลที่ให้อาจไม่ครบถ้วน ไม่ถูกต้อง หรือไม่ตรงกับนโยบายปัจจุบันของพรรค
+                    </div>
+                </div>
+                <div class="term-item">
+                    <span class="term-number">3</span>
+                    <div class="term-text">
+                        <strong>แหล่งข้อมูลอย่างเป็นทางการ:</strong> ผู้ใช้งานควรตรวจสอบข้อมูลจาก Social Media อย่างเป็นทางการของพรรคฮูลัลลา (@hulalla.hawaii) เพื่อความถูกต้องของข้อมูล
+                    </div>
+                </div>
+                <div class="term-item">
+                    <span class="term-number">4</span>
+                    <div class="term-text">
+                        <strong>ข้อมูลส่วนบุคคล:</strong> ระบบนี้ไม่มีการจัดเก็บ รวบรวม หรือประมวลผลข้อมูลส่วนบุคคลของผู้ใช้งาน ตามพระราชบัญญัติคุ้มครองข้อมูลส่วนบุคคล พ.ศ. 2562 (PDPA) ผู้ใช้งานไม่ควรให้ข้อมูลส่วนบุคคลที่ละเอียดอ่อนผ่านระบบนี้
+                    </div>
+                </div>
+            </div>
+            
+            <button id="accept-disclaimer" class="accept-btn">
+                <i class="fas fa-check-circle"></i> ยอมรับข้อตกลง
+            </button>
+        </div>
+    </div>
+
+    <!-- February 10 Voting Popup -->
+    <div class="vote-popup" id="votePopup">
+        <div class="vote-popup-overlay" onclick="closeVotePopup()"></div>
+        <div class="vote-popup-content">
+            <button class="vote-popup-close" onclick="closeVotePopup()">
+                <i class="fas fa-times"></i>
+            </button>
+            <div class="vote-popup-header">
+                <h2>🗳️ โหวตพรรคฮูลัลลาเบอร์ 3</h2>
+                <p class="vote-date">📅 วันที่ 10 กุมภาพันธ์ 2026</p>
+            </div>
+            <div class="vote-popup-body">
+                <div class="vote-poster">
+                    <img src="../img/333.jpg" alt="โปสเตอร์พรรคฮูลัลลา" class="poster-image">
+                </div>
+                <div class="vote-instructions">
+                    <h3>📋 วิธีการโหวต</h3>
+                    <div class="instructions-images">
+                        <img src="../img/13.jpg" alt="วิธีการโหวต ขั้นตอนที่ 1" class="instruction-image">
+                        <img src="../img/14.jpg" alt="วิธีการโหวต ขั้นตอนที่ 2" class="instruction-image">
+                    </div>
+                    <div class="vote-cta">
+                        <p class="vote-message">✨ มาร่วมกันสร้างการเปลี่ยนแปลง! โหวตให้พรรคฮูลัลลาเบอร์ 3 วันที่ 10 กุมภาพันธ์นี้ 🌴</p>
+                        <button class="btn btn-vote" onclick="closeVotePopup()">
+                            <i class="fas fa-check-circle"></i>
+                            เข้าใจแล้ว พร้อมโหวต!
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+<script src="https://cdn.jsdelivr.net/npm/fuse.js@7.0.0"></script>
+  <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-app.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-database.js"></script>
+  <script src="/keys.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-analytics.js"></script>
+<script src="./chat308.js"></script>
+<script>
+    // ========== VOTE POPUP (FEBRUARY 10) ==========
+    function showVotePopup() {
+        const popup = document.getElementById('votePopup');
+        if (popup) {
+            popup.classList.add('show');
+            document.body.style.overflow = 'hidden';
+        }
+    }
+
+    function closeVotePopup() {
+        const popup = document.getElementById('votePopup');
+        if (popup) {
+            popup.classList.remove('show');
+            document.body.style.overflow = '';
+        }
+    }
+
+    // Show vote popup on page load (after a delay)
+    setTimeout(() => {
+        showVotePopup();
+    }, 2000);
+</script>
+
+</body>
+</html>

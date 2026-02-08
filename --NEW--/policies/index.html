@@ -1,0 +1,612 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="นโยบายพรรคฮูลัลลา - พรรคสภานักเรียนรุ่นที่ 15 โรงเรียนสาธิตมหาวิทยาลัยขอนแก่น ฝ่ายมัธยมศึกษา (ศึกษาศาสตร์)">
+    <meta property="og:title" content="นโยบายพรรคฮูลัลลา">
+    <meta property="og:description" content="นโยบายของพรรคฮูลัลลา เพื่อส่งเสริมนักเรียนอย่างรอบด้าน">
+    <meta property="og:image" content="https://via.placeholder.com/1200x630/38b6ff/FFFFFF?text=Hulalla+Policies">
+    <title>นโยบายพรรคฮูลัลลา | Hulalla Policies</title>
+    
+    <!-- Favicon & Icons -->
+    <link rel="manifest" href="/manifest.json">
+    <link rel="apple-touch-icon" sizes="57x57" href="/apple-icon-57x57.png">
+    <link rel="apple-touch-icon" sizes="60x60" href="/apple-icon-60x60.png">
+    <link rel="apple-touch-icon" sizes="72x72" href="/apple-icon-72x72.png">
+    <link rel="apple-touch-icon" sizes="76x76" href="/apple-icon-76x76.png">
+    <link rel="apple-touch-icon" sizes="114x114" href="/apple-icon-114x114.png">
+    <link rel="apple-touch-icon" sizes="120x120" href="/apple-icon-120x120.png">
+    <link rel="apple-touch-icon" sizes="144x144" href="/apple-icon-144x144.png">
+    <link rel="apple-touch-icon" sizes="152x152" href="/apple-icon-152x152.png">
+    <link rel="apple-touch-icon" sizes="180x180" href="/apple-icon-180x180.png">
+    <link rel="icon" type="image/png" sizes="192x192" href="/android-icon-192x192.png">
+    <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="96x96" href="/favicon-96x96.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
+    <meta name="msapplication-TileImage" content="/ms-icon-144x144.png">
+    <link rel="icon" href="/favicon.ico" type="image/x-icon">
+    
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    
+    <!-- SweetAlert2 -->
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Prompt:wght@300;400;500;600;700;800;900&family=IBM+Plex+Sans+Thai:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    
+    <link rel="stylesheet" href="./policies.css">
+    <style>
+/* ========== VOTE POPUP (FEBRUARY 10) ========== */
+.vote-popup {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 100000;
+    display: none;
+    justify-content: center;
+    align-items: center;
+    padding: 20px;
+}
+
+.vote-popup.show {
+    display: flex;
+    animation: fadeIn 0.3s ease-out;
+}
+
+.vote-popup-overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.75);
+    backdrop-filter: blur(8px);
+    animation: fadeIn 0.3s ease-out;
+}
+
+.vote-popup-content {
+    position: relative;
+    background: linear-gradient(135deg, #ffffff 0%, #f8f9fa 100%);
+    border-radius: 30px;
+    max-width: 800px;
+    width: 100%;
+    max-height: 90vh;
+    overflow-y: auto;
+    box-shadow: 0 25px 80px rgba(0, 0, 0, 0.3);
+    animation: slideUp 0.4s ease-out;
+    border: 3px solid rgba(56, 182, 255, 0.3);
+}
+
+.vote-popup-close {
+    position: absolute;
+    top: 20px;
+    right: 20px;
+    background: rgba(255, 255, 255, 0.95);
+    border: none;
+    border-radius: 50%;
+    width: 40px;
+    height: 40px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    color: #666;
+    font-size: 20px;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+    z-index: 10;
+}
+
+.vote-popup-close:hover {
+    background: #38b6ff;
+    color: white;
+    transform: rotate(90deg) scale(1.1);
+}
+
+.vote-popup-header {
+    background: linear-gradient(135deg, #38b6ff 0%, #5cc3ff 100%);
+    padding: 40px 30px 30px;
+    text-align: center;
+    border-radius: 27px 27px 0 0;
+    position: relative;
+    overflow: hidden;
+}
+
+.vote-popup-header::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 120"><path d="M0,50 Q300,100 600,50 T1200,50 L1200,120 L0,120 Z" fill="white" opacity="0.1"/></svg>');
+    background-size: cover;
+    background-position: bottom;
+    pointer-events: none;
+}
+
+.vote-popup-header h2 {
+    color: white;
+    font-size: clamp(1.5rem, 4vw, 2.2rem);
+    font-weight: 800;
+    margin: 0 0 10px 0;
+    text-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+    position: relative;
+    z-index: 1;
+}
+
+.vote-date {
+    color: rgba(255, 255, 255, 0.95);
+    font-size: 1.1rem;
+    font-weight: 600;
+    margin: 0;
+    text-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
+    position: relative;
+    z-index: 1;
+}
+
+.vote-popup-body {
+    padding: 30px;
+}
+
+.vote-poster {
+    margin-bottom: 30px;
+    border-radius: 20px;
+    overflow: hidden;
+    box-shadow: 0 10px 40px rgba(56, 182, 255, 0.2);
+    border: 3px solid rgba(56, 182, 255, 0.2);
+}
+
+.poster-image {
+    width: 100%;
+    height: auto;
+    display: block;
+    transition: transform 0.3s ease;
+}
+
+.vote-poster:hover .poster-image {
+    transform: scale(1.02);
+}
+
+.vote-instructions h3 {
+    color: #38b6ff;
+    font-size: 1.5rem;
+    font-weight: 700;
+    margin: 0 0 20px 0;
+    text-align: center;
+}
+
+.instructions-images {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 20px;
+    margin-bottom: 25px;
+}
+
+.instruction-image {
+    width: 100%;
+    height: auto;
+    border-radius: 15px;
+    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.1);
+    border: 2px solid rgba(56, 182, 255, 0.2);
+    transition: all 0.3s ease;
+}
+
+.instruction-image:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 12px 35px rgba(56, 182, 255, 0.3);
+}
+
+.vote-cta {
+    background: linear-gradient(135deg, #38b6ff 0%, #e3b93d 100%);
+    padding: 25px;
+    border-radius: 20px;
+    text-align: center;
+    margin-top: 25px;
+    box-shadow: 0 8px 30px rgba(56, 182, 255, 0.3);
+}
+
+.vote-message {
+    color: white;
+    font-size: 1.1rem;
+    font-weight: 600;
+    margin: 0 0 20px 0;
+    line-height: 1.6;
+    text-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
+}
+
+.btn-vote {
+    background: white;
+    color: #38b6ff;
+    border: none;
+    padding: 15px 40px;
+    font-size: 1.1rem;
+    font-weight: 700;
+    border-radius: 50px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.15);
+    font-family: 'Prompt', sans-serif;
+}
+
+.btn-vote:hover {
+    background: #e3b93d;
+    color: white;
+    transform: translateY(-3px);
+    box-shadow: 0 8px 30px rgba(227, 185, 61, 0.4);
+}
+
+.btn-vote i {
+    margin-right: 8px;
+}
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+    }
+    to {
+        opacity: 1;
+    }
+}
+
+@keyframes slideUp {
+    from {
+        opacity: 0;
+        transform: translateY(50px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+@media (max-width: 768px) {
+    .vote-popup-content {
+        border-radius: 20px;
+        max-height: 95vh;
+    }
+
+    .vote-popup-header {
+        padding: 30px 20px 25px;
+        border-radius: 17px 17px 0 0;
+    }
+
+    .vote-popup-header h2 {
+        font-size: 1.5rem;
+    }
+
+    .vote-date {
+        font-size: 1rem;
+    }
+
+    .vote-popup-body {
+        padding: 20px;
+    }
+
+    .instructions-images {
+        grid-template-columns: 1fr;
+        gap: 15px;
+    }
+
+    .vote-cta {
+        padding: 20px;
+    }
+
+    .vote-message {
+        font-size: 1rem;
+    }
+
+    .btn-vote {
+        padding: 12px 30px;
+        font-size: 1rem;
+    }
+}
+    </style>
+</head>
+<body>
+    <!-- Animated Background -->
+    <div class="animated-bg">
+        <div class="gradient-orb orb-1"></div>
+        <div class="gradient-orb orb-2"></div>
+        <div class="gradient-orb orb-3"></div>
+    </div>
+
+    <!-- Hero Section -->
+    <section class="hero-section">
+        <div class="hero-container">
+            <div class="hero-content">
+                <div class="hero-logo">
+                    <img src="../nav_white.png" alt="Hulalla Logo">
+                </div>
+                <h1 class="hero-title">
+                    <span class="title-main">นโยบาย</span>
+                    <span class="title-sub">พรรคฮูลัลลา</span>
+                </h1>
+                <p class="hero-subtitle">เลือกสภา ฮูลัลลา เบอร์ 3</p>
+                <p class="hero-description">
+                    พรรคสภานักเรียนรุ่นที่ 15 โรงเรียนสาธิตมหาวิทยาลัยขอนแก่น ฝ่ายมัธยมศึกษา (ศึกษาศาสตร์)
+                </p>
+                <div class="hero-stats">
+                    <div class="stat-item">
+                        <div class="stat-number">25</div>
+                        <div class="stat-label">นโยบาย</div>
+                    </div>
+                    <div class="stat-item">
+                        <div class="stat-number">7</div>
+                        <div class="stat-label">ด้าน</div>
+                    </div>
+                    <div class="stat-item">
+                        <div class="stat-number">X 3</div>
+                        <div class="stat-label">เลือกฮูลัลลา</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="hero-scroll">
+            <i class="fas fa-chevron-down"></i>
+        </div>
+    </section>
+
+    <!-- Main Container -->
+    <div class="container">
+        
+        <!-- Category Filter Section -->
+        <section class="filter-section">
+            <div class="filter-container">
+                <h2 class="section-title">เลือกดูนโยบายตามด้าน</h2>
+                <div class="filter-grid" id="filterTags">
+                    <button class="filter-card active" data-category="all" onclick="filterByCategory('all')">
+                        <div class="filter-icon">
+                            <i class="fas fa-th-large"></i>
+                        </div>
+                        <div class="filter-content">
+                            <h3>ทั้งหมด</h3>
+                            <p id="count-all">25 นโยบาย</p>
+                        </div>
+                    </button>
+                    <button class="filter-card" data-category="student-life" onclick="filterByCategory('student-life')">
+                        <div class="filter-icon">
+                            <i class="fas fa-user-graduate"></i>
+                        </div>
+                        <div class="filter-content">
+                            <h3>นักเรียนและคุณภาพชีวิต</h3>
+                            <p id="count-student-life">4 นโยบาย</p>
+                        </div>
+                    </button>
+                    <button class="filter-card" data-category="activities" onclick="filterByCategory('activities')">
+                        <div class="filter-icon">
+                            <i class="fas fa-calendar-alt"></i>
+                        </div>
+                        <div class="filter-content">
+                            <h3>กิจกรรมและความสามารถพิเศษ</h3>
+                            <p id="count-activities">6 นโยบาย</p>
+                        </div>
+                    </button>
+                    <button class="filter-card" data-category="academic" onclick="filterByCategory('academic')">
+                        <div class="filter-icon">
+                            <i class="fas fa-book"></i>
+                        </div>
+                        <div class="filter-content">
+                            <h3>การเรียนและวิชาการ</h3>
+                            <p id="count-academic">2 นโยบาย</p>
+                        </div>
+                    </button>
+                    <button class="filter-card" data-category="innovation" onclick="filterByCategory('innovation')">
+                        <div class="filter-icon">
+                            <i class="fas fa-lightbulb"></i>
+                        </div>
+                        <div class="filter-content">
+                            <h3>นวัตกรรมและการพัฒนาโรงเรียน</h3>
+                            <p id="count-innovation">4 นโยบาย</p>
+                        </div>
+                    </button>
+                    <button class="filter-card" data-category="environment" onclick="filterByCategory('environment')">
+                        <div class="filter-icon">
+                            <i class="fas fa-leaf"></i>
+                        </div>
+                        <div class="filter-content">
+                            <h3>สิ่งแวดล้อมและความสะอาด</h3>
+                            <p id="count-environment">2 นโยบาย</p>
+                        </div>
+                    </button>
+                    <button class="filter-card" data-category="inclusive" onclick="filterByCategory('inclusive')">
+                        <div class="filter-icon">
+                            <i class="fas fa-hands-helping"></i>
+                        </div>
+                        <div class="filter-content">
+                            <h3>สภาพแวดล้อมที่เปิดกว้างและเอื้อต่อการเรียนรู้</h3>
+                            <p id="count-inclusive">3 นโยบาย</p>
+                        </div>
+                    </button>
+                    <button class="filter-card" data-category="communication" onclick="filterByCategory('communication')">
+                        <div class="filter-icon">
+                            <i class="fas fa-comments"></i>
+                        </div>
+                        <div class="filter-content">
+                            <h3>การสื่อสารและการมีส่วนร่วม</h3>
+                            <p id="count-communication">4 นโยบาย</p>
+                        </div>
+                    </button>
+                </div>
+            </div>
+        </section>
+
+        <!-- Search Bar -->
+        <section class="search-section">
+            <div class="search-container">
+                <div class="search-box">
+                    <i class="fas fa-search"></i>
+                    <input type="text" id="searchInput" placeholder="ค้นหานโยบาย..." onkeyup="searchPolicies()">
+                    <button class="search-clear" onclick="clearSearch()" style="display: none;">
+                        <i class="fas fa-times"></i>
+                    </button>
+                </div>
+            </div>
+        </section>
+
+        <!-- Policies Grid Section -->
+        <section class="policies-section">
+            <div class="policies-container">
+                <div class="policy-grid" id="policyGrid">
+                    <div class="loading">
+                        <div class="spinner"></div>
+                        <p>กำลังโหลดนโยบาย...</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </div>
+
+     <!-- Footer -->
+        <footer>
+            <div class="footer-content">
+                <div class="footer-section">
+                    <div class="footer-logo">
+                        <img src="../nav_white.png" alt="Hulalla Logo" class="footer-logo-emoji">
+                        <span class="footer-logo-text">พรรคฮูลัลลา Hulalla</span>
+                    </div>
+                    <p>พรรคฮูลัลลาเบอร์ 3 - โรงเรียนสาธิตมหาวิทยาลัยขอนแก่น ฝ่ายมัธยมศึกษา (ศึกษาศาสตร์)</p>
+                    <p style="font-size: xx-small;" id="buildver"></p>
+                </div>
+                
+                <div class="footer-section">
+                    <h4>หน้าอื่น ๆ</h4>
+                    <a href="../index.html">หน้าหลัก</a>
+                    <a href="../policies/">นโยบาย</a>
+                    <a href="../report">รายงานปัญหา</a>
+                </div>
+                
+                <div class="footer-section">
+                    <h4>เกี่ยวกับ</h4>
+                    <a href="../privacy">ความเป็นส่วนตัว</a>
+                    <a href="../terms">เงื่อนไขการใช้งาน</a>
+                </div>
+            </div>
+
+            <div class="social-bar">
+                <a href="https://www.instagram.com/hulalla.hawaii/" class="social-link ig" target="_blank" rel="noopener" aria-label="Instagram">
+                    <i class="fab fa-instagram"></i>
+                </a>
+                <a href="https://www.youtube.com/@hulalla.hawaii" class="social-link yt" target="_blank" rel="noopener" aria-label="YouTube">
+                    <i class="fab fa-youtube"></i>
+                </a>
+                <a href="https://www.tiktok.com/@hulalla.hawaii" class="social-link tiktok" target="_blank" rel="noopener" aria-label="TikTok">
+                    <i class="fab fa-tiktok"></i>
+                </a>
+            </div>
+
+            <div class="footer-bottom">
+                <p>© 2026 Hulalla Party. All rights reserved.</p>
+                <div class="footer-links">
+                    <a href="../privacy">Privacy</a>
+                    <a href="../terms">Terms</a>
+                </div>
+            </div>
+        </footer>
+
+    <!-- Policy Detail Modal -->
+    <div class="modal-overlay" id="policyModal" onclick="closeModalOnOverlay(event)">
+        <div class="modal-container">
+            <div class="modal-header">
+                <h2 id="modalTitle">นโยบาย</h2>
+                <button class="modal-close" onclick="closePolicyModal()">
+                    <i class="fas fa-times"></i>
+                </button>
+            </div>
+            <div class="modal-body" id="modalBody">
+                <!-- Content will be dynamically inserted -->
+            </div>
+        </div>
+    </div>
+
+    <!-- AI Agent Floating Button -->
+    <a href="../chat" class="ai-agent-button" id="aiAgentButton" title="ถามคำถามกับ AI">
+        <img src="../chat/ai_logo.png" alt="AI Agent" class="ai-logo">
+    </a>
+
+    <!-- AI Agent Popup Invitation -->
+    <div class="ai-popup-invitation" id="aiPopupInvitation">
+        <div class="ai-popup-content">
+            <img src="../chat/ai_logo.png" alt="AI" class="ai-popup-icon">
+            <div class="ai-popup-text">
+                <h4>💬 มีคำถามเกี่ยวกับนโยบาย?</h4>
+                <p>ถามคำถามกับ LuLu ได้เลย!</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- Back to Top Button -->
+    <button class="back-to-top" id="backToTop" onclick="scrollToTop()">
+        <i class="fas fa-chevron-up"></i>
+    </button>
+
+    <!-- February 10 Voting Popup -->
+    <div class="vote-popup" id="votePopup">
+        <div class="vote-popup-overlay" onclick="closeVotePopup()"></div>
+        <div class="vote-popup-content">
+            <button class="vote-popup-close" onclick="closeVotePopup()">
+                <i class="fas fa-times"></i>
+            </button>
+            <div class="vote-popup-header">
+                <h2>🗳️ โหวตพรรคฮูลัลลาเบอร์ 3</h2>
+                <p class="vote-date">📅 วันที่ 10 กุมภาพันธ์ 2026</p>
+            </div>
+            <div class="vote-popup-body">
+                <div class="vote-poster">
+                    <img src="../img/333.jpg" alt="โปสเตอร์พรรคฮูลัลลา" class="poster-image">
+                </div>
+                <div class="vote-instructions">
+                    <h3>📋 วิธีการโหวต</h3>
+                    <div class="instructions-images">
+                        <img src="../img/13.jpg" alt="วิธีการโหวต ขั้นตอนที่ 1" class="instruction-image">
+                        <img src="../img/14.jpg" alt="วิธีการโหวต ขั้นตอนที่ 2" class="instruction-image">
+                    </div>
+                    <div class="vote-cta">
+                        <p class="vote-message">✨ มาร่วมกันสร้างการเปลี่ยนแปลง! โหวตให้พรรคฮูลัลลาเบอร์ 3 วันที่ 10 กุมภาพันธ์นี้ 🌴</p>
+                        <button class="btn btn-vote" onclick="closeVotePopup()">
+                            <i class="fas fa-check-circle"></i>
+                            เข้าใจแล้ว พร้อมโหวต!
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Firebase SDK -->
+    <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-app-compat.js"></script>
+    <script src="/keys.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-analytics-compat.js"></script>
+    
+    <script src="./policies_new.js"></script>
+    <script>
+        // ========== VOTE POPUP (FEBRUARY 10) ==========
+        function showVotePopup() {
+            const popup = document.getElementById('votePopup');
+            if (popup) {
+                popup.classList.add('show');
+                document.body.style.overflow = 'hidden';
+            }
+        }
+
+        function closeVotePopup() {
+            const popup = document.getElementById('votePopup');
+            if (popup) {
+                popup.classList.remove('show');
+                document.body.style.overflow = '';
+            }
+        }
+
+        // Show vote popup on page load (after a delay)
+        setTimeout(() => {
+            showVotePopup();
+        }, 2000);
+    </script>
+</body>
+</html>
