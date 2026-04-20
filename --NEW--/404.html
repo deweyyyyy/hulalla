@@ -1,0 +1,445 @@
+<!doctype html>
+<html lang="th">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>HULALLA - ขอบคุณทุกคะแนนเสียง</title>
+	<link rel="preconnect" href="https://fonts.googleapis.com">
+	<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+	<link href="https://fonts.googleapis.com/css2?family=Sarabun:wght@300;400;500;700;800&display=swap" rel="stylesheet">
+	<script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-app-compat.js"></script>
+	<script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-analytics-compat.js"></script>
+	<style>
+		:root {
+			--sky-1: #1198e8;
+			--sky-2: #0072bb;
+			--sky-3: #073b5d;
+			--ink: #0c1a25;
+			--white: #ffffff;
+			--glass: rgba(255, 255, 255, 0.16);
+			--border: rgba(255, 255, 255, 0.35);
+			--shadow: 0 24px 60px rgba(7, 36, 55, 0.32);
+		}
+
+		* {
+			box-sizing: border-box;
+		}
+
+		html,
+		body {
+			margin: 0;
+			padding: 0;
+			min-height: 100%;
+			font-family: "Sarabun", sans-serif;
+			color: var(--white);
+			background: linear-gradient(160deg, #001622 0%, #05395a 45%, #0a6aa0 100%);
+		}
+
+		body {
+			overflow-x: hidden;
+		}
+
+		.page {
+			position: relative;
+			min-height: 100vh;
+			isolation: isolate;
+		}
+
+		.page::before {
+			content: "";
+			position: fixed;
+			inset: 0;
+			background: linear-gradient(180deg, rgba(12, 36, 58, 0.42) 0%, rgba(6, 20, 31, 0.72) 75%),
+				url("/src/thx1.jpg") center/cover no-repeat;
+			z-index: -3;
+		}
+
+		.page::after {
+			content: "";
+			position: fixed;
+			inset: 0;
+			background:
+				radial-gradient(circle at 14% 4%, rgba(201, 234, 255, 0.5), transparent 40%),
+				radial-gradient(circle at 88% 0%, rgba(157, 228, 255, 0.4), transparent 35%),
+				linear-gradient(180deg, rgba(0, 105, 173, 0.45), rgba(1, 29, 45, 0.35));
+			z-index: -2;
+			pointer-events: none;
+		}
+
+		.beam {
+			position: fixed;
+			top: -15vh;
+			width: 60vw;
+			height: 70vh;
+			transform: rotate(12deg);
+			background: linear-gradient(180deg, rgba(202, 236, 255, 0.45), rgba(202, 236, 255, 0));
+			filter: blur(1px);
+			pointer-events: none;
+			z-index: -1;
+			animation: floatBeam 7s ease-in-out infinite alternate;
+		}
+
+		.beam.left {
+			left: -22vw;
+		}
+
+		.beam.right {
+			right: -22vw;
+			transform: rotate(-12deg);
+			animation-delay: 1.5s;
+		}
+
+		@keyframes floatBeam {
+			from {
+				transform: translateY(-1rem) rotate(12deg);
+				opacity: 0.65;
+			}
+			to {
+				transform: translateY(1.25rem) rotate(9deg);
+				opacity: 0.95;
+			}
+		}
+
+		.wrap {
+			max-width: 1080px;
+			margin: 0 auto;
+			padding: 2.2rem 1rem 3rem;
+		}
+
+		.hero {
+			text-align: center;
+			padding: 2rem 1rem 1.2rem;
+			animation: rise 700ms ease-out both;
+		}
+
+		.logo {
+			width: clamp(84px, 14vw, 128px);
+			display: inline-block;
+			margin-bottom: 0.7rem;
+			filter: drop-shadow(0 8px 26px rgba(0, 0, 0, 0.45));
+		}
+
+		h1 {
+			margin: 0;
+			font-size: clamp(2.1rem, 7vw, 4rem);
+			line-height: 1.1;
+			letter-spacing: 0.02em;
+			font-weight: 800;
+			text-shadow: 0 8px 24px rgba(7, 23, 34, 0.34);
+		}
+
+		.score {
+			margin-top: 0.55rem;
+			font-size: clamp(1.35rem, 4.2vw, 2.3rem);
+			font-weight: 500;
+			opacity: 0.98;
+		}
+
+		.score strong {
+			font-weight: 800;
+			font-size: 1.08em;
+			color: #d8f0ff;
+			text-shadow: 0 4px 16px rgba(1, 18, 27, 0.4);
+		}
+
+		.grid {
+			display: grid;
+			gap: 1rem;
+			grid-template-columns: 1fr;
+			margin-top: 1rem;
+		}
+
+		.card {
+			border: 1px solid var(--border);
+			background: var(--glass);
+			backdrop-filter: blur(8px);
+			border-radius: 20px;
+			box-shadow: var(--shadow);
+			padding: 1.2rem 1rem;
+			animation: rise 820ms ease-out both;
+		}
+
+		.message {
+			font-size: clamp(1.05rem, 2.75vw, 1.42rem);
+			line-height: 1.78;
+			font-weight: 400;
+			white-space: pre-line;
+			margin: 0;
+		}
+
+		.congrats {
+			margin: 1rem 0 0;
+			font-size: clamp(1.05rem, 2.75vw, 1.38rem);
+			line-height: 1.7;
+			font-weight: 500;
+		}
+
+		.thanks-last {
+			margin: 0.85rem 0 0;
+			font-size: clamp(1.15rem, 3.2vw, 1.5rem);
+			font-weight: 700;
+			color: #f2fbff;
+		}
+
+		.gallery {
+			display: grid;
+			grid-template-columns: 1fr;
+			gap: 1rem;
+			animation: rise 920ms ease-out both;
+		}
+
+		.image-box {
+			border-radius: 20px;
+			overflow: hidden;
+			border: 1px solid rgba(255, 255, 255, 0.4);
+			box-shadow: var(--shadow);
+			background: rgba(255, 255, 255, 0.15);
+			cursor: zoom-in;
+			transition: transform 220ms ease, box-shadow 220ms ease;
+		}
+
+		.image-box:hover {
+			transform: translateY(-4px);
+			box-shadow: 0 26px 64px rgba(7, 36, 55, 0.42);
+		}
+
+		.image-box img {
+			display: block;
+			width: 100%;
+			height: 100%;
+			object-fit: cover;
+		}
+
+		.footer-note {
+			margin-top: 1.2rem;
+			text-align: center;
+			font-size: 0.95rem;
+			opacity: 0.9;
+			letter-spacing: 0.02em;
+		}
+
+		.footer-meta {
+			margin-top: 0.45rem;
+			text-align: center;
+			font-size: 0.84rem;
+			opacity: 0.82;
+		}
+
+		.footer-social {
+			margin-top: 0.75rem;
+			display: flex;
+			justify-content: center;
+		}
+
+		.ig-link {
+			display: inline-flex;
+			align-items: center;
+			gap: 0.45rem;
+			padding: 0.5rem 0.9rem;
+			border-radius: 999px;
+			text-decoration: none;
+			font-weight: 700;
+			font-size: 0.94rem;
+			color: #ffffff;
+			border: 1px solid rgba(255, 255, 255, 0.4);
+            background: var(--glass);
+			backdrop-filter: blur(8px);
+            box-shadow: 0 10px 24px rgba(18, 15, 19, 0.3);
+			transition: transform 200ms ease, box-shadow 200ms ease;
+            margin-top: 50px;
+		}
+
+		.ig-link:hover {
+			transform: translateY(-2px);
+			box-shadow: 0 14px 30px rgba(18, 15, 19, 0.38);
+		}
+
+		.lightbox {
+			position: fixed;
+			inset: 0;
+			z-index: 70;
+			display: none;
+			align-items: center;
+			justify-content: center;
+			padding: 1rem;
+			background: rgba(2, 10, 16, 0.86);
+			backdrop-filter: blur(3px);
+		}
+
+		.lightbox.open {
+			display: flex;
+		}
+
+		.lightbox img {
+			max-width: min(96vw, 1200px);
+			max-height: 88vh;
+			width: auto;
+			height: auto;
+			border-radius: 14px;
+			border: 1px solid rgba(255, 255, 255, 0.35);
+			box-shadow: 0 30px 90px rgba(0, 0, 0, 0.52);
+		}
+
+		.lightbox-close {
+			position: absolute;
+			top: 1rem;
+			right: 1rem;
+			width: 42px;
+			height: 42px;
+			border: 0;
+			border-radius: 999px;
+			cursor: pointer;
+			font-size: 1.3rem;
+			line-height: 1;
+			font-weight: 700;
+			color: #ffffff;
+			background: rgba(255, 255, 255, 0.2);
+		}
+
+		@keyframes rise {
+			from {
+				transform: translateY(18px);
+				opacity: 0;
+			}
+			to {
+				transform: translateY(0);
+				opacity: 1;
+			}
+		}
+
+		@media (min-width: 860px) {
+			.wrap {
+				padding: 2.6rem 1.5rem 3.4rem;
+			}
+
+			.grid {
+				grid-template-columns: 1.18fr 0.82fr;
+				align-items: start;
+			}
+
+			.card {
+				padding: 1.55rem 1.4rem;
+			}
+
+			.gallery {
+				gap: 1.15rem;
+			}
+		}
+	</style>
+</head>
+<body>
+	<main class="page">
+		<div class="beam left" aria-hidden="true"></div>
+		<div class="beam right" aria-hidden="true"></div>
+
+		<div class="wrap">
+			<header class="hero">
+				<img class="logo" src="/src/logo_white.png" alt="HULALLA logo">
+				<h1>ขอบคุณทุกคะแนนเสียง</h1>
+				<p class="score">ทั้ง <strong>411 คะแนน</strong> ที่ไว้ใจพวกเรา</p>
+			</header>
+
+			<section class="grid" aria-label="ข้อความขอบคุณ">
+				<article class="card">
+					<p class="message">“ แม้เราได้รับคะแนนเสียงไม่มากพอในการเป็นสภานักเรียน แต่พวกเราฮูลัลล่าทำพรรคอย่างเต็มที่ และสุดความสามารถแล้วจริงๆ ขอบคุณเพื่อนๆร่วมพรรคทุกคน ที่ทุ่มเท และร่วมทำพรรคในชื่อฮูลัลล่าด้วยกัน ขอขอบพระคุณอาจารย์ที่ปรึกษาทุกท่านที่คอยให้คำแนะนำและเป็นกำลังใจให้พวกเรามาโดยตลอด ถึงแม้จะไม่ได้รับเลือกให้เป็นสภานักเรียน แต่พวกเราก็มีความตั้งใจที่จะพัฒนาโรงเรียนให้ดียิ่งขึ้นต่อไป ”</p>
+
+					<p class="congrats">และขอแสดงความยินดีกับพรรคที่ได้รับความไว้วางใจจากชาวสาธิตให้เป็นสภานักเรียนรุ่นที่ 15</p>
+
+					<p class="thanks-last">ขอขอบพระคุณทุกคะแนนเสียงที่ให้ความไว้วางใจเราด้วยนะคะ/ครับ</p>
+				</article>
+
+				<aside class="gallery" aria-label="ภาพบรรยากาศ">
+					<figure class="image-box" data-full="/src/thxtext.jpg">
+						<img src="/src/thxtext.jpg" alt="โปสเตอร์ขอบคุณจากพรรคฮูลัลล่า">
+					</figure>
+				</aside>
+                					<figure class="image-box" data-full="/src/thx1.jpg">
+						<img src="/src/thx1.jpg" alt="ข้อความและภาพขอบคุณจากเพื่อนๆ ฮูลัลล่า">
+					</figure>
+					<figure class="image-box" data-full="/src/thx2.jpg">
+						<img src="/src/thx2.jpg" alt="Hulalla Team">
+					</figure>
+			</section>
+
+			<div class="footer-social" aria-label="Hulalla social media">
+				<a class="ig-link" href="https://www.instagram.com/hulalla.hawaii/" target="_blank" rel="noopener noreferrer" aria-label="Instagram @hulalla.hawaii">
+					<span>IG</span>
+					<span>@hulalla.hawaii</span>
+				</a>
+			</div>
+			<p class="footer-note">HULALLA | ขอบคุณทุกความไว้วางใจจากใจ</p>
+			<p class="footer-meta">Copyright 2025-2026 Dewey's World | Website Management of Hulalla</p>
+		</div>
+	</main>
+
+	<div class="lightbox" id="imageLightbox" aria-hidden="true" role="dialog" aria-label="แสดงภาพขยาย">
+		<button class="lightbox-close" id="lightboxClose" type="button" aria-label="ปิดภาพ">×</button>
+		<img id="lightboxImage" src="" alt="ภาพขยาย">
+	</div>
+
+	<script src="/keys.js"></script>
+	<script>
+		const firebaseConfig = window.HLL_KEYS.firebase;
+
+		let analytics = null;
+		try {
+			if (typeof firebase !== "undefined") {
+				if (!firebase.apps.length) {
+					firebase.initializeApp(firebaseConfig);
+				}
+				analytics = firebase.analytics ? firebase.analytics() : null;
+				if (analytics) {
+					analytics.logEvent("thank_you_page_view", {
+						page: "new_404_thank_you",
+						source: "hulalla"
+					});
+				}
+			}
+		} catch (error) {
+			console.log("Firebase Analytics not available:", error);
+		}
+
+		const lightbox = document.getElementById("imageLightbox");
+		const lightboxImage = document.getElementById("lightboxImage");
+		const lightboxClose = document.getElementById("lightboxClose");
+		const zoomTargets = document.querySelectorAll(".image-box");
+
+		function openLightbox(src, altText) {
+			lightboxImage.src = src;
+			lightboxImage.alt = altText || "ภาพขยาย";
+			lightbox.classList.add("open");
+			lightbox.setAttribute("aria-hidden", "false");
+			document.body.style.overflow = "hidden";
+		}
+
+		function closeLightbox() {
+			lightbox.classList.remove("open");
+			lightbox.setAttribute("aria-hidden", "true");
+			lightboxImage.src = "";
+			document.body.style.overflow = "";
+		}
+
+		zoomTargets.forEach((item) => {
+			item.addEventListener("click", () => {
+				const img = item.querySelector("img");
+				const fullSrc = item.dataset.full || (img ? img.src : "");
+				if (!fullSrc) return;
+				openLightbox(fullSrc, img ? img.alt : "");
+			});
+		});
+
+		lightboxClose.addEventListener("click", closeLightbox);
+		lightbox.addEventListener("click", (event) => {
+			if (event.target === lightbox) {
+				closeLightbox();
+			}
+		});
+
+		document.addEventListener("keydown", (event) => {
+			if (event.key === "Escape" && lightbox.classList.contains("open")) {
+				closeLightbox();
+			}
+		});
+	</script>
+</body>
+</html>
