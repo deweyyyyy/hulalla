@@ -1,0 +1,39 @@
+{
+  "advisors": [
+    {
+      "id": "advisor-1",
+      "title": "อ.ตัวอย่าง",
+      "fullname": "ตัวอย่าง นามสมมติ",
+      "nickname": "อ.ตัวอย่าง",
+      "role": "อาจารย์ที่ปรึกษา",
+      "type": "advisor"
+    }
+  ],
+  "executives": [
+    { "position": "ประธานพรรค", "nickname": "สมชาย", "id": "000001" }
+  ],
+  "department_heads": [
+    { "department": "ฝ่ายวิชาการ", "nickname": "สมหญิง", "id": "000002" }
+  ],
+  "members": [
+    {
+      "id": "000001",
+      "nickname": "สมชาย",
+      "fullname": "สมชาย ใจดี",
+      "role": "บริหาร",
+      "sub_role": "ประธาน",
+      "class": "4/1",
+      "gender": "นาย",
+      "ig": "somchai.example"
+    },
+    {
+      "id": "000002",
+      "nickname": "สมหญิง",
+      "fullname": "สมหญิง รักเรียน",
+      "role": "วิชาการ",
+      "class": "4/2",
+      "gender": "นางสาว",
+      "ig": ""
+    }
+  ]
+}
